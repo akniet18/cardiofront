@@ -19,10 +19,8 @@
 
 <script>
 import NavBar from '../components/navbar'
-import Chart from '../components/chart'
 export default {
   components:{
-    Chart,
     NavBar
   },
   name: 'Home',

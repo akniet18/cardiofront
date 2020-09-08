@@ -53,7 +53,8 @@
     methods: {
         handleSelect(key, keyPath){
             if (key == 1){
-                this.$router.push({name: "chart"})
+                // this.$router.push({name: "chart"})
+                window.location.href = '/home/';
             }
             else if (key == 2){
                 this.$router.push({name: "profile"})

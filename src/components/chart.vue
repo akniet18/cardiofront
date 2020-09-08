@@ -15,6 +15,7 @@ export default {
     }
   },
   mounted () {
+    // window.location.reload()
     // setInterval(this.chart, 1000)
     const lcjs = require('@arction/lcjs')
 

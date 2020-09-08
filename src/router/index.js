@@ -16,17 +16,17 @@ Vue.use(VueRouter)
 
   const routes = [
   {
-    path: '',
+    path: '/home',
     name: 'Home',
     component: Home,
     // beforeEnter: ifAuth,
     children: [
       {
-        path: "",
+        path: "/",
         name:'chart',
         component: function () {
           return import('../components/chart.vue')
-        }
+        },
       },
       {
         path: '/profile',
@@ -39,7 +39,7 @@ Vue.use(VueRouter)
   },
 
   {
-    path: '/login',
+    path: '/',
     name: 'Login',
     component: function () {
       return import('../views/login.vue')

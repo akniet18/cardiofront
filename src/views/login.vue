@@ -78,7 +78,8 @@ export default {
           });
 		},
 		login() {
-			this.$router.push({name: 'Home'}) 
+			// this.$router.push({name: 'Home'}) 
+			window.location.href = '/home/';
 		//   let data = {
 		//     'username_or_email': this.ch_form.username,
 		//     'password': this.ch_form.password
