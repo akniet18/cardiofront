@@ -7,16 +7,23 @@
             <div class="text-white">Akniet</div> 
         </div>
     </header>
-    <Chart />
+
+    <section>
+      <NavBar />
+      <router-view></router-view>
+      <!-- <Chart /> -->
+    </section>
 
   </div>
 </template>
 
 <script>
+import NavBar from '../components/navbar'
 import Chart from '../components/chart'
 export default {
   components:{
-    Chart
+    Chart,
+    NavBar
   },
   name: 'Home',
   data(){
@@ -46,5 +53,11 @@ header{
 }
 .ava{
   margin-right: 8px;
+}
+
+section{
+  display: grid;
+  grid-template-columns: 2fr 10fr;
+  grid-gap: 10px;
 }
 </style>

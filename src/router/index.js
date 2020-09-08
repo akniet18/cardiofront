@@ -16,10 +16,26 @@ Vue.use(VueRouter)
 
   const routes = [
   {
-    path: '/',
+    path: '',
     name: 'Home',
     component: Home,
-    // beforeEnter: ifAuth
+    // beforeEnter: ifAuth,
+    children: [
+      {
+        path: "",
+        name:'chart',
+        component: function () {
+          return import('../components/chart.vue')
+        }
+      },
+      {
+        path: '/profile',
+        name: 'profile',
+        component: function () {
+          return import('../views/profile.vue')
+        }
+      }
+    ]
   },
 
   {
