@@ -2,22 +2,38 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 
+const ifAuth = (to, from, next) => {
+  if (sessionStorage.getItem('token')){
+    next()
+  }
+  else{
+    next('/login')
+  }
+}
+
+
 Vue.use(VueRouter)
 
   const routes = [
   {
     path: '/',
     name: 'Home',
-    component: Home
+    component: Home,
+    // beforeEnter: ifAuth
+  },
+
+  {
+    path: '/login',
+    name: 'Login',
+    component: function () {
+      return import('../views/login.vue')
+    }
   },
   {
-    path: '/about',
-    name: 'About',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
+    path: '/register',
+    name: 'Register',
     component: function () {
-      return import(/* webpackChunkName: "about" */ '../views/About.vue')
+      return import('../views/register.vue')
     }
   }
 ]

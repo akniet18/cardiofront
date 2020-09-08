@@ -1,18 +1,50 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <header>
+        <div class="text-white">ECG</div>
+        <div class="userDiv">
+            <el-avatar shape="square" size="medium" src="https://www.blexar.com/avatar.png" class="ava"></el-avatar>
+            <div class="text-white">Akniet</div> 
+        </div>
+    </header>
+    <Chart />
+
   </div>
 </template>
 
 <script>
-// @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
-
+import Chart from '../components/chart'
 export default {
+  components:{
+    Chart
+  },
   name: 'Home',
-  components: {
-    HelloWorld
+  data(){
+    return{
+      chartdata: [1, 2, 3, 4, 5, 6],
+      options: []
+    }
+  },
+  mounted () {
+    
   }
 }
 </script>
+
+<style scoped>
+header, .userDiv{
+  display: flex;
+  align-items: center;
+}
+header{
+  background: #409EFF;
+  padding: 10px 20px;
+  justify-content: space-between;
+}
+.text-white{
+  color: #fff;
+}
+.ava{
+  margin-right: 8px;
+}
+</style>
