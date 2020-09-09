@@ -51,6 +51,13 @@ Vue.use(VueRouter)
     component: function () {
       return import('../views/register.vue')
     }
+  },
+  {
+    path: '/chart2',
+    name: 'chart2',
+    component: function () {
+      return import('../components/ecgchart.vue')
+    }
   }
 ]
 

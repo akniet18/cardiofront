@@ -58,4 +58,9 @@ section{
   grid-template-columns: 2fr 10fr;
   grid-gap: 10px;
 }
+@media (min-width: 900px) {
+  section{
+    grid-template-columns: 2fr 12fr;
+  }
+}
 </style>
