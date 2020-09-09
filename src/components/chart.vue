@@ -10,7 +10,7 @@
         <section>
             <div class="info">
                 <div class="sectionAva">
-                    <img src="../assets/ava1.jpg" alt="">
+                    <img src="../assets/ava1.jpeg" alt="">
                 </div>
                 <div class="sectionInfo">
                     <div class="username">Көшербай Марлен Айдынұлы </div>
@@ -20,7 +20,7 @@
             </div> 
             <div class="info">
                 <div class="sectionAva">
-                    <img src="../assets/ava2.jpg" alt="">
+                    <img src="../assets/ava2.jpeg" alt="">
                 </div>
                 <div class="sectionInfo">
                     <div class="username">Шылмырза Үсен Жұманұлы</div>
