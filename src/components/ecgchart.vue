@@ -1659,7 +1659,7 @@ export default {
         .toStream()
         .forEach(point => {
             // Push the created points to the series.
-            series.add({ x: point.timestamp, y: point.data.y })
+            // series.add({ x: point.timestamp, y: point.data.y })
         })
     
     var asd = document.querySelector('#lcjs-auto-flexbox')
