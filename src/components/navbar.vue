@@ -31,14 +31,14 @@
             <i class="el-icon-menu"></i>
             <span slot="title">Profile</span>
         </el-menu-item>
-        <el-menu-item index="3">
+        <!-- <el-menu-item index="3">
             <i class="el-icon-document"></i>
             <span slot="title">Navigator Three</span>
         </el-menu-item>
         <el-menu-item index="4">
             <i class="el-icon-setting"></i>
             <span slot="title">Navigator Four</span>
-        </el-menu-item>
+        </el-menu-item> -->
         </el-menu>
     </div>
 </template>
@@ -47,17 +47,25 @@
   export default {
     data() {
       return {
-        isCollapse: false
+        isCollapse: false,
       };
     },
     methods: {
         handleSelect(key, keyPath){
+            console.log(sessionStorage.getItem('is_staff'))
             if (key == 1){
-                // this.$router.push({name: "chart"})
-                window.location.href = '/home/';
+                if (sessionStorage.getItem('is_staff') == true){
+                    window.location.href = '/home/staff';
+                }else{
+                    window.location.href = '/home/';
+                }
             }
             else if (key == 2){
-                this.$router.push({name: "profile"})
+                if (sessionStorage.getItem('is_staff') == true){
+                    this.$router.push({name: "profilestaff"})
+                }else{
+                    this.$router.push({name: "profile"})
+                }
             }
         },
         handleOpen(key, keyPath) {

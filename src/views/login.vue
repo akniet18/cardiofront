@@ -4,7 +4,6 @@
             <el-form :model="ch_form" :rules="rules" ref="ch_form" class="demo-ruleForm form">
                 <h1 class="title">Вход</h1>
 
-                <div class="errorM" v-if="formError">username or password wrong</div>
                 <div class="inpDiv">
                     <el-form-item prop="username">
                         <label  for="username">Username or email</label>
@@ -79,28 +78,35 @@ export default {
 		},
 		login() {
 			// this.$router.push({name: 'Home'}) 
-			window.location.href = '/home/';
-		//   let data = {
-		//     'username_or_email': this.ch_form.username,
-		//     'password': this.ch_form.password
-		//   }
-		//   this.$http.post('users/login/', data)
-		//     .then(r => {
-		//       return r.json()
-		//     })
-		//     .then(r => {
-		//       console.log(r)
-		//       if (r.token && r.uid){
-		//         sessionStorage.setItem('token', r.token)
-		//         sessionStorage.setItem('uid', r.uid)
-		//         this.$router.push({name: 'home'}) 
-		//       }
-		//       if (r.status){
-		//      	this.open2()
-		//       }
-		//     }, r => {
-		//       console.log(r)
-		//     })
+			// window.location.href = '/home/';
+		  let data = {
+		    'username': this.ch_form.username,
+		    'pwd': this.ch_form.password
+		  }
+		  axios.post('users/login/', data)
+		    .then(r => {
+		      console.log(r.data)
+		      if (r.data.key && r.data.uid){
+		        sessionStorage.setItem('is_staff', r.data.is_staff)
+				sessionStorage.setItem('uid', r.data.uid)
+				sessionStorage.setItem('key', r.data.key)
+				sessionStorage.setItem('first_name', r.data.first_name)
+				sessionStorage.setItem('last_name', r.data.last_name)
+				sessionStorage.setItem('username', this.ch_form.username)
+				sessionStorage.setItem('birth_date', r.data.birth_date)
+				sessionStorage.setItem('location', r.data.location)
+				sessionStorage.setItem('avatar', r.data.avatar)
+				if (r.data.is_staff){
+					window.location.href = '/home/staff/';
+				}
+				else{
+					window.location.href = '/home/';
+				}
+		        // this.$router.push({name: 'home'}) 
+		      }
+		    }, r => {
+		      console.log(r)
+		    })
 		},
     }    
 }

@@ -3,8 +3,8 @@
     <header>
         <div class="text-white">ECG</div>
         <div class="userDiv">
-            <el-avatar shape="square" size="medium" src="https://www.blexar.com/avatar.png" class="ava"></el-avatar>
-            <div class="text-white">Akniet</div> 
+            <img class="ava" :src="avatar"/>
+            <div class="text-white">{{username}}</div> 
         </div>
     </header>
 
@@ -27,7 +27,9 @@ export default {
   data(){
     return{
       chartdata: [1, 2, 3, 4, 5, 6],
-      options: []
+      options: [],
+      avatar: sessionStorage.getItem('avatar'),
+      username: sessionStorage.getItem('username')
     }
   },
   mounted () {
@@ -51,16 +53,21 @@ header{
 }
 .ava{
   margin-right: 8px;
+  width: 35px;
+  height: 35px;
+  border-radius: 5px;
 }
 
 section{
   display: grid;
   grid-template-columns: 2fr 10fr;
   grid-gap: 10px;
+  margin-right: 20px;
 }
 @media (min-width: 900px) {
   section{
     grid-template-columns: 2fr 12fr;
   }
 }
+
 </style>

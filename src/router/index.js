@@ -22,10 +22,17 @@ Vue.use(VueRouter)
     // beforeEnter: ifAuth,
     children: [
       {
-        path: "/",
+        path: "staff/",
         name:'chart',
         component: function () {
           return import('../components/chart.vue')
+        },
+      },
+      {
+        path: "/",
+        name:'chart',
+        component: function () {
+          return import('../components/userhome.vue')
         },
       },
       {
@@ -33,6 +40,13 @@ Vue.use(VueRouter)
         name: 'profile',
         component: function () {
           return import('../views/profile.vue')
+        }
+      },
+      {
+        path: '/profile/staff',
+        name: 'profilestaff',
+        component: function () {
+          return import('../views/profilestaff.vue')
         }
       }
     ]
