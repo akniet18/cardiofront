@@ -8,7 +8,7 @@
         </div>
         
         <section>
-            <div class="info" @click="zoom">
+            <div class="info" @click="zoom(1)">
                 <div class="sectionAva">
                     <img src="../assets/ava1.jpeg" alt="">
                 </div>
@@ -18,7 +18,7 @@
                     <div class="address">г. Алматы, мкр-н. Айгерим-1, ул. Бенберина 76, кв. 8</div>
                 </div>
             </div> 
-            <div class="info" @click="zoom">
+            <div class="info" @click="zoom(2)">
                 <div class="sectionAva">
                     <img src="../assets/ava2.jpeg" alt="">
                 </div>
@@ -28,7 +28,7 @@
                     <div class="address">г.Алматы, Ауэзовский р-н, мкр.11, ул.Шаляпина дом 14, кв 10</div>
                 </div>
             </div> 
-            <div class="info" @click="zoom">
+            <div class="info" @click="zoom(3)">
                 <div class="sectionAva">
                     <img src="../assets/ava3.jpeg" alt="">
                 </div>
@@ -38,7 +38,7 @@
                     <div class="address">Алматы обл, Еңбекшіқазақ ауд, Түрген ауылы, Жүнісбай 11</div>
                 </div>
             </div> 
-            <div class="info" @click="zoom">
+            <div class="info" @click="zoom(4)">
                 <div class="sectionAva">
                     <img src="../assets/ava4.jpeg" alt="">
                 </div>
@@ -90,8 +90,10 @@ export default {
    
   },
   methods: {
-      zoom(event){
-          console.log(event)
+      zoom(id){
+          console.log(id)
+        //   var chart = document.querySelector(`#chart-${id}`)
+        //   chart.style.display
       },
       chart() {
         this.data.push(this.data[0])

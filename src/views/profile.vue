@@ -5,21 +5,21 @@
                 <el-avatar shape="square" :size="100" :src="ruleForm.avatar"></el-avatar>
             </div>
             <el-form-item label="username" prop="username">
-                <el-input v-model="ruleForm.username"></el-input>
+                <el-input disabled v-model="ruleForm.username"></el-input>
             </el-form-item>
 
             <el-form-item label="first name" prop="first_name">
-                <el-input v-model="ruleForm.first_name"></el-input>
+                <el-input disabled v-model="ruleForm.first_name"></el-input>
             </el-form-item>
             <el-form-item label="last name" prop="last_name">
-                <el-input v-model="ruleForm.last_name"></el-input>
+                <el-input disabled v-model="ruleForm.last_name"></el-input>
             </el-form-item>
 
             <el-form-item prop="date1" label="birth date">
-                <el-date-picker type="date" placeholder="Pick a date" v-model="ruleForm.birth_date" style="width: 100%;"></el-date-picker>
+                <el-date-picker disabled type="date" placeholder="Pick a date" v-model="ruleForm.birth_date" style="width: 100%;"></el-date-picker>
             </el-form-item>
             <el-form-item label="address" prop="location">
-                <el-input type="textarea" v-model="ruleForm.location"></el-input>
+                <el-input disabled type="textarea" v-model="ruleForm.location"></el-input>
             </el-form-item>
             <!-- <el-form-item label="avatar">
                 <input type='file' id="avatar" />

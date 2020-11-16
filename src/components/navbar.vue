@@ -54,14 +54,14 @@
         handleSelect(key, keyPath){
             console.log(sessionStorage.getItem('is_staff'))
             if (key == 1){
-                if (sessionStorage.getItem('is_staff') == true){
+                if (sessionStorage.getItem('is_staff') == "true"){
                     window.location.href = '/home/staff';
                 }else{
                     window.location.href = '/home/';
                 }
             }
             else if (key == 2){
-                if (sessionStorage.getItem('is_staff') == true){
+                if (sessionStorage.getItem('is_staff') == "true"){
                     this.$router.push({name: "profilestaff"})
                 }else{
                     this.$router.push({name: "profile"})
