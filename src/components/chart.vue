@@ -1,14 +1,14 @@
 <template>
     <div class="wrapper">
         <div>
-            <div class="item item1"><EcgChart /></div>
-            <div class="item item2"><EcgChart2 /></div>
-            <div class="item item3"><EcgChart2 /></div>
-            <div class="item item4"><EcgChart2 /></div>
+            <div class="item item1" ><EcgChart /></div>
+            <div class="item item2" ><EcgChart2 /></div>
+            <div class="item item3" ><EcgChart2 /></div>
+            <div class="item item4" ><EcgChart2 /></div>
         </div>
         
         <section>
-            <div class="info">
+            <div class="info" @click="zoom">
                 <div class="sectionAva">
                     <img src="../assets/ava1.jpeg" alt="">
                 </div>
@@ -18,7 +18,7 @@
                     <div class="address">г. Алматы, мкр-н. Айгерим-1, ул. Бенберина 76, кв. 8</div>
                 </div>
             </div> 
-            <div class="info">
+            <div class="info" @click="zoom">
                 <div class="sectionAva">
                     <img src="../assets/ava2.jpeg" alt="">
                 </div>
@@ -28,7 +28,7 @@
                     <div class="address">г.Алматы, Ауэзовский р-н, мкр.11, ул.Шаляпина дом 14, кв 10</div>
                 </div>
             </div> 
-            <div class="info">
+            <div class="info" @click="zoom">
                 <div class="sectionAva">
                     <img src="../assets/ava3.jpeg" alt="">
                 </div>
@@ -38,7 +38,7 @@
                     <div class="address">Алматы обл, Еңбекшіқазақ ауд, Түрген ауылы, Жүнісбай 11</div>
                 </div>
             </div> 
-            <div class="info">
+            <div class="info" @click="zoom">
                 <div class="sectionAva">
                     <img src="../assets/ava4.jpeg" alt="">
                 </div>
@@ -90,6 +90,9 @@ export default {
    
   },
   methods: {
+      zoom(event){
+          console.log(event)
+      },
       chart() {
         this.data.push(this.data[0])
         this.data.splice(0, 1)
@@ -134,6 +137,9 @@ section{
     height: 100%;
     
 }
+.item{
+    z-index: 999;
+}
 .info{
     /* position: absolute; */
     top: 5px;
@@ -145,7 +151,7 @@ section{
     width: 100%;
     height: 70px;
     color: #fff;
-    z-index: 999;
+    z-index: 99;
 }
 .sectionAva img{
     width: 60px;
