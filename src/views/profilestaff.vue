@@ -1,35 +1,95 @@
 <template>
-    <div>  
-        <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="120px" class="demo-ruleForm">
-            <el-form-item label="username" prop="username">
-                <el-input v-model="ruleForm.username"></el-input>
-            </el-form-item>
-            <el-form-item label="password" prop="pwd">
-                <el-input v-model="ruleForm.pwd"></el-input>
-            </el-form-item>
+    <div> 
+        <el-table
+            :data="data.filter(data => !search || data.username.toLowerCase().includes(search.toLowerCase()) 
+                                    || data.first_name.toLowerCase().includes(search.toLowerCase())
+                                    || data.last_name.toLowerCase().includes(search.toLowerCase())
+                                    || data.location.toLowerCase().includes(search.toLowerCase()))"
+            style="width: 100%">
+            <el-table-column
+                fixed
+                prop="username"
+                label="Никнейм"
+                width="150">
+            </el-table-column>
+            <el-table-column
+                prop="first_name"
+                label="Имя"
+                width="120">
+            </el-table-column>
+            <el-table-column
+                prop="last_name"
+                label="Фамилия"
+                width="120">
+            </el-table-column>
+            <el-table-column
+                prop="location"
+                label="Адрес"
+                width="120">
+            </el-table-column>
+            <el-table-column
+                prop="birth_date"
+                label="Дата рождения"
+                sortable
+               >
+            </el-table-column>
+            
+            <el-table-column>
+                <template slot="header" slot-scope="scope">
+                    <el-input
+                    v-model="search"
+                    size="mini"
+                    placeholder="Type to search"/>
+                </template>
+                <template slot-scope="scope">
+                    <!-- <el-button @click="handleClick" type="text" size="small">Detail</el-button> -->
+                    <el-button type="warning" size="mini" @click="handleChange(scope.$index, scope.row)">Изменить</el-button>
+                    <el-button size="mini" type="danger">Удалить</el-button>
+                </template>
+            </el-table-column>
+        </el-table>
 
-            <el-form-item label="first name" prop="first_name">
-                <el-input v-model="ruleForm.first_name"></el-input>
-            </el-form-item>
-            <el-form-item label="last name" prop="last_name">
-                <el-input v-model="ruleForm.last_name"></el-input>
-            </el-form-item>
+        <el-dialog
+            title="Tips"
+            :visible.sync="dialogVisible"
+            width="60%"
+            :before-close="handleClose">
+            <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="130px" class="demo-ruleForm">
+                <el-form-item label="username" prop="username">
+                    <el-input v-model="ruleForm.username"></el-input>
+                </el-form-item>
+                <!-- <el-form-item label="password" prop="pwd">
+                    <el-input v-model="ruleForm.pwd"></el-input>
+                </el-form-item> -->
 
-            <el-form-item prop="date1" label="birth date">
-                <el-date-picker type="date" placeholder="Pick a date" v-model="ruleForm.date1" style="width: 100%;"></el-date-picker>
-            </el-form-item>
-            <el-form-item label="address" prop="location">
-                <el-input type="textarea" v-model="ruleForm.location"></el-input>
-            </el-form-item>
-            <el-form-item label="avatar">
-                <input type='file' id="avatar" />
-            </el-form-item>
+                <el-form-item label="Имя" prop="first_name">
+                    <el-input v-model="ruleForm.first_name"></el-input>
+                </el-form-item>
+                <el-form-item label="Фамилия" prop="last_name">
+                    <el-input v-model="ruleForm.last_name"></el-input>
+                </el-form-item>
 
-            <el-form-item>
-                <el-button type="primary" @click="submitForm('ruleForm')">Create</el-button>
-                <el-button @click="resetForm('ruleForm')">Reset</el-button>
-            </el-form-item>
-        </el-form>
+                <el-form-item prop="birth_date" label="Дата рождения">
+                    <el-date-picker type="date" placeholder="Pick a date" v-model="ruleForm.birth_date" style="width: 100%;"></el-date-picker>
+                </el-form-item>
+                <el-form-item label="Адрес" prop="location">
+                    <el-input type="textarea" v-model="ruleForm.location"></el-input>
+                </el-form-item>
+                <el-form-item label="Аватар">
+                    <input type='file' id="avatar" />
+                </el-form-item>
+
+                <!-- <el-form-item>
+                    <el-button type="primary" @click="submitForm('ruleForm')">Create</el-button>
+                    <el-button @click="resetForm('ruleForm')">Reset</el-button>
+                </el-form-item> -->
+            </el-form>
+            <span slot="footer" class="dialog-footer">
+                <el-button @click="dialogVisible = false">Cancel</el-button>
+                <el-button type="primary" @click="submitForm('ruleForm')">Confirm</el-button>
+            </span>
+        </el-dialog>
+        
     </div>
 </template>
 
@@ -39,12 +99,16 @@ import moment from 'moment'
 export default {
     data(){
         return{
+            dialogVisible: false,
+            currentId: 0,
+            search: '',
             imageUrl: '',
+            data: [],
             ruleForm: {
                 username: '',
                 first_name: '',
                 last_name: '',
-                date1: '',
+                birth_date: '',
                 location: '',
                 pwd: ''
             },
@@ -63,8 +127,8 @@ export default {
                 last_name: [
                     { required: true, message: 'Please input last name', trigger: 'blur' }
                 ],
-                date1: [
-                    { type: 'date', required: true, message: 'Please pick a date', trigger: 'change' }
+                birth_date: [
+                    { required: true, message: 'Please pick a date' }
                 ],
                 location: [
                     { required: true, message: 'Please input location', trigger: 'blur' }
@@ -72,25 +136,32 @@ export default {
             }
         }
     },
+    mounted(){
+        this.get_users()
+    },
     methods: {
       submitForm(formName) {
         this.$refs[formName].validate((valid) => {
           if (valid) {
+            console.log(this.ruleForm.birth_date)
             let headers = {"Authorization": "Token " + sessionStorage.getItem('key')}
             let data = new FormData()
+            data.append('id', this.currentId)
             data.append('first_name', this.ruleForm.first_name)
             data.append('last_name', this.ruleForm.last_name)
             data.append('username', this.ruleForm.username)
-            data.append('avatar', document.querySelector('#avatar').files[0])
-            data.append('birth_date', moment(String(this.ruleForm.date1)).format('YYYY-MM-DD'))
+            // data.append('avatar', document.querySelector('#avatar').files[0])
+            data.append('birth_date', moment(String(this.ruleForm.birth_date)).format('YYYY-MM-DD'))
             data.append('location', this.ruleForm.location)
-            data.append('pwd', this.ruleForm.pwd)
-            axios.post('users/create/', data, {headers})
+            // data.append('pwd', this.ruleForm.pwd)
+            console.log(data)
+            axios.post('users/change/', data, {headers})
                 .then(r => {
                     console.log(r)
                 }, r => {
                     console.log(r)
                 })
+                this.dialogVisible = !this.dialogVisible
           } else {
             console.log('error submit!!');
             return false;
@@ -100,6 +171,29 @@ export default {
       resetForm(formName) {
         this.$refs[formName].resetFields();
       },
+      get_users(){
+          let headers = {"Authorization": "Token " + sessionStorage.getItem('key')}
+          axios.get('users/get/', {headers})
+            .then(r=>{
+                console.log(r.data)
+                this.data = r.data
+            }, r=> {
+                console.log(r)
+            })
+      },
+      handleChange(index, row) {
+        // console.log(row);
+        this.dialogVisible = !this.dialogVisible
+        this.ruleForm = row
+        this.currentId = row.id
+      },
+      handleClose(done) {
+        this.$confirm('Are you sure to close this dialog?')
+          .then(_ => {
+            done();
+          })
+          .catch(_ => {});
+      }
     }
 }
 </script>

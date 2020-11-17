@@ -25,12 +25,17 @@
         </el-submenu> -->
         <el-menu-item index="1">
             <i class="el-icon-menu"></i>
-            <span slot="title">ECG</span>
+            <span slot="title">Электрокардиографии</span>
         </el-menu-item>
         <el-menu-item index="2">
             <i class="el-icon-menu"></i>
-            <span slot="title">Profile</span>
+            <span slot="title">Пользователи</span>
         </el-menu-item>
+        <el-menu-item index="3" v-if="is_staff">
+            <i class="el-icon-menu"></i>
+            <span slot="title">Добавить пользователя</span>
+        </el-menu-item>
+        
         <!-- <el-menu-item index="3">
             <i class="el-icon-document"></i>
             <span slot="title">Navigator Three</span>
@@ -40,6 +45,7 @@
             <span slot="title">Navigator Four</span>
         </el-menu-item> -->
         </el-menu>
+        
     </div>
 </template>
 
@@ -48,6 +54,7 @@
     data() {
       return {
         isCollapse: false,
+        is_staff: sessionStorage.getItem('is_staff', null)
       };
     },
     methods: {
@@ -62,10 +69,13 @@
             }
             else if (key == 2){
                 if (sessionStorage.getItem('is_staff') == "true"){
-                    this.$router.push({name: "profilestaff"})
+                    this.$router.push({name: "profile_staff"})
                 }else{
                     this.$router.push({name: "profile"})
                 }
+            }
+            else if (key == 3){
+                this.$router.push({name: "create_user"})  
             }
         },
         handleOpen(key, keyPath) {
@@ -81,7 +91,7 @@
 
 <style>
   .el-menu-vertical-demo:not(.el-menu--collapse) {
-    width: 200px;
-    min-height: 400px;
+    /* width: 220px; */
+    min-height: 100vh;
   }
 </style>

@@ -1,7 +1,7 @@
 <template>
   <div class="home">
     <header>
-        <div class="text-white">ECG</div>
+        <div class="text-white">Электрокардиография</div>
         <div class="userDiv">
             <img class="ava" :src="avatar"/>
             <div class="text-white">{{username}}</div> 
@@ -13,7 +13,6 @@
       <router-view></router-view>
       <!-- <Chart /> -->
     </section>
-
   </div>
 </template>
 

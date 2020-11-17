@@ -36,10 +36,10 @@
                     <el-button class="btnn" type="primary" @click="submit">Войти</el-button>
                 </el-form-item>
             </el-form>
-            <div class="regDiv">
+            <!-- <div class="regDiv">
                 Ещё нет аккаунта? 
                 <router-link tag="el-link" :to="{name: 'Register'}"><el-link class="regf" type="primary">Зарегистрируйтесь</el-link></router-link>
-            </div>
+            </div> -->
         </div>
     </div>   
 </template>
@@ -85,25 +85,28 @@ export default {
 		  }
 		  axios.post('users/login/', data)
 		    .then(r => {
-		      console.log(r.data)
-		      if (r.data.key && r.data.uid){
-		        sessionStorage.setItem('is_staff', r.data.is_staff)
-				sessionStorage.setItem('uid', r.data.uid)
-				sessionStorage.setItem('key', r.data.key)
-				sessionStorage.setItem('first_name', r.data.first_name)
-				sessionStorage.setItem('last_name', r.data.last_name)
-				sessionStorage.setItem('username', this.ch_form.username)
-				sessionStorage.setItem('birth_date', r.data.birth_date)
-				sessionStorage.setItem('location', r.data.location)
-				sessionStorage.setItem('avatar', r.data.avatar)
-				if (r.data.is_staff){
-					window.location.href = '/home/staff/';
+				if (r.data.status != "wrong"){
+					if (r.data.key && r.data.uid){
+						sessionStorage.setItem('is_staff', r.data.is_staff)
+						sessionStorage.setItem('uid', r.data.uid)
+						sessionStorage.setItem('key', r.data.key)
+						sessionStorage.setItem('first_name', r.data.first_name)
+						sessionStorage.setItem('last_name', r.data.last_name)
+						sessionStorage.setItem('username', this.ch_form.username)
+						sessionStorage.setItem('birth_date', r.data.birth_date)
+						sessionStorage.setItem('location', r.data.location)
+						sessionStorage.setItem('avatar', r.data.avatar)
+						if (r.data.is_staff){
+							window.location.href = '/home/staff/';
+						}
+						else{
+							window.location.href = '/home/';
+						}
+					}
 				}
 				else{
-					window.location.href = '/home/';
+					this.$message.error('Логин или пароль неправильно');
 				}
-		        // this.$router.push({name: 'home'}) 
-		      }
 		    }, r => {
 		      console.log(r)
 		    })

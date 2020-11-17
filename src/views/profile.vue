@@ -37,7 +37,6 @@
 export default {
     data () {
         return{
-            
             ruleForm:{
                 username: sessionStorage.getItem('username'),
                 first_name: sessionStorage.getItem('first_name'),
@@ -47,7 +46,6 @@ export default {
                 location: sessionStorage.getItem('location'),
                 // avatar: sessionStorage.getItem('username'),
             }
-            
         }
     }
     

@@ -43,8 +43,15 @@ Vue.use(VueRouter)
         }
       },
       {
+        path: '/profile/create',
+        name: 'create_user',
+        component: function () {
+          return import('../views/createuser.vue')
+        }
+      },
+      {
         path: '/profile/staff',
-        name: 'profilestaff',
+        name: 'profile_staff',
         component: function () {
           return import('../views/profilestaff.vue')
         }
