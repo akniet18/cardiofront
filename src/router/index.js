@@ -60,7 +60,7 @@ Vue.use(VueRouter)
   },
 
   {
-    path: '/',
+    path: '/login',
     name: 'Login',
     component: function () {
       return import('../views/login.vue')
@@ -79,7 +79,15 @@ Vue.use(VueRouter)
     component: function () {
       return import('../components/ecgchart.vue')
     }
-  }
+  },
+  {
+    path: '/',
+    name: 'base',
+    component: function () {
+      return import('../views/base.vue')
+    }
+  },
+  
 ]
 
 const router = new VueRouter({
