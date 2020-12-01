@@ -46,7 +46,7 @@
             </div>
             <div class="info" style="background: #E5F4F9">
                 
-                <div class="info_block" >
+                <div class="info_block info_block2" >
                     <div class="info_img">
                         <img src="https://www.schiller.ru/upload/iblock/b25/bg-cardio-img.png" alt="">
                     </div>
@@ -162,5 +162,27 @@ footer{
     color: #fff;
     background: #00456f;
     padding: 20px;
+}
+
+@media screen and (max-width: 1200px) {
+    .info_block{
+        width: 90%;
+    }
+}
+@media screen and (max-width: 1000px) {
+    .info_block{
+        flex-direction: column;
+    }
+    .info_block2{
+        flex-direction: column-reverse;
+    }
+    .info_img{
+        display: flex;
+        justify-content: center;
+    }
+    .info_img img{
+        margin-top: 20px;
+        width: 60%
+    }
 }
 </style>
