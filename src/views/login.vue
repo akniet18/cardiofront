@@ -87,6 +87,7 @@ export default {
 		    .then(r => {
 				if (r.data.status != "wrong"){
 					if (r.data.key && r.data.uid){
+						console.log(r.data.is_staff)
 						sessionStorage.setItem('is_staff', r.data.is_staff)
 						sessionStorage.setItem('uid', r.data.uid)
 						sessionStorage.setItem('key', r.data.key)

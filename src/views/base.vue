@@ -117,14 +117,28 @@
         </section>
 
         <footer>
-            <div>© 2020, Almaty</div>
+            <div class="footer">
+                <div class="footer_logo"><img src="../assets/Рисунок6.png" alt=""></div>
+                <div class="footer_contacts">
+                    <div>Контакты:</div>
+                    <div>8 (771) 600 50 70</div>
+                </div>
+                <div>
+                    <el-button type="primary" plain @click="login">Войти</el-button>
+                </div>
+            </div>
+            <div class="footer">© 2020, Almaty</div>
         </footer>
     </div>
 </template>
 
 <script>
 export default {
-
+    methods:{
+        login(){
+            this.$router.push({name: "Login"})
+        }
+    }
 }
 </script>
 
@@ -264,14 +278,31 @@ header{
     transform: translateX(-50%);
     font-size: 5em;
     color:#fff;
-
 }
 
 
 footer{
     color: #fff;
-    background: #00456f;
+    background: #149bfc;
     padding: 20px;
+}
+footer img{
+    width: 200px;
+}
+.footer{
+    width: 85%;
+    margin: 5px auto;
+    padding: 10px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.footer:first-child{
+    border-bottom: 1px solid #fff;
+}
+.footer_contacts{
+    margin-left: 50%;
+    font-size: 1.2em;
 }
 
 @media screen and (max-width: 1200px) {
@@ -294,5 +325,48 @@ footer{
         margin-top: 20px;
         width: 60%
     }
+    h1{
+        font-size: 1.5em;
+    }
+    .main_first_row{
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: 1fr 1fr;
+    }
+    .problems_section img{
+        width: 100%;
+        height: 100%;
+    }
 }
+@media screen and (max-width: 900px) {
+    .problems_section{
+        grid-template-columns: 1fr;
+    }
+    .problems_section img{
+        width: 80%;
+        height: auto;
+    }
+    .footer_contacts{
+        margin-left: 10%;
+        font-size: 1em;
+    }
+}
+@media screen and (max-width: 650px) {
+    .main_first_row{
+        grid-gap: 10px;
+        font-size: 1em;
+    }
+    .footer{
+        flex-direction: column;
+        align-items: baseline;
+    }
+    .footer_contacts{
+        margin: 10px 0;
+    }
+}
+@media screen and (max-width: 450px) {
+    .main_first_row{
+        grid-template-columns: 1fr;
+    }
+}
+
 </style>

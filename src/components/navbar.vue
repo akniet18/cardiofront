@@ -31,7 +31,7 @@
             <i class="el-icon-menu"></i>
             <span slot="title">Пользователи</span>
         </el-menu-item>
-        <el-menu-item index="3" v-if="is_staff">
+        <el-menu-item index="3" v-show="is_staff != 'false'">
             <i class="el-icon-menu"></i>
             <span slot="title">Добавить пользователя</span>
         </el-menu-item>
@@ -54,12 +54,15 @@
     data() {
       return {
         isCollapse: false,
-        is_staff: sessionStorage.getItem('is_staff', null)
+        is_staff: sessionStorage.getItem('is_staff', false)
       };
+    },
+    mounted(){
+        this.is_staff = sessionStorage.getItem('is_staff', false)
     },
     methods: {
         handleSelect(key, keyPath){
-            console.log(sessionStorage.getItem('is_staff'))
+            console.log(this.is_staff)
             if (key == 1){
                 if (sessionStorage.getItem('is_staff') == "true"){
                     window.location.href = '/home/staff';
