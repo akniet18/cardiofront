@@ -1,7 +1,7 @@
 <template>
     <div class="wrapper">
         <div>
-            <div class="item item1"><EcgChart /></div>
+            <div class="item item1"><EcgChart :d="data"/></div>
         </div>
         
         <section>
@@ -34,7 +34,7 @@ export default {
     return{
         chartdata: [1, 2, 3, 4, 5, 6],
         options: [],
-        data: [40, 39, 10, 40, 39, 80, 40],
+        data: [],
         username: sessionStorage.getItem('username'),
         first_name: sessionStorage.getItem('first_name'),
         last_name: sessionStorage.getItem('last_name'),
@@ -42,6 +42,9 @@ export default {
         avatar: sessionStorage.getItem('avatar'),
         location: sessionStorage.getItem('location'),
     }
+  },
+  created(){
+    //   this.getData()
   },
   mounted () {
       var asd = document.querySelector('#lcjs-auto-flexbox')
@@ -57,22 +60,21 @@ export default {
    
   },
   methods: {
-      chart() {
-        this.data.push(this.data[0])
-        this.data.splice(0, 1)
-        console.log(this.data)
-        this.renderChart({
-            labels: [1, 2, 3, 4, 5, 6, 7],
-            datasets: [
-                {
-                label: 'Data One',
-                backgroundColor: '#f87979',
-                data: this.data,
-                borderWidth: 1,
-                lineTension: 0,
+    getData(){
+          axios.get('api/setByte/')
+            .then(r=>{
+                let d = r.data.data
+                d = d.substring(1, d.length-1)
+                d = d.split(', ')
+                let ddd = []
+                for (let i in d){
+                    d[i] = parseInt(d[i])
                 }
-            ]
-        }, {responsive: true, maintainAspectRatio: false})
+                console.log(d)
+                this.data = d
+            }, r=>{
+                console.log(r)
+            })
       }
   }
 }
@@ -83,19 +85,17 @@ export default {
     display: flex;
     position: relative;
     min-height: 90vh;
-    /* display: grid;
-    grid-template-columns: 1fr 1fr;
+    display: grid;
+    /* grid-template-columns: 1fr 1fr;
     grid-template-rows: 1fr 1fr;
     grid-gap: 5px; */
 }
-/* .item {
+.item {
     position: relative;
-} */
+    height: 450px
+}
 section{
     position: absolute;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: 1fr 1fr;
     grid-gap: 10px;
     width: 100%;
     height: 100%;

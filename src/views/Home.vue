@@ -28,10 +28,13 @@ export default {
       chartdata: [1, 2, 3, 4, 5, 6],
       options: [],
       avatar: sessionStorage.getItem('avatar'),
-      username: sessionStorage.getItem('username')
+      username: sessionStorage.getItem('username'),
+      data: []
     }
   },
   mounted () {
+  },
+  methods: {
     
   }
 }

@@ -1,19 +1,81 @@
 <template>
-    <div class="section"></div>
+    <div id="section" class="fill"></div>
 </template>
 
 <script>
-// import { Line } from 'vue-chartjs'
+import {lightningChart,
+            DataPatterns,
+            AxisScrollStrategies,
+            SolidLine,
+            SolidFill,
+            ColorHEX,
+            AutoCursorModes,
+            Themes} from '@arction/lcjs'
+let lineSeries = null
 export default {
   name: 'EcgChart2',
 //   extends: Line,
   data(){
+    this.chart = null
     return{
-    
+        data: [{ x: 2, y: 81 },
+        { x: 3, y: 83 },
+        { x: 4, y: 88 },
+        { x: 5, y: 98 },
+        { x: 6, y: 92 },
+        { x: 7, y: 85 },
+        { x: 8, y: 73 },
+        { x: 9, y: 71 },
+        { x: 10, y: 70 },
+        { x: 11, y: 83 },
+        { x: 12, y: 73 },
+        { x: 13, y: 79 },
+        { x: 14, y: 84 },
+        { x: 15, y: 78 },
+        { x: 16, y: 67 },
+        { x: 17, y: 71 },
+        { x: 18, y: 76 },
+        { x: 19, y: 77 },
+        { x: 20, y: 64 },
+        { x: 21, y: 53 },
+        { x: 22, y: 0 },
+        { x: 23, y: 41 },
+        { x: 24, y: 51 },
+        { x: 25, y: 3 },
+        { x: 26, y: 31 },
+        { x: 27, y: 37 },
+        { x: 28, y: 35 },
+        { x: 29, y: 48 },
+        { x: 30, y: 40 },
+        { x: 31, y: 42 },
+        { x: 32, y: 42 },
+        { x: 33, y: 32 }]
     }
   },
   mounted () {
-    const lcjs = require('@arction/lcjs')
+    this.createChart(this.data)
+  },
+  methods: {
+      createChart(data) {
+        this.chart = lightningChart().ChartXY({container: "section"})
+        // Set chart title
+        // this.chart.setTitle('Getting Started')
+        // Add line series to the chart
+        this.chart.setAutoCursorMode(AutoCursorModes.disabled)
+        this.chart.getDefaultAxisY()
+            .setInterval(-1000, 1000)
+            .setScrollStrategy(AxisScrollStrategies.expansion)
+
+        this.chart.getDefaultAxisX()
+            .setInterval(0, 500)
+            .setScrollStrategy(AxisScrollStrategies.progressive)
+        lineSeries = this.chart.addLineSeries()
+        // Set stroke style of the line
+        lineSeries.setStrokeStyle((style) => style.setThickness(3))
+        lineSeries.add(data)
+      },
+      graf(){
+          const lcjs = require('@arction/lcjs')
     const {
         lightningChart,
         DataPatterns,
@@ -1665,10 +1727,20 @@ export default {
     var asd = document.querySelector('#lcjs-auto-flexbox')
     asd.style.height = "100%"
     document.querySelector(".section").appendChild(asd)
+      }
+  },
+  beforeDestroy() {
+    // "dispose" should be called when the component is unmounted to free all the resources used by the chart
+    this.chart.dispose()
   }
 }
 </script>
 
 <style scoped>
-
+.section{
+    width: 100%;
+}
+.fill {
+    height: 100%;
+  }
 </style>

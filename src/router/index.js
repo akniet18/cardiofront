@@ -77,7 +77,7 @@ Vue.use(VueRouter)
     path: '/chart2',
     name: 'chart2',
     component: function () {
-      return import('../components/ecgchart.vue')
+      return import('../components/ecgchart2.vue')
     }
   },
   {

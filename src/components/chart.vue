@@ -1,12 +1,11 @@
 <template>
     <div class="wrapper">
-        <div>
-            <div class="item item1" ><EcgChart /></div>
+        <div class="items">
+            <div class="item item1" ><EcgChart :d="data"/></div>
             <div class="item item2" ><EcgChart2 /></div>
             <div class="item item3" ><EcgChart2 /></div>
             <div class="item item4" ><EcgChart2 /></div>
         </div>
-        
         <section>
             <div class="info" @click="zoom(1)">
                 <div class="sectionAva">
@@ -67,51 +66,32 @@ export default {
     return{
       chartdata: [1, 2, 3, 4, 5, 6],
       options: [],
-      data: [40, 39, 10, 40, 39, 80, 40]
+      data: []
     }
   },
-  mounted () {
-      var asd = document.querySelector('#lcjs-auto-flexbox')
-      asd.style.display = "grid"
-      asd.style.gridTemplateColumns = "1fr 1fr"
-      asd.style.gridTemplateRows = "1fr 1fr"
-      asd.style.gridGap = "10px"
-      asd.style.zIndex = "99"
 
-      var chart = document.querySelectorAll('div[id^="chart-"]')
-    //   var info = document.querySelector(".info")
-    //   console.log(chart)
-      for (let i in chart){
-          chart[i].style.marginTop = "20px"
-        //   chart[i].style.postion = "relative"
-      }
-    // window.location.reload()
-    // setInterval(this.chart, 1000)
+  mounted () {
+      
+    //   var asd = document.querySelector('#lcjs-auto-flexbox')
+    //   asd.style.display = "grid"
+    //   asd.style.gridTemplateColumns = "1fr 1fr"
+    //   asd.style.gridTemplateRows = "1fr 1fr"
+    //   asd.style.gridGap = "10px"
+    //   asd.style.zIndex = "99"
+
+    //   var chart = document.querySelectorAll('div[id^="chart-"]')
+    // //   console.log(chart)
+    //   for (let i in chart){
+    //       chart[i].style.marginTop = "20px"
+    //   }
+
    
   },
   methods: {
       zoom(id){
           console.log(id)
-        //   var chart = document.querySelector(`#chart-${id}`)
-        //   chart.style.display
       },
-      chart() {
-        this.data.push(this.data[0])
-        this.data.splice(0, 1)
-        console.log(this.data)
-        this.renderChart({
-            labels: [1, 2, 3, 4, 5, 6, 7],
-            datasets: [
-                {
-                label: 'Data One',
-                backgroundColor: '#f87979',
-                data: this.data,
-                borderWidth: 1,
-                lineTension: 0,
-                }
-            ]
-        }, {responsive: true, maintainAspectRatio: false})
-      }
+
   }
 }
 </script>
@@ -137,10 +117,16 @@ section{
     grid-gap: 10px;
     width: 100%;
     height: 100%;
-    
 }
-.item{
-    z-index: 999;
+.item1 div{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    grid-gap: 10px;
+}
+.item1{
+    height: 100%;
+    min-height: 90vh;
 }
 .info{
     /* position: absolute; */
