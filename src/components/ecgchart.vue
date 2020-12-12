@@ -53,7 +53,7 @@ export default {
                 let p = []
                 for (let i=1; i<d.length; i++){
                     let pp = {x: k, y: parseInt(d[i])-parseInt(d[i-1])}
-                    k+=1
+                    k+=5
                     p.push(pp)
                 }
                 self.data = p
@@ -74,7 +74,7 @@ export default {
             .setScrollStrategy(AxisScrollStrategies.expansion)
 
         this.chart.getDefaultAxisX()
-            .setInterval(0, 500)
+            .setInterval(0, 100)
             .setScrollStrategy(AxisScrollStrategies.progressive)
         lineSeries = this.chart.addLineSeries()
         // Set stroke style of the line
