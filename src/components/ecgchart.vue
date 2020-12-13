@@ -11,6 +11,7 @@ import {lightningChart,
             ColorHEX,
             AutoCursorModes,
             Themes} from '@arction/lcjs'
+import { createSampledDataGenerator } from '@arction/xydata';
 let lineSeries = null
 export default {
   name: 'EcgChart',
@@ -31,6 +32,19 @@ export default {
       data: function(v){
         // this.createChart(this.data)
         lineSeries.add(v)
+        // createSampledDataGenerator(v)
+        //     .setSamplingFrequency(1)
+        //     .setInputData(v)
+        //     .generate()
+        //     .setStreamBatchSize(100)
+        //     .setStreamInterval(1000)
+        //     .setStreamRepeat(true)
+        //     .toStream()
+        //     .forEach(v => {
+        //         console.log(v.data)
+        //         // Push the created points to the series.
+        //         lineSeries.add({ x: v.data.x, y: v.data.y })
+        //     })
       }
   },
   created(){
@@ -38,7 +52,7 @@ export default {
   },
   mounted () {
     // setInterval(this.getData(), 1000)
-    this.createChart(this.data) 
+    this.createChart() 
   },
   methods: {
       getData(){
@@ -61,25 +75,23 @@ export default {
             }, r=>{
                 console.log(r)
             })
-          }, 3000)
+          }, 1000)
       },
-      createChart(data) {
+      createChart() {
         this.chart = lightningChart().ChartXY({container: "section"})
-        // Set chart title
-        // this.chart.setTitle('Getting Started')
-        // Add line series to the chart
         this.chart.setAutoCursorMode(AutoCursorModes.disabled)
         this.chart.getDefaultAxisY()
             .setInterval(-1000, 1000)
             .setScrollStrategy(AxisScrollStrategies.expansion)
-
         this.chart.getDefaultAxisX()
-            .setInterval(0, 100)
+            .setInterval(0, 400)
             .setScrollStrategy(AxisScrollStrategies.progressive)
-        lineSeries = this.chart.addLineSeries()
+        lineSeries = this.chart.addLineSeries({ dataPattern: DataPatterns.horizontalProgressive })
         // Set stroke style of the line
         lineSeries.setStrokeStyle((style) => style.setThickness(3))
-        lineSeries.add(data)
+        lineSeries.setMouseInteractions(false)
+        // lineSeries.add(data)
+       
       },
       graf(p){
         const lcjs = require('@arction/lcjs')
