@@ -24,6 +24,7 @@ export default {
         yAxisStripLinesArray: [],
         dps: [],
         dataPointsArray: [],
+        k: 1
     }
   },
   watch:{
@@ -49,11 +50,10 @@ export default {
                 let d = r.data.data
                 d = d.substring(1, d.length-1)
                 d = d.split(', ')
-                let k = 1
                 let p = []
                 for (let i=1; i<d.length; i++){
-                    let pp = {x: k, y: parseInt(d[i])-parseInt(d[i-1])}
-                    k+=5
+                    let pp = {x: self.k, y: parseInt(d[i])-parseInt(d[i-1])}
+                    self.k+=5
                     p.push(pp)
                 }
                 self.data = p
