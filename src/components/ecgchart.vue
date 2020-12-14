@@ -25,7 +25,8 @@ export default {
         yAxisStripLinesArray: [],
         dps: [],
         dataPointsArray: [],
-        k: 1
+        k: 1,
+        interval: null
     }
   },
   watch:{
@@ -57,7 +58,7 @@ export default {
   methods: {
       getData(){
           let self = this
-        setInterval(function(){
+        self.interval = setInterval(function(){
         
           axios.get('api/setByte/')
             .then(r=>{
@@ -1755,6 +1756,7 @@ export default {
    beforeDestroy() {
     // "dispose" should be called when the component is unmounted to free all the resources used by the chart
     this.chart.dispose()
+    clearInterval(this.interval)
   }
 }
 </script>
