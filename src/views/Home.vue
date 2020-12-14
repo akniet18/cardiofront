@@ -1,11 +1,13 @@
 <template>
   <div class="home">
     <header>
-        <div class="text-white">Электрокардиография</div>
+        <div class="text-white" @click="logout"><div><img class="logo" src="../assets/hart-removebg-preview.png" alt=""> </div></div>
         <div class="userDiv">
             <img class="ava" :src="avatar"/>
             <div class="text-white">{{username}}</div> 
+            <div class="logout" @click="logout">Выйти</div>
         </div>
+  
     </header>
 
     <section>
@@ -18,9 +20,13 @@
 
 <script>
 import NavBar from '../components/navbar'
+import { BIcon, BIconArrowUp, BIconArrowDown } from 'bootstrap-vue'
+
 export default {
   components:{
-    NavBar
+    NavBar, BIcon,
+    BIconArrowUp,
+    BIconArrowDown
   },
   name: 'Home',
   data(){
@@ -35,7 +41,10 @@ export default {
   mounted () {
   },
   methods: {
-    
+    logout(){
+      sessionStorage.removeItem('key')
+      this.$router.push({name: "base"})
+    }
   }
 }
 </script>
@@ -45,16 +54,21 @@ header, .userDiv{
   display: flex;
   align-items: center;
 }
+.logo{
+    width: 70px;
+    height: 50px;
+    cursor: pointer;
+}
 header{
   background: #409EFF;
-  padding: 10px 20px;
+  padding: 5px 25px;
   justify-content: space-between;
 }
 .text-white{
   color: #fff;
 }
 .ava{
-  margin-right: 8px;
+  margin-right: 2px;
   width: 35px;
   height: 35px;
   border-radius: 5px;
@@ -66,6 +80,12 @@ section{
   grid-gap: 10px;
   margin-right: 20px;
 }
+.logout{
+  color: #fff;
+  margin-left: 15px;
+  cursor: pointer;
+}
+
 @media (min-width: 900px) {
   section{
     grid-template-columns: 2fr 12fr;

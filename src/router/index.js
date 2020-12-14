@@ -3,7 +3,7 @@ import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 
 const ifAuth = (to, from, next) => {
-  if (sessionStorage.getItem('token')){
+  if (sessionStorage.getItem('key')){
     next()
   }
   else{
@@ -19,7 +19,7 @@ Vue.use(VueRouter)
     path: '/home',
     name: 'Home',
     component: Home,
-    // beforeEnter: ifAuth,
+    beforeEnter: ifAuth,
     children: [
       {
         path: "staff/",
