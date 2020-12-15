@@ -137,6 +137,10 @@ section > *:nth-child(4){
     -ms-grid-row: 3;
     -ms-grid-column: 3;
 }
+.items{
+    width: 100%;
+    height: auto;
+}
 .item1 div{
     display: -ms-grid;
     display: grid;
