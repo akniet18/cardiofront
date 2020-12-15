@@ -178,9 +178,15 @@ export default {
     color: #fff;
 }
 header{
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
-    justify-content: space-between;
-    align-items: center;
+    -webkit-box-pack: justify;
+        -ms-flex-pack: justify;
+            justify-content: space-between;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
     width: 85%;
     margin: 0 auto;
     padding: 5px 0;
@@ -200,13 +206,22 @@ header{
 
 
 .news{
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
-    flex-direction: column;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
     border: 1px solid #000;
     padding: 20px;
+    height: -webkit-fill-available;
+    height: -moz-available;
     height: fill;
 }
 .news_header{
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
     /* align-items: center; */
     height: 100px;
@@ -228,20 +243,28 @@ header{
 .info_block{
     width: 83%;
     margin: auto;
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
-    justify-content: space-between;
+    -webkit-box-pack: justify;
+        -ms-flex-pack: justify;
+            justify-content: space-between;
     padding: 15px;
 }
 .info_img{
     width: 100%;
-    flex: 1;
+    -webkit-box-flex: 1;
+        -ms-flex: 1;
+            flex: 1;
 }
 .info_img img{
     margin-top: 20px;
     width: 90%
 }
 .info_text{
-    flex: 1;
+    -webkit-box-flex: 1;
+        -ms-flex: 1;
+            flex: 1;
 }
 
 .main{
@@ -258,13 +281,24 @@ header{
 .main_section{
     width: 85%;
     margin: 5px auto;
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
 }
 .main_first_row{
+    display: -ms-grid;
     display: grid;
+    -ms-grid-columns: 1fr 20px 1fr 20px 1fr 20px 1fr;
     grid-template-columns: 1fr 1fr 1fr 1fr;
     grid-gap: 20px;
     font-size: 1.2em;
@@ -289,7 +323,9 @@ header{
 .problems_section{
     width: 85%;
     margin: 5px auto;
+    display: -ms-grid;
     display: grid;
+    -ms-grid-columns: 1fr 20px 1fr;
     grid-template-columns: 1fr 1fr;
     grid-gap: 20px;
 }
@@ -299,9 +335,16 @@ header{
     border-radius: 10px;
 }
 .problems_first_row{
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+    -webkit-box-pack: justify;
+        -ms-flex-pack: justify;
+            justify-content: space-between;
 }
 .problems_first_row h2{
     color: red
@@ -310,7 +353,9 @@ header{
     position: absolute;
     bottom: 15px;
     left: 50%;
-    transform: translateX(-50%);
+    -webkit-transform: translateX(-50%);
+        -ms-transform: translateX(-50%);
+            transform: translateX(-50%);
     font-size: 5em;
     color:#fff;
 }
@@ -328,9 +373,15 @@ footer img{
     width: 85%;
     margin: 5px auto;
     padding: 10px 0;
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
-    justify-content: space-between;
-    align-items: center;
+    -webkit-box-pack: justify;
+        -ms-flex-pack: justify;
+            justify-content: space-between;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
 }
 .footer:first-child{
     border-bottom: 1px solid #fff;
@@ -347,14 +398,24 @@ footer img{
 }
 @media screen and (max-width: 1000px) {
     .info_block{
-        flex-direction: column;
+        -webkit-box-orient: vertical;
+        -webkit-box-direction: normal;
+            -ms-flex-direction: column;
+                flex-direction: column;
     }
     .info_block2{
-        flex-direction: column-reverse;
+        -webkit-box-orient: vertical;
+        -webkit-box-direction: reverse;
+            -ms-flex-direction: column-reverse;
+                flex-direction: column-reverse;
     }
     .info_img{
+        display: -webkit-box;
+        display: -ms-flexbox;
         display: flex;
-        justify-content: center;
+        -webkit-box-pack: center;
+            -ms-flex-pack: center;
+                justify-content: center;
     }
     .info_img img{
         margin-top: 20px;
@@ -364,8 +425,26 @@ footer img{
         font-size: 1.5em;
     }
     .main_first_row{
+        -ms-grid-columns: 1fr 20px 1fr;
         grid-template-columns: 1fr 1fr;
+        -ms-grid-rows: 1fr 20px 1fr;
         grid-template-rows: 1fr 1fr;
+    }
+    .main_first_row > *:nth-child(1){
+        -ms-grid-row: 1;
+        -ms-grid-column: 1;
+    }
+    .main_first_row > *:nth-child(2){
+        -ms-grid-row: 1;
+        -ms-grid-column: 3;
+    }
+    .main_first_row > *:nth-child(3){
+        -ms-grid-row: 3;
+        -ms-grid-column: 1;
+    }
+    .main_first_row > *:nth-child(4){
+        -ms-grid-row: 3;
+        -ms-grid-column: 3;
     }
     .problems_section img{
         width: 100%;
@@ -374,6 +453,7 @@ footer img{
 }
 @media screen and (max-width: 900px) {
     .problems_section{
+        -ms-grid-columns: 1fr;
         grid-template-columns: 1fr;
     }
     .problems_section img{
@@ -391,8 +471,13 @@ footer img{
         font-size: 1em;
     }
     .footer{
-        flex-direction: column;
-        align-items: baseline;
+        -webkit-box-orient: vertical;
+        -webkit-box-direction: normal;
+            -ms-flex-direction: column;
+                flex-direction: column;
+        -webkit-box-align: baseline;
+            -ms-flex-align: baseline;
+                align-items: baseline;
     }
     .footer_contacts{
         margin: 10px 0;
@@ -400,6 +485,7 @@ footer img{
 }
 @media screen and (max-width: 450px) {
     .main_first_row{
+        -ms-grid-columns: 1fr;
         grid-template-columns: 1fr;
     }
 }

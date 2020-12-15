@@ -51,8 +51,12 @@ export default {
 
 <style scoped>
 header, .userDiv{
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  align-items: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
 }
 .logo{
     width: 70px;
@@ -62,7 +66,9 @@ header, .userDiv{
 header{
   background: #409EFF;
   padding: 5px 25px;
-  justify-content: space-between;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
 }
 .text-white{
   color: #fff;
@@ -75,7 +81,9 @@ header{
 }
 
 section{
+  display: -ms-grid;
   display: grid;
+  -ms-grid-columns: 2fr 10px 10fr;
   grid-template-columns: 2fr 10fr;
   grid-gap: 10px;
   margin-right: 20px;
@@ -88,6 +96,7 @@ section{
 
 @media (min-width: 900px) {
   section{
+    -ms-grid-columns: 2fr 10px 12fr;
     grid-template-columns: 2fr 12fr;
   }
 }

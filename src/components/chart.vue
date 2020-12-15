@@ -98,31 +98,69 @@ export default {
 
 <style scoped>
 .wrapper{
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
     position: relative;
     min-height: 90vh;
-    /* display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: 1fr 1fr;
-    grid-gap: 5px; */
 }
-/* .item {
-    position: relative;
-} */
+
 section{
     position: absolute;
+    display: -ms-grid;
     display: grid;
+    -ms-grid-columns: 1fr 10px 1fr;
     grid-template-columns: 1fr 1fr;
+    -ms-grid-rows: 1fr 10px 1fr;
     grid-template-rows: 1fr 1fr;
     grid-gap: 10px;
     width: 100%;
     height: 100%;
 }
+
+section > *:nth-child(1){
+    -ms-grid-row: 1;
+    -ms-grid-column: 1;
+}
+
+section > *:nth-child(2){
+    -ms-grid-row: 1;
+    -ms-grid-column: 3;
+}
+
+section > *:nth-child(3){
+    -ms-grid-row: 3;
+    -ms-grid-column: 1;
+}
+
+section > *:nth-child(4){
+    -ms-grid-row: 3;
+    -ms-grid-column: 3;
+}
 .item1 div{
+    display: -ms-grid;
     display: grid;
+    -ms-grid-columns: 1fr 10px 1fr;
     grid-template-columns: 1fr 1fr;
+    -ms-grid-rows: 1fr 10px 1fr;
     grid-template-rows: 1fr 1fr;
     grid-gap: 10px;
+}
+.item1 div > *:nth-child(1){
+    -ms-grid-row: 1;
+    -ms-grid-column: 1;
+}
+.item1 div > *:nth-child(2){
+    -ms-grid-row: 1;
+    -ms-grid-column: 3;
+}
+.item1 div > *:nth-child(3){
+    -ms-grid-row: 3;
+    -ms-grid-column: 1;
+}
+.item1 div > *:nth-child(4){
+    -ms-grid-row: 3;
+    -ms-grid-column: 3;
 }
 .item1{
     height: 100%;
@@ -133,8 +171,12 @@ section{
     top: 5px;
     left: 5px;
     background: #202020;
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
-    align-items: center;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
     font-size: 0.9em;
     width: 100%;
     height: 70px;

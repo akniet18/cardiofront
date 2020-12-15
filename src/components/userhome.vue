@@ -82,13 +82,13 @@ export default {
 
 <style scoped>
 .wrapper{
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
     position: relative;
     min-height: 90vh;
+    display: -ms-grid;
     display: grid;
-    /* grid-template-columns: 1fr 1fr;
-    grid-template-rows: 1fr 1fr;
-    grid-gap: 5px; */
 }
 .item {
     position: relative;
@@ -105,8 +105,12 @@ section{
     top: 5px;
     left: 5px;
     background: #202020;
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
-    align-items: center;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
     font-size: 0.9em;
     width: 100%;
     height: 70px;
