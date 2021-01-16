@@ -1,5 +1,5 @@
 <template>
-    <div> 
+    <div style="width: 100%"> 
         <el-table
             :data="data.filter(data => !search || data.username.toLowerCase().includes(search.toLowerCase()) 
                                     || data.first_name.toLowerCase().includes(search.toLowerCase())
@@ -7,30 +7,34 @@
                                     || data.location.toLowerCase().includes(search.toLowerCase()))"
             style="width: 100%">
             <el-table-column
-                fixed
                 prop="username"
                 label="Никнейм"
-                width="150">
+                width="100px"
+             >
             </el-table-column>
             <el-table-column
                 prop="first_name"
                 label="Имя"
-                width="120">
+                v-if="show"
+                >
             </el-table-column>
             <el-table-column
                 prop="last_name"
                 label="Фамилия"
-                width="120">
+                v-if="show"
+               >
             </el-table-column>
             <el-table-column
                 prop="location"
                 label="Адрес"
-                width="120">
+                v-if="show"
+              >
             </el-table-column>
             <el-table-column
                 prop="birth_date"
                 label="Дата рождения"
                 sortable
+                v-if="show"
                >
             </el-table-column>
             
@@ -93,6 +97,7 @@
     </div>
 </template>
 
+
 <script>
 import moment from 'moment'
 
@@ -133,11 +138,15 @@ export default {
                 location: [
                     { required: true, message: 'Please input location', trigger: 'blur' }
                 ]
-            }
+            },
+            show: true
         }
     },
     mounted(){
         this.get_users()
+        if (window.outerWidth < 600){
+            this.show = false
+        }
     },
     methods: {
       submitForm(formName) {

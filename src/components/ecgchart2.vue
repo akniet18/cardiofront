@@ -1,5 +1,5 @@
 <template>
-    <div id="section" class="fill"></div>
+    <div id="section" class="fill section"></div>
 </template>
 
 <script>
@@ -53,7 +53,8 @@ export default {
     }
   },
   mounted () {
-    this.createChart(this.data)
+    // this.createChart(this.data)
+    this.graf()
   },
   methods: {
       createChart(data) {
@@ -84,7 +85,9 @@ export default {
         SolidFill,
         ColorHEX,
         AutoCursorModes,
-        Themes
+        Themes,
+        emptyLine,
+        emptyTick
     } = lcjs
 
     // Import data-generators from 'xydata'-library.
@@ -95,7 +98,7 @@ export default {
     // Create a XY Chart.
     const chart = lightningChart().ChartXY({
         // theme: Themes.dark 
-    }).setTitle('ECG')
+    }).setTitle('')
 
     // Add line series to visualize the data received
     const series = chart.addLineSeries({ dataPattern: DataPatterns.horizontalProgressive })
@@ -111,14 +114,18 @@ export default {
 
     // Setup view nicely.
     chart.getDefaultAxisY()
-        .setTitle('mV')
-        .setInterval(-1600, 1000)
-        .setScrollStrategy(AxisScrollStrategies.expansion)
+        .setTickStrategy("Empty")
+        .setStrokeStyle(emptyLine)
+        // .setTitle('mV')
+        // .setInterval(-1600, 1000)
+        // .setScrollStrategy(AxisScrollStrategies.expansion)
 
     chart.getDefaultAxisX()
-        .setTitle('milliseconds')
-        .setInterval(0, 2500)
-        .setScrollStrategy(AxisScrollStrategies.progressive)
+        .setTickStrategy("Empty")
+        .setStrokeStyle(emptyLine)
+        // .setTitle('milliseconds')
+        // .setInterval(0, 2500)
+        // .setScrollStrategy(AxisScrollStrategies.progressive)
 
     // Points that are used to generate a continuous stream of data.
     const point = [

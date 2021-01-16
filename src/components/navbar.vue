@@ -28,7 +28,7 @@
             <span slot="title">Электрокардиографии</span>
         </el-menu-item>
         <el-menu-item index="2">
-            <i class="el-icon-menu"></i>
+            <i class="el-icon-user"></i>
             <span slot="title">Пользователи</span>
         </el-menu-item>
         <el-menu-item index="3" v-show="is_staff != 'false'">
@@ -59,6 +59,10 @@
     },
     mounted(){
         this.is_staff = sessionStorage.getItem('is_staff', false)
+        if (window.outerWidth < 600){
+            this.isCollapse = true
+        }
+        console.log(this.isCollapse, window.outerWidth)
     },
     methods: {
         handleSelect(key, keyPath){

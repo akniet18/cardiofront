@@ -2,7 +2,7 @@
     <div>
         <el-form label-width="120px" class="demo-ruleForm">
             <div class="avap">
-                <el-avatar shape="square" :size="100" :src="ruleForm.avatar"></el-avatar>
+                <el-avatar shape="square" :src="ruleForm.avatar"></el-avatar>
             </div>
             <el-form-item label="username" prop="username">
                 <el-input disabled v-model="ruleForm.username"></el-input>

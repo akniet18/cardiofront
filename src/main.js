@@ -11,7 +11,7 @@ Vue.use(ElementUI, { locale });
 Vue.config.productionTip = false
 window.axios = axios
 // axios.defaults.baseURL = 'http://localhost:8000/'
-axios.defaults.baseURL = 'http://back.cardioservice.com.kz/'
+axios.defaults.baseURL = 'https://back.cardioservice.com.kz/'
 
 
 new Vue({

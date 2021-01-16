@@ -66,6 +66,7 @@ header, .userDiv{
 header{
   background: #409EFF;
   padding: 5px 25px;
+  width: calc(100% - 50px);
   -webkit-box-pack: justify;
       -ms-flex-pack: justify;
           justify-content: space-between;
@@ -86,7 +87,8 @@ section{
   -ms-grid-columns: 2fr 10px 10fr;
   grid-template-columns: 2fr 10fr;
   grid-gap: 10px;
-  margin-right: 20px;
+  margin-right: 10px;
+  /* height: auto; */
 }
 .logout{
   color: #fff;
@@ -94,11 +96,21 @@ section{
   cursor: pointer;
 }
 
-@media (min-width: 900px) {
+/* @media (min-width: 900px) {
   section{
     -ms-grid-columns: 2fr 10px 12fr;
     grid-template-columns: 2fr 12fr;
   }
+} */
+@media (max-width: 600px) {
+  section{
+    -ms-grid-columns: 50px 5px 13.5fr;
+    grid-template-columns: 50px 13.5fr;
+    margin-right: 5px;
+  }
+  .logo{
+    width: 50px;
+    height: 40px;
+  }
 }
-
 </style>
