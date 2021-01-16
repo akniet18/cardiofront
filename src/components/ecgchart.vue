@@ -53,12 +53,13 @@ export default {
   },
   mounted () {
     // setInterval(this.getData(), 1000)
+    // this.getData2()
     this.createChart() 
   },
   methods: {
       getData(){
           let self = this
-        self.interval = setInterval(function(){
+          self.interval = setInterval(function(){
         
           axios.get('api/setByte/')
             .then(r=>{
@@ -66,8 +67,8 @@ export default {
                 d = d.substring(1, d.length-1)
                 d = d.split(', ')
                 let p = []
-                for (let i=1; i<d.length; i++){
-                    let pp = {x: self.k, y: parseInt(d[i])-parseInt(d[i-1])}
+                for (let i=0; i<d.length; i++){
+                    let pp = {x: self.k, y: parseInt(d[i])}
                     self.k+=5
                     p.push(pp)
                 }
@@ -78,14 +79,29 @@ export default {
             })
           }, 1000)
       },
+      getData2(){
+        // chrome.experimental.socket.create('tcp', '157.230.91.217', 9879, function(socketInfo) {
+        //   chrome.experimental.socket.connect(socketInfo.socketId, function (result) {
+        //         chrome.experimental.socket.write(socketInfo.socketId, "Hello, world!");         
+        //     });
+        // });
+        $.ajax({
+            type: "POST",
+            url: "./index.py",
+            // data: { param: input },
+            success: function(d){
+              console.log(d)
+            }
+        });
+      },
       createChart() {
         this.chart = lightningChart().ChartXY({container: "section"})
         this.chart.setAutoCursorMode(AutoCursorModes.disabled)
-        this.chart.getDefaultAxisY()
-            .setInterval(-1000, 1000)
-            .setScrollStrategy(AxisScrollStrategies.expansion)
+        // this.chart.getDefaultAxisY()
+        //     .setInterval(0, 20000000)
+        //     .setScrollStrategy(AxisScrollStrategies.expansion)
         this.chart.getDefaultAxisX()
-            .setInterval(0, 400)
+            .setInterval(0, 300)
             .setScrollStrategy(AxisScrollStrategies.progressive)
         lineSeries = this.chart.addLineSeries({ dataPattern: DataPatterns.horizontalProgressive })
         // Set stroke style of the line
