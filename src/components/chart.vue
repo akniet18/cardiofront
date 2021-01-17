@@ -168,7 +168,7 @@ section > *:nth-child(4){
     min-height: 90vh;
 }
 .info{
-    position: absolute;
+    /* position: absolute; */
     top: 5px;
     left: 0px;
     background: #202020;

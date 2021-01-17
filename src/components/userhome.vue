@@ -101,9 +101,9 @@ section{
     height: 100%;
 }
 .info{
-    /* position: absolute; */
+    position: absolute;
     top: 5px;
-    left: 5px;
+    left: 0px;
     background: #202020;
     display: -webkit-box;
     display: -ms-flexbox;
