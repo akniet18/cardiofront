@@ -1,6 +1,6 @@
 <template>
     <div>  
-        <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="150px" class="demo-ruleForm">
+        <el-form :model="ruleForm" :rules="rules" ref="ruleForm"  class="demo-ruleForm">
             <el-form-item label="username" prop="username">
                 <el-input v-model="ruleForm.username"></el-input>
             </el-form-item>
@@ -107,6 +107,7 @@ export default {
 <style scoped>
 .demo-ruleForm{
     margin-top: 20px;
+    margin-left: 10px;
 }
 .avatar-uploader {
     width: 178px;

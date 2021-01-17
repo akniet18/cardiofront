@@ -1,6 +1,6 @@
 <template>
     <!-- <div id="section" class="fill"></div> -->
-    <div style="margin-top: 5px;">
+    <div style="margin-top: 15px;">
       <section class="section"></section>
       <!-- <canvas id="mycanvas" height="300"></canvas> -->
     </div>
@@ -16,7 +16,7 @@ import {lightningChart,
             AutoCursorModes,
             Themes} from '@arction/lcjs'
 import { createSampledDataGenerator } from '@arction/xydata';
-import {SmoothieChart, TimeSeries} from '../../public/ecg';
+// import {SmoothieChart, TimeSeries} from '../../public/ecg';
 let lineSeries = null
 export default {
   name: 'EcgChart',
@@ -24,11 +24,7 @@ export default {
   data(){
     this.chart = null
     return{
-        data: [16528537, 16528537, 16527914, 16524012, 16524012, 16522951, 16522951, 10522951, 16528537, 16529537, 13529537,
-              16528537, 16528537, 16527914, 16524012, 16524012, 16522951, 16522951, 10522951, 16528537, 16529537, 13529537,
-              16528537, 16528537, 16527914, 16524012, 16524012, 16522951, 16522951, 10522951, 16528537, 16529537, 13529537,
-              16528537, 16528537, 16527914, 16524012, 16524012, 16522951, 16522951, 252, 10522951, 16528537, 16529537, 13529537,
-              16528537, 16528537, 16527914, 16524012, 16524012, 16522951, 16522951, 10522951, 16528537, 16529537, 13529537,
+        data: [
             ],
         xAxisStripLinesArray: [],
         yAxisStripLinesArray: [],
@@ -36,44 +32,51 @@ export default {
         dataPointsArray: [],
         k: 1,
         interval: null,
-        line1: null,
-        line2: null
+        series: null,
+        
     }
   },
-  watch:{
-      data: function(v){
-        // lineSeries.add(v)
-        for (let i in v){
-          this.line1.append(new Date().getTime(), v[i]['y'])
-        }
-      }
-  },
+  // watch:{
+  //     data: function(v){
+  //       // lineSeries.add(v)
+  //       let old = v[0]
+  //       for (let i in v){
+  //         this.k+=2
+  //         if (Math.abs(v[i]-old) < 10000000){
+  //           console.log(v[i]);
+  //           this.series.add({x: this.k, y: v[i]})
+  //         }
+  //       }
+  //     }
+  // },
   created(){
     // this.getData()
   },
   mounted () {
-    // setInterval(this.getData(), 1000)
     // this.getData2()
     this.graf(this.data)
+    this.minterval()
     let socket = new WebSocket("wss://back.cardioservice.com.kz/api/setByte/");
-
+    let self = this
     socket.onopen = function(e) {
       // socket.send("Меня зовут Джон");
       console.log('open')
     };
     socket.onmessage = function(event) {
-      console.log(event.data)
-      let d = event.data
-      // d = d.substring(1, d.length-1)
-      // d = d.split(', ')
+      clearInterval(self.interval)
+      let d = JSON.parse(event.data)['content']['pointers']['content']['pointers']
+      // console.log(d['content']['pointers']['content']['pointers']);
       let p = []
+      let old = d[0]
       for (let i=0; i<d.length; i++){
-          let pp = {x: new Date().getTime(), y: parseInt(d[i])}
-          self.k+=5
-          p.push(pp)
+        // p.push(d[i])
+          self.k+=2
+          if (Math.abs(d[i]-old) < 1000000){
+            self.series.add({x: self.k, y: d[i]})
+          }
       }
-      self.data = p
-      console.log(p)
+      self.minterval()
+      // console.log(this.data)
     };
     socket.onclose = function(event) {
       console.log("close");
@@ -157,18 +160,14 @@ export default {
             emptyLine,
             emptyTick
         } = lcjs
-        // Import data-generators from 'xydata'-library.
-        const {
-            createSampledDataGenerator
-        } = require('@arction/xydata')
-        // Create a XY Chart.
+
         const chart = lightningChart().ChartXY({
             // theme: Themes.dark 
         }).setTitle('')
         // Add line series to visualize the data received
-        const series = chart.addLineSeries({ dataPattern: DataPatterns.horizontalProgressive })
+        this.series = chart.addLineSeries({ dataPattern: DataPatterns.horizontalProgressive })
         // Style the series
-        series
+        this.series
             .setStrokeStyle(new SolidLine({
                 thickness: 2,
                 fillStyle: new SolidFill({ color: ColorHEX('#5aafc7') })
@@ -179,37 +178,18 @@ export default {
         chart.getDefaultAxisY()
             .setTickStrategy("Empty")
             .setStrokeStyle(emptyLine)
-            // .setTitle('mV')
-            // .setInterval(100, 17000000)
-            // .setScrollStrategy(AxisScrollStrategies.expansion)
+
         chart.getDefaultAxisX()
-            // .setTitle('milliseconds')
-            .setTickStrategy("Empty")
-            .setStrokeStyle(emptyLine)
+            // .setTickStrategy("Empty")
+            // .setStrokeStyle(emptyLine)
             .setInterval(0, 1000)
-            // .setScrollStrategy(AxisScrollStrategies.progressive)    
+            .setScrollStrategy(AxisScrollStrategies.progressive)
         // Create a data generator to supply a continuous stream of data.
-        let pp = 0
-        // createSampledDataGenerator(p, 1, 10)
-        //     .setSamplingFrequency(1)
-        //     .setInputData(p)
-        //     .generate()
-        //     .setStreamBatchSize(48)
-        //     .setStreamInterval(50)
-        //     .setStreamRepeat(true)
-        //     .toStream()
-        //     .forEach(p => {
-        //         pp+=2
-        //         // Push the created points to the series.
-        //         series.add({ x: pp, y: p.data.y })
-        //     })
-        // p += this.data
-        // console.log(p);
         let old = p[0]
         for (let i in p){
-          pp+=2
-          if (Math.abs(p[i]-old) < 100000){
-            series.add({x: pp, y: p[i]})  
+          this.k+=2
+          if (Math.abs(p[i]-old) < 1000000){
+            this.series.add({x: this.k, y: p[i]})  
           }
         }
         
@@ -220,10 +200,23 @@ export default {
         asd.style.zIndex = "9"
         sec.appendChild(asd)
       },
+      minterval(){
+        let self = this
+        this.interval = setInterval(function(){
+          let mmax = self.series.getYMax()
+          let mmin = self.series.getYMin()
+          if (mmax && mmin){
+            console.log(mmax);
+            let data = (mmax + mmin) / 2
+            self.k += 2
+            self.series.add({x: self.k, y: data})
+          }
+        }, 200);
+      }
   },
   beforeDestroy() {
     // "dispose" should be called when the component is unmounted to free all the resources used by the chart
-    this.chart.dispose()
+    // this.chart.dispose()
     clearInterval(this.interval)
   }
 }

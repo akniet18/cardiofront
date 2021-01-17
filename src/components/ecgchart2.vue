@@ -1718,18 +1718,18 @@ export default {
 
     ]
     // Create a data generator to supply a continuous stream of data.
-    createSampledDataGenerator(point, 1, 10)
-        .setSamplingFrequency(1)
-        .setInputData(point)
-        // .generate()
-        .setStreamBatchSize(48)
-        .setStreamInterval(50)
-        // .setStreamRepeat(true)
-        .toStream()
-        .forEach(point => {
-            // Push the created points to the series.
-            series.add({ x: point.timestamp, y: point.data.y })
-        })
+    // createSampledDataGenerator(point, 1, 10)
+    //     .setSamplingFrequency(1)
+    //     .setInputData(point)
+    //     // .generate()
+    //     .setStreamBatchSize(48)
+    //     .setStreamInterval(50)
+    //     // .setStreamRepeat(true)
+    //     .toStream()
+    //     .forEach(point => {
+    //         // Push the created points to the series.
+    //         series.add({ x: point.timestamp, y: point.data.y })
+    //     })
     
     var asd = document.querySelector('#lcjs-auto-flexbox')
     asd.style.height = "100%"
@@ -1738,7 +1738,7 @@ export default {
   },
   beforeDestroy() {
     // "dispose" should be called when the component is unmounted to free all the resources used by the chart
-    this.chart.dispose()
+    // this.chart.dispose()
   }
 }
 </script>

@@ -32,7 +32,7 @@
             <span slot="title">Пользователи</span>
         </el-menu-item>
         <el-menu-item index="3" v-show="is_staff != 'false'">
-            <i class="el-icon-menu"></i>
+            <i class="el-icon-plus"></i>
             <span slot="title">Добавить пользователя</span>
         </el-menu-item>
         
@@ -62,7 +62,6 @@
         if (window.outerWidth < 600){
             this.isCollapse = true
         }
-        console.log(this.isCollapse, window.outerWidth)
     },
     methods: {
         handleSelect(key, keyPath){

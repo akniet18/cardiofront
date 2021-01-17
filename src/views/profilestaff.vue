@@ -1,5 +1,5 @@
 <template>
-    <div style="width: 100%"> 
+    <div style="max-width: 99%"> 
         <el-table
             :data="data.filter(data => !search || data.username.toLowerCase().includes(search.toLowerCase()) 
                                     || data.first_name.toLowerCase().includes(search.toLowerCase())
@@ -56,9 +56,9 @@
         <el-dialog
             title="Tips"
             :visible.sync="dialogVisible"
-            width="60%"
-            :before-close="handleClose">
-            <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="130px" class="demo-ruleForm">
+            width="80%"
+            >
+            <el-form :model="ruleForm" :rules="rules" ref="ruleForm" class="demo-ruleForm">
                 <el-form-item label="username" prop="username">
                     <el-input v-model="ruleForm.username"></el-input>
                 </el-form-item>

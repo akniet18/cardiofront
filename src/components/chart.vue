@@ -71,7 +71,19 @@ export default {
   },
 
   mounted () {
-      
+      let s = document.getElementById("lcjs-auto-flexbox")
+      let canv= document.querySelectorAll("#lcjs-auto-flexbox canvas")
+      if (window.outerWidth < 600){
+        // console.log(window.outerWidth)
+        s.style.display = "flex"
+        s.style.flexDirection = "column"
+      }else{
+        s.style.display = "grid"
+        s.style.gridTemplateColumns = "1fr 1fr"
+        for (let i in canv){
+            canv[i].style.height = "500px"
+        }
+      }
     //   var asd = document.querySelector('#lcjs-auto-flexbox')
     //   asd.style.display = "grid"
     //   asd.style.gridTemplateColumns = "1fr 1fr"
@@ -141,15 +153,15 @@ section > *:nth-child(4){
     width: 100%;
     height: auto;
 }
-#lcjs-auto-flexbox{
-    display: -ms-grid;
-    display: grid;
-    -ms-grid-columns: 1fr 10px 1fr;
-    grid-template-columns: 1fr 1fr;
-    -ms-grid-rows: 1fr 10px 1fr;
-    grid-template-rows: 1fr 1fr;
-    grid-gap: 10px;
-}
+/* #lcjs-auto-flexbox{
+    display: -ms-grid!important;
+    display: grid!important;
+    -ms-grid-columns: 1fr 10px 1fr!important;
+    grid-template-columns: 1fr 1fr!important;
+    -ms-grid-rows: 1fr 10px 1fr!important;
+    grid-template-rows: 1fr 1fr!important;
+    grid-gap: 10px!important;
+} */
 
 .item1{
     height: 100%;
@@ -181,13 +193,13 @@ section > *:nth-child(4){
     margin:0 5px;
 }
 @media (max-width: 800px) {
-  #lcjs-auto-flexbox{
+  /* #lcjs-auto-flexbox{
     display: flex;
     flex-direction: column;
   }
   #lcjs-auto-flexbox div canvas{
       height: 800px;
-  }
+  } */
   section{
       -ms-grid-columns: 1fr;
     grid-template-columns: 1fr;
