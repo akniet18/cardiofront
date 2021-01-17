@@ -170,7 +170,7 @@ section > *:nth-child(4){
 .info{
     /* position: absolute; */
     top: 5px;
-    left: 0px;
+    left: 5px;
     background: #202020;
     display: -webkit-box;
     display: -ms-flexbox;
