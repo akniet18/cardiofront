@@ -73,10 +73,12 @@ export default {
           self.k+=2
           if (Math.abs(d[i]-old) < 2000000){
             self.series.add({x: self.k, y: d[i]})
+            console.log(d[i]);
           }
+          
       }
       self.minterval()
-      console.log(self.data)
+      // console.log(self.data)
     };
     socket.onclose = function(event) {
       console.log("close");
