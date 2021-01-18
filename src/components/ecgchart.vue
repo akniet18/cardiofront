@@ -70,7 +70,7 @@ export default {
       let old = d[0]
       for (let i=0; i<d.length; i++){
         // p.push(d[i])
-          self.k+=5
+          self.k+=3
           if (Math.abs(d[i]-old) < 2000000){
             self.series.add({x: self.k, y: d[i]})
             console.log(d[i]);
@@ -189,7 +189,7 @@ export default {
         // Create a data generator to supply a continuous stream of data.
         let old = p[0]
         for (let i in p){
-          this.k+=5
+          this.k+=3
           if (Math.abs(p[i]-old) < 2000000){
             this.series.add({x: this.k, y: p[i]})  
           }
