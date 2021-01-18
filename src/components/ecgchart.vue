@@ -76,7 +76,7 @@ export default {
           }
       }
       self.minterval()
-      // console.log(this.data)
+      console.log(this.data)
     };
     socket.onclose = function(event) {
       console.log("close");
@@ -206,7 +206,7 @@ export default {
           let mmax = self.series.getYMax()
           let mmin = self.series.getYMin()
           if (mmax && mmin){
-            console.log(mmax);
+            // console.log(mmax);
             let data = (mmax + mmin) / 2
             self.k += 2
             self.series.add({x: self.k, y: data})
