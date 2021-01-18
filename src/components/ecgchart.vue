@@ -76,7 +76,7 @@ export default {
           }
       }
       self.minterval()
-      console.log(this.data)
+      console.log(self.data)
     };
     socket.onclose = function(event) {
       console.log("close");
