@@ -71,7 +71,7 @@ export default {
       for (let i=0; i<d.length; i++){
         // p.push(d[i])
           self.k+=2
-          if (Math.abs(d[i]-old) < 1000000){
+          if (Math.abs(d[i]-old) < 2000000){
             self.series.add({x: self.k, y: d[i]})
           }
       }
@@ -188,7 +188,7 @@ export default {
         let old = p[0]
         for (let i in p){
           this.k+=2
-          if (Math.abs(p[i]-old) < 1000000){
+          if (Math.abs(p[i]-old) < 2000000){
             this.series.add({x: this.k, y: p[i]})  
           }
         }
