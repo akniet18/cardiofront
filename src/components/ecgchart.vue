@@ -55,7 +55,7 @@ export default {
   mounted () {
     // this.getData2()
     this.graf(this.data)
-    this.minterval()
+    // this.minterval()
     let socket = new WebSocket("wss://back.cardioservice.com.kz/api/setByte/");
     let self = this
     socket.onopen = function(e) {
@@ -63,7 +63,7 @@ export default {
       console.log('open')
     };
     socket.onmessage = function(event) {
-      clearInterval(self.interval)
+      // clearInterval(self.interval)
       let d = JSON.parse(event.data)['content']['pointers']['content']['pointers']
       // console.log(d['content']['pointers']['content']['pointers']);
       let p = []
@@ -75,9 +75,8 @@ export default {
             self.series.add({x: self.k, y: d[i]})
             console.log(d[i]);
           }
-          
       }
-      self.minterval()
+      // self.minterval()
       // console.log(self.data)
     };
     socket.onclose = function(event) {

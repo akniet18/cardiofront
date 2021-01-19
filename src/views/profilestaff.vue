@@ -10,19 +10,19 @@
                 prop="username"
                 label="Никнейм"
                 width="100px"
-             >
+            >
             </el-table-column>
             <el-table-column
                 prop="first_name"
                 label="Имя"
                 v-if="show"
-                >
+            >
             </el-table-column>
             <el-table-column
                 prop="last_name"
                 label="Фамилия"
                 v-if="show"
-               >
+            >
             </el-table-column>
             <el-table-column
                 prop="location"
