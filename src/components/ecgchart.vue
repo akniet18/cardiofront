@@ -70,11 +70,12 @@ export default {
       let old = d[0]
       for (let i=0; i<d.length; i++){
         // p.push(d[i])
+        setTimeout(function(){
           self.k+=1
+        }, 100)
+          
           if (Math.abs(d[i]-old) < 2000000){
-            setTimeout(function(){
-              self.series.add({x: self.k, y: d[i]})
-            }, 100)
+            self.series.add({x: self.k, y: d[i]})
             console.log(d[i]);
           }
       }
