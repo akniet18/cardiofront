@@ -71,7 +71,7 @@ export default {
       for (let i=0; i<d.length; i++){
         // p.push(d[i])
         setTimeout(function(){
-          self.k+=1
+          self.k+=10
         }, 100)
           
           if (Math.abs(d[i]-old) < 2000000){
