@@ -41,7 +41,7 @@ export default {
   //       // lineSeries.add(v)
   //       let old = v[0]
   //       for (let i in v){
-  //         this.k+=2
+  //         this.k+=3
   //         if (Math.abs(v[i]-old) < 10000000){
   //           console.log(v[i]);
   //           this.series.add({x: this.k, y: v[i]})
@@ -184,7 +184,7 @@ export default {
         chart.getDefaultAxisX()
             // .setTickStrategy("Empty")
             // .setStrokeStyle(emptyLine)
-            .setInterval(0, 1000)
+            .setInterval(0, 500)
             .setScrollStrategy(AxisScrollStrategies.progressive)
         // Create a data generator to supply a continuous stream of data.
         let old = p[0]
