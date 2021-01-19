@@ -54,6 +54,9 @@ export default {
   },
   mounted () {
     // this.getData2()
+     const {
+        createSampledDataGenerator
+    } = require('@arction/xydata')
     this.graf(this.data)
     // this.minterval()
     let socket = new WebSocket("wss://back.cardioservice.com.kz/api/setByte/");
@@ -70,15 +73,26 @@ export default {
       let old = d[0]
       for (let i=0; i<d.length; i++){
         // p.push(d[i])
-        setTimeout(function(){
-          self.k+=10
-        }, 100)
-          
+          self.k+=1
           if (Math.abs(d[i]-old) < 2000000){
-            self.series.add({x: self.k, y: d[i]})
-            console.log(d[i]);
+            // self.series.add({x: self.k, y: d[i]})
+            p.push({x: self.k, y: d[i]})
+            // console.log(d[i]);
           }
       }
+      
+      createSampledDataGenerator(p, 1, 10)
+        .setSamplingFrequency(1)
+        .setInputData(p)
+        .generate()
+        .setStreamBatchSize(48)
+        .setStreamInterval(50)
+        .toStream()
+        .forEach(p => {
+          console.log(p.timestamp, p.data.y);
+            // Push the created ps to the series.
+            self.series.add({ x: p.data.x, y: p.data.y })
+        })
       // self.minterval()
       // console.log(self.data)
     };
@@ -189,13 +203,28 @@ export default {
             .setInterval(0, 500)
             .setScrollStrategy(AxisScrollStrategies.progressive)
         // Create a data generator to supply a continuous stream of data.
-        let old = p[0]
-        for (let i in p){
-          this.k+=3
-          if (Math.abs(p[i]-old) < 2000000){
-            this.series.add({x: this.k, y: p[i]})  
-          }
-        }
+
+           // Create a data generator to supply a continuous stream of data.
+    //        let point=this.data
+    // createSampledDataGenerator(point, 1, 10)
+    //     .setSamplingFrequency(1)
+    //     .setInputData(point)
+    //     // .generate()
+    //     .setStreamBatchSize(48)
+    //     .setStreamInterval(50)
+    //     // .setStreamRepeat(true)
+    //     .toStream()
+    //     .forEach(point => {
+    //         // Push the created points to the series.
+    //         series.add({ x: point.timestamp, y: point.data.y })
+    //     })
+        // let old = p[0]
+        // for (let i in p){
+        //   this.k+=3
+        //   if (Math.abs(p[i]-old) < 2000000){
+        //     this.series.add({x: this.k, y: p[i]})  
+        //   }
+        // }
         
         var asd = document.querySelector('#lcjs-auto-flexbox')
         asd.style.height = "100%"
