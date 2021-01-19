@@ -24,8 +24,7 @@ export default {
   data(){
     this.chart = null
     return{
-        data: [
-            ],
+        data: [],
         xAxisStripLinesArray: [],
         yAxisStripLinesArray: [],
         dps: [],
@@ -33,19 +32,25 @@ export default {
         k: 1,
         interval: null,
         series: null,
+        chart: null
         
     }
   },
   // watch:{
-  //     data: function(v){
+  //     data: function(d){
+  //       let self = this
   //       // lineSeries.add(v)
-  //       let old = v[0]
-  //       for (let i in v){
-  //         this.k+=3
-  //         if (Math.abs(v[i]-old) < 10000000){
-  //           console.log(v[i]);
-  //           this.series.add({x: this.k, y: v[i]})
-  //         }
+  //       let old = d[0]
+  //       for (let i in d){
+  //           self.series.add({x: d[i]['x'], y: d[i]['y']})
+  //           // console.log(self.k);
+  //           // let mmax = self.series.getYMax()
+  //           // let mmin = self.series.getYMin()
+  //           // self.chart.getDefaultAxisY()
+  //           //   .setTickStrategy("Empty")
+  //           //   .setStrokeStyle(emptyLine)
+  //           //   .setInterval(mmin, mmax, true)
+  //           //   .setScrollStrategy(AxisScrollStrategies.expansion)
   //       }
   //     }
   // },
@@ -54,6 +59,19 @@ export default {
   },
   mounted () {
     // this.getData2()
+    const lcjs = require('@arction/lcjs')
+        const {
+            lightningChart,
+            DataPatterns,
+            AxisScrollStrategies,
+            SolidLine,
+            SolidFill,
+            ColorHEX,
+            AutoCursorModes,
+            Themes,
+            emptyLine,
+            emptyTick
+        } = lcjs
      const {
         createSampledDataGenerator
     } = require('@arction/xydata')
@@ -73,26 +91,26 @@ export default {
       let old = d[0]
       for (let i=0; i<d.length; i++){
         // p.push(d[i])
-          self.k+=1
+        // setTimeout(() => {
+          
+        // }, 10);
           if (Math.abs(d[i]-old) < 2000000){
-            // self.series.add({x: self.k, y: d[i]})
-            p.push({x: self.k, y: d[i]})
-            // console.log(d[i]);
+            // setTimeout(function(){
+            self.k+=10
+            // }, 50)
+            self.series.add({x: self.k, y: d[i]})
+            let mmax = self.series.getYMax()
+            let mmin = self.series.getYMin()
+            self.chart.getDefaultAxisY()
+              .setTickStrategy("Empty")
+              .setStrokeStyle(emptyLine)
+              .setInterval(mmin, mmax, true)
+              .setScrollStrategy(AxisScrollStrategies.expansion)
+            // p.push({x: self.k, y: d[i]})
+            console.log(d[i]);
           }
       }
-      
-      createSampledDataGenerator(p, 1, 10)
-        .setSamplingFrequency(1)
-        .setInputData(p)
-        .generate()
-        .setStreamBatchSize(48)
-        .setStreamInterval(50)
-        .toStream()
-        .forEach(p => {
-          console.log(p.timestamp, p.data.y);
-            // Push the created ps to the series.
-            self.series.add({ x: p.data.x, y: p.data.y })
-        })
+      // self.data = p
       // self.minterval()
       // console.log(self.data)
     };
@@ -102,19 +120,6 @@ export default {
     socket.onerror = function(error) {
       console.log(error)
     };
-
-    // var smoothie = new SmoothieChart({
-    //     grid: { strokeStyle:'rgb(255, 255, 255)', fillStyle:'rgb(0, 0, 0)',
-    //             lineWidth: 0.1, millisPerLine: 50, verticalSections: 10, },
-    //     labels: { fillStyle:'rgb(0, 25, 255)' }
-    // });
-    // smoothie.streamTo(document.getElementById("mycanvas"), 1000);
-    // this.line1 = new TimeSeries();
-    // for (let i in this.data){
-    //   this.line1.append(new Date().getTime(), this.data[i])
-    // }
-    // smoothie.addTimeSeries(this.line1, { strokeStyle:'rgb(255, 0, 0)',  lineWidth: 1.5 });
-    // this.createChart() 
   },
   methods: {
       getData(){
@@ -179,11 +184,11 @@ export default {
             emptyTick
         } = lcjs
 
-        const chart = lightningChart().ChartXY({
+        this.chart = lightningChart().ChartXY({
             // theme: Themes.dark 
         }).setTitle('')
         // Add line series to visualize the data received
-        this.series = chart.addLineSeries({ dataPattern: DataPatterns.horizontalProgressive })
+        this.series = this.chart.addLineSeries({ dataPattern: DataPatterns.horizontalProgressive })
         // Style the series
         this.series
             .setStrokeStyle(new SolidLine({
@@ -191,16 +196,18 @@ export default {
                 fillStyle: new SolidFill({ color: ColorHEX('#5aafc7') })
             }))
             .setMouseInteractions(false)
-        chart.setAutoCursorMode(AutoCursorModes.disabled)
+        this.chart.setAutoCursorMode(AutoCursorModes.disabled)
         // Setup view nicely.
-        chart.getDefaultAxisY()
+        this.chart.getDefaultAxisY()
             .setTickStrategy("Empty")
             .setStrokeStyle(emptyLine)
+            // .setInterval(0, 1000)
+            // .setScrollStrategy(AxisScrollStrategies.progressive)
 
-        chart.getDefaultAxisX()
+        this.chart.getDefaultAxisX()
             // .setTickStrategy("Empty")
             // .setStrokeStyle(emptyLine)
-            .setInterval(0, 500)
+            .setInterval(0, 1000, 50)
             .setScrollStrategy(AxisScrollStrategies.progressive)
         // Create a data generator to supply a continuous stream of data.
 
