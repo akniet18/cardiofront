@@ -72,7 +72,9 @@ export default {
         // p.push(d[i])
           self.k+=3
           if (Math.abs(d[i]-old) < 2000000){
-            self.series.add({x: self.k, y: d[i]})
+            setTimeout(function(){
+              self.series.add({x: self.k, y: d[i]})
+            }, 100)
             console.log(d[i]);
           }
       }
