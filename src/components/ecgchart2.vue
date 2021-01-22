@@ -49,7 +49,7 @@ export default {
         { x: 30, y: 40 },
         { x: 31, y: 42 },
         { x: 32, y: 42 },
-        { x: 33, y: 32 }]
+               { x: 33, y: 32 }]
     }
   },
   mounted () {
@@ -89,8 +89,6 @@ export default {
         emptyLine,
         emptyTick
     } = lcjs
-
-    // Import data-generators from 'xydata'-library.
     const {
         createSampledDataGenerator
     } = require('@arction/xydata')
@@ -102,7 +100,6 @@ export default {
 
     // Add line series to visualize the data received
     const series = chart.addLineSeries({ dataPattern: DataPatterns.horizontalProgressive })
-    // Style the series
     series
         .setStrokeStyle(new SolidLine({
             thickness: 2,
@@ -1737,7 +1734,6 @@ export default {
       }
   },
   beforeDestroy() {
-    // "dispose" should be called when the component is unmounted to free all the resources used by the chart
     // this.chart.dispose()
   }
 }

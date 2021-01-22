@@ -94,19 +94,19 @@ export default {
         // setTimeout(() => {
           
         // }, 10);
-          if (Math.abs(d[i]-old) < 2000000){
+          if (Math.abs(d[i]-old) < 80000){
             // setTimeout(function(){
-            self.k+=10
+            self.k+=3
             // }, 50)
             self.series.add({x: self.k, y: d[i]})
-            let mmax = self.series.getYMax()
-            let mmin = self.series.getYMin()
+            let mmax = self.series.getYMax() + 100000
+            let mmin = self.series.getYMin() - 100000
             self.chart.getDefaultAxisY()
               .setTickStrategy("Empty")
               .setStrokeStyle(emptyLine)
               .setInterval(mmin, mmax, true)
               .setScrollStrategy(AxisScrollStrategies.expansion)
-            // p.push({x: self.k, y: d[i]})
+            p.push({x: self.k, y: d[i]})
             console.log(d[i]);
           }
       }
@@ -198,16 +198,16 @@ export default {
             .setMouseInteractions(false)
         this.chart.setAutoCursorMode(AutoCursorModes.disabled)
         // Setup view nicely.
-        this.chart.getDefaultAxisY()
-            .setTickStrategy("Empty")
-            .setStrokeStyle(emptyLine)
-            // .setInterval(0, 1000)
+        // this.chart.getDefaultAxisY()
+            // .setTickStrategy("Empty")
+            // .setStrokeStyle(emptyLine)
+            // .setInterval(16000000, 17000000)
             // .setScrollStrategy(AxisScrollStrategies.progressive)
 
         this.chart.getDefaultAxisX()
             // .setTickStrategy("Empty")
             // .setStrokeStyle(emptyLine)
-            .setInterval(0, 1000, 50)
+            .setInterval(0, 1000, true)
             .setScrollStrategy(AxisScrollStrategies.progressive)
         // Create a data generator to supply a continuous stream of data.
 

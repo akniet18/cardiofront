@@ -48,12 +48,10 @@
                 </div>
             </div> 
         </section>
-        
     </div>
 </template>
 
 <script>
-// import { Line } from 'vue-chartjs'
 import EcgChart from './ecgchart'
 import EcgChart2 from './ecgchart2'
 export default {
@@ -61,7 +59,6 @@ export default {
   components: {
       EcgChart, EcgChart2
   },
-//   extends: Line,
   data(){
     return{
       chartdata: [1, 2, 3, 4, 5, 6],
@@ -69,12 +66,10 @@ export default {
       data: []
     }
   },
-
   mounted () {
       let s = document.getElementById("lcjs-auto-flexbox")
       let canv= document.querySelectorAll("#lcjs-auto-flexbox canvas")
       if (window.outerWidth < 600){
-        // console.log(window.outerWidth)
         s.style.display = "flex"
         s.style.flexDirection = "column"
       }else{
@@ -83,21 +78,7 @@ export default {
         for (let i in canv){
             canv[i].style.height = "500px"
         }
-      }
-    //   var asd = document.querySelector('#lcjs-auto-flexbox')
-    //   asd.style.display = "grid"
-    //   asd.style.gridTemplateColumns = "1fr 1fr"
-    //   asd.style.gridTemplateRows = "1fr 1fr"
-    //   asd.style.gridGap = "10px"
-    //   asd.style.zIndex = "99"
-
-    //   var chart = document.querySelectorAll('div[id^="chart-"]')
-    // //   console.log(chart)
-    //   for (let i in chart){
-    //       chart[i].style.marginTop = "20px"
-    //   }
-
-   
+      }  
   },
   methods: {
       zoom(id){
@@ -153,15 +134,6 @@ section > *:nth-child(4){
     width: 100%;
     height: auto;
 }
-/* #lcjs-auto-flexbox{
-    display: -ms-grid!important;
-    display: grid!important;
-    -ms-grid-columns: 1fr 10px 1fr!important;
-    grid-template-columns: 1fr 1fr!important;
-    -ms-grid-rows: 1fr 10px 1fr!important;
-    grid-template-rows: 1fr 1fr!important;
-    grid-gap: 10px!important;
-} */
 
 .item1{
     height: 100%;
