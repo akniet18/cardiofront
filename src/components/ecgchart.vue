@@ -95,6 +95,7 @@ export default {
           
         // }, 10);
           // if (Math.abs(d[i]-old) < 80000){
+          // if (d[i].length > 1){
             // setTimeout(function(){
             self.k+=3
             // }, 50)
@@ -106,7 +107,7 @@ export default {
               .setStrokeStyle(emptyLine)
               .setInterval(mmin, mmax, true)
               .setScrollStrategy(AxisScrollStrategies.expansion)
-            p.push({x: self.k, y: d[i]})
+            // p.push({x: self.k, y: d[i]})
             console.log(d[i]);
           // }
       }
