@@ -94,7 +94,7 @@ export default {
         // setTimeout(() => {
           
         // }, 10);
-          if (Math.abs(d[i]-old) < 80000){
+          // if (Math.abs(d[i]-old) < 80000){
             // setTimeout(function(){
             self.k+=3
             // }, 50)
@@ -108,7 +108,7 @@ export default {
               .setScrollStrategy(AxisScrollStrategies.expansion)
             p.push({x: self.k, y: d[i]})
             console.log(d[i]);
-          }
+          // }
       }
       // self.data = p
       // self.minterval()
