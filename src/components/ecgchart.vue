@@ -870,25 +870,25 @@ export default {
         
     }
   },
-  watch:{
-      data: function(d){
-        let self = this
-        // lineSeries.add(v)
-        // let old = d[0]
-        for (let i in d){
-            self.series.add({x: d[i]['x'], y: d[i]['y']})
-            d.shift()
-            // console.log(self.k);
-            // let mmax = self.series.getYMax()
-            // let mmin = self.series.getYMin()
-            // self.chart.getDefaultAxisY()
-            //   .setTickStrategy("Empty")
-            //   .setStrokeStyle(emptyLine)
-            //   .setInterval(mmin, mmax, true)
-            //   .setScrollStrategy(AxisScrollStrategies.expansion)
-        }
-      }
-  },
+  // watch:{
+  //     data: function(d){
+  //       let self = this
+  //       // lineSeries.add(v)
+  //       // let old = d[0]
+  //       for (let i in d){
+  //           self.series.add({x: d[i]['x'], y: d[i]['y']})
+  //           d.shift()
+  //           // console.log(self.k);
+  //           // let mmax = self.series.getYMax()
+  //           // let mmin = self.series.getYMin()
+  //           // self.chart.getDefaultAxisY()
+  //           //   .setTickStrategy("Empty")
+  //           //   .setStrokeStyle(emptyLine)
+  //           //   .setInterval(mmin, mmax, true)
+  //           //   .setScrollStrategy(AxisScrollStrategies.expansion)
+  //       }
+  //     }
+  // },
   created(){
     // this.getData()
   },
@@ -934,13 +934,13 @@ export default {
             self.k+=3
             // }, 50)
             // self.series.add({x: self.k, y: d[i]})
-            // let mmax = self.series.getYMax() + 100000
-            // let mmin = self.series.getYMin() - 100000
-            // self.chart.getDefaultAxisY()
-            //   .setTickStrategy("Empty")
-            //   .setStrokeStyle(emptyLine)
-            //   .setInterval(mmin, mmax, true)
-            //   .setScrollStrategy(AxisScrollStrategies.expansion)
+            let mmax = self.series.getYMax() + 100000
+            let mmin = self.series.getYMin() - 100000
+            self.chart.getDefaultAxisY()
+              .setTickStrategy("Empty")
+              .setStrokeStyle(emptyLine)
+              .setInterval(mmin, mmax, true)
+              .setScrollStrategy(AxisScrollStrategies.expansion)
             // self.data.push({x: self.k, y: d[i]})
             p.push({x: self.k, y: d[i]})
             console.log(d[i]);
