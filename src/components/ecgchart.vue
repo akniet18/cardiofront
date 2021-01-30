@@ -921,10 +921,12 @@ export default {
       console.log('open')
     };
     socket.onmessage = function(event) {
-      console.log(event);
+      // console.log(event);
       // clearInterval(self.interval)
       let d = JSON.parse(event.data)['content']['pointers']['content']['pointers']
       // console.log(d['content']['pointers']['content']['pointers']);
+
+      console.log(d);
       let p = []
       let old = d[0]
       for (let i=0; i<d.length; i++){
