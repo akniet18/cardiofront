@@ -943,7 +943,7 @@ export default {
               .setScrollStrategy(AxisScrollStrategies.expansion)
             // self.data.push({x: self.k, y: d[i]})
             p.push({x: self.k, y: d[i]})
-            console.log(d[i]);
+            // console.log(d[i]);
           }
       }
       createSampledDataGenerator(p, 1, 10)
