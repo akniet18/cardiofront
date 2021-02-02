@@ -921,42 +921,41 @@ export default {
       console.log('open')
     };
     socket.onmessage = function(event) {
-      console.log(event);
+      // console.log(event);
       // clearInterval(self.interval)
       let d = JSON.parse(event.data)['content']['pointers']['content']['pointers']
-      // console.log(d['content']['pointers']['content']['pointers']);
+      console.log(d);
       let p = []
       let old = d[0]
       for (let i=0; i<d.length; i++){
           // if (Math.abs(d[i]-old) < 80000){
           if (d[i] > 10){
-            // setTimeout(function(){
             self.k+=3
             // }, 50)
-            // self.series.add({x: self.k, y: d[i]})
-            let mmax = self.series.getYMax() + 100000
-            let mmin = self.series.getYMin() - 100000
+            self.series.add({x: self.k, y: d[i]})
+            let mmax = self.series.getYMax() + 20000
+            let mmin = self.series.getYMin() - 20000
             self.chart.getDefaultAxisY()
               .setTickStrategy("Empty")
               .setStrokeStyle(emptyLine)
               .setInterval(mmin, mmax, true)
               .setScrollStrategy(AxisScrollStrategies.expansion)
             // self.data.push({x: self.k, y: d[i]})
-            p.push({x: self.k, y: d[i]})
-            console.log(d[i]);
+            // p.push({x: self.k, y: d[i]})
+            // console.log(d[i]);
           }
       }
-      createSampledDataGenerator(p, 1, 10)
-        .setSamplingFrequency(1)
-        .setInputData(p)
-        .generate()
-        .setStreamBatchSize(48)
-        .setStreamInterval(50)
-        .toStream()
-        .forEach(p => {
-            // Push the created points to the series.
-            self.series.add({ x: p.data.x, y: p.data.y })
-        })
+      // createSampledDataGenerator(p, 1, 10)
+      //   .setSamplingFrequency(1)
+      //   .setInputData(p)
+      //   .generate()
+      //   .setStreamBatchSize(48)
+      //   .setStreamInterval(50)
+      //   .toStream()
+      //   .forEach(p => {
+      //       // Push the created points to the series.
+      //       self.series.add({ x: p.data.x, y: p.data.y })
+      //   })
       // self.data = p
       // self.minterval()
       // console.log(self.data)
