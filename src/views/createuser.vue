@@ -1,5 +1,5 @@
 <template>
-    <div>  
+    <div class="section">  
         <el-form :model="ruleForm" :rules="rules" ref="ruleForm"  class="demo-ruleForm">
             <el-form-item label="username" prop="username">
                 <el-input v-model="ruleForm.username"></el-input>
@@ -105,6 +105,10 @@ export default {
 </script>
 
 <style scoped>
+.section{
+    width: 100%;
+    overflow: hidden;
+}
 .demo-ruleForm{
     margin-top: 20px;
     margin-left: 10px;

@@ -1,6 +1,6 @@
 <template>
     <div>
-        <el-form label-width="120px" class="demo-ruleForm">
+        <el-form class="demo-ruleForm">
             <div class="avap">
                 <el-avatar shape="square" :src="ruleForm.avatar"></el-avatar>
             </div>
@@ -58,5 +58,8 @@ export default {
 }
 .avap{
     margin: 20px;
+}
+.demo-ruleForm{
+    margin-left: 10px;
 }
 </style>

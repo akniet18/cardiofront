@@ -209,7 +209,7 @@ export default {
 
 <style scoped>
 .demo-ruleForm{
-    margin-top: 20px;
+    /* margin-top: 20px; */
 }
 .avatar-uploader {
     width: 178px;
@@ -236,5 +236,10 @@ export default {
     height: 178px;
     display: block;
   }
-
+.el-dialog__body{
+    padding-top: 5px!important;
+}
+.demo-ruleForm{
+    margin: -30px 0;
+}
 </style>
