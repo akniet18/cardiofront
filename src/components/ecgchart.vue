@@ -189,4 +189,9 @@ export default {
   color: #fff;
   padding: 10px;
 }
+@media (max-width: 800px) {
+  .infod{
+    font-size: 0.8em;
+  }
+}
 </style>

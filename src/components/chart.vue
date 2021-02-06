@@ -133,10 +133,7 @@ section > *:nth-child(4), .divitems> *:nth-child(4){
     -ms-grid-row: 3;
     -ms-grid-column: 3;
 }
-.divitems{
-    width: 100%;
-    height: 100%;
-}
+
 canvas{
     height: 100%;
 }
@@ -165,19 +162,21 @@ canvas{
 .sectionAva{
     margin:0 5px;
 }
+#lcjs-auto-flexbox{
+      height: 0;
+  } 
 @media (max-width: 800px) {
-  /* #lcjs-auto-flexbox{
-    display: flex;
-    flex-direction: column;
-  }
-  #lcjs-auto-flexbox div canvas{
-      height: 800px;
-  } */
-  section{
-      -ms-grid-columns: 1fr;
+   .info{
+       font-size: 0.8em;
+   }
+  
+  section, .divitems{
+    -ms-grid-columns: 1fr;
     grid-template-columns: 1fr;
     -ms-grid-rows: 1fr 10px 1fr 10px 1fr 10px 1fr;
     grid-template-rows: 1fr 1fr 1fr 1fr;
+    height: 150vh;
   }
+  
 }
 </style>
