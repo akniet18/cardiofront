@@ -68,9 +68,15 @@ export default {
       if (period.length >= 351){
         self.maxx = Math.max(...period)
         self.minn = Math.min(...period)
-        self.p = self.maxx * 0.3
-        self.t = self.maxx * 0.6
-        self.q = self.minn * 0.5
+        if (self.maxx == self.minn){
+          self.p = self.maxx
+          self.t = self.maxx 
+          self.q = self.minn 
+        }else{
+          self.p = self.maxx * 0.3
+          self.t = self.maxx * 0.6
+          self.q = self.minn * 0.5
+        }
         period = []
       }
       let p = []
