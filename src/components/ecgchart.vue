@@ -65,7 +65,7 @@ export default {
     this.socket.onmessage = function(event) {
       let d = JSON.parse(event.data)['content']['pointers']['content']['pointers']
       console.log(d);
-      period = period.concat(d)
+      period = period.concat(d.slice(1))
       if (period.length >= 351){
         self.maxx = Math.max(...period)
         self.minn = Math.min(...period)
@@ -82,18 +82,16 @@ export default {
       }
       let p = []
       let old = d[0]
-      for (let i=0; i<d.length; i++){
-          // if (Math.abs(d[i]-old) < 80000){
+      for (let i=1; i<d.length; i++){
           if (d[i] > 10){
             self.k+=3
-
             self.series.add({x: self.k, y: d[i]})
             let mmax = self.series.getYMax() + 20000
             let mmin = self.series.getYMin() - 20000
             self.chart.getDefaultAxisY()
               .setTickStrategy("Empty")
               .setStrokeStyle(emptyLine)
-              .setInterval(mmin, mmax, true)
+              .setInterval(mmin, mmax)
               .setScrollStrategy(AxisScrollStrategies.expansion)
             // self.data.push({x: self.k, y: d[i]})
             // p.push({x: self.k, y: d[i]})
@@ -195,7 +193,7 @@ export default {
         this.chart.getDefaultAxisX()
             // .setTickStrategy("Empty")
             // .setStrokeStyle(emptyLine)
-            .setInterval(0, 3000)
+            .setInterval(0, 2200)
             .setScrollStrategy(AxisScrollStrategies.progressive)
 
         //let point=this.data
