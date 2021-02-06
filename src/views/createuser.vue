@@ -21,6 +21,10 @@
             <el-form-item label="Адрес" prop="location">
                 <el-input type="textarea" v-model="ruleForm.location"></el-input>
             </el-form-item>
+             <el-form-item label="id устройства" prop="did">
+                <el-input type="textarea" v-model="ruleForm.did"></el-input>
+            </el-form-item>
+
             <el-form-item label="Аватар">
                 <input type='file' id="avatar" />
             </el-form-item>
@@ -46,7 +50,8 @@ export default {
                 last_name: '',
                 date1: '',
                 location: '',
-                pwd: ''
+                pwd: '',
+                did: ''
             },
             rules: {
                 username: [
@@ -68,6 +73,9 @@ export default {
                 ],
                 location: [
                     { required: true, message: 'Please input location', trigger: 'blur' }
+                ],
+                did: [
+                     { required: true, message: 'Please input device id', trigger: 'blur' }
                 ]
             }
         }
@@ -85,6 +93,7 @@ export default {
             data.append('birth_date', moment(String(this.ruleForm.date1)).format('YYYY-MM-DD'))
             data.append('location', this.ruleForm.location)
             data.append('pwd', this.ruleForm.pwd)
+            data.append('device_id', this.ruleForm.did)
             axios.post('users/create/', data, {headers})
                 .then(r => {
                     console.log(r)
