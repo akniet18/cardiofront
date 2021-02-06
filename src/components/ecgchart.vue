@@ -183,7 +183,7 @@ export default {
 .infod{
   position: absolute;
   bottom: 15px;
-  right: 8px;
+  right: 2px;
   background: #202020;
   z-index: 9999;
   color: #fff;

@@ -5,6 +5,7 @@
             <div class="item item2" ><EcgChart did="2"/></div>
             <div class="item item3" ><EcgChart did="3"/></div>
             <div class="item item4" ><EcgChart did="4"/></div>
+            <div class="item item5" ><EcgChart did="5"/></div>
         </div>
         <section>
             <div class="info" @click="zoom(1)">
@@ -45,6 +46,16 @@
                     <div class="username">Сейткасымов Турар</div>
                     <div class="birthdate">09.07.1997</div>
                     <div class="address">Г. Алматы Жетысуский р-н. ул. Леваневского 3</div>
+                </div>
+            </div> 
+            <div class="info" @click="zoom(1)">
+                <div class="sectionAva">
+                    <img src="../assets/ava1.jpeg" alt="">
+                </div>
+                <div class="sectionInfo">
+                    <div class="username">Көшербай Марлен Айдынұлы </div>
+                    <div class="birthdate">18.04.1997</div>
+                    <div class="address">г. Алматы, мкр-н. Айгерим-1, ул. Бенберина 76, кв. 8</div>
                 </div>
             </div> 
         </section>
@@ -99,6 +110,7 @@ export default {
     display: flex;
     position: relative;
     min-height: 90vh;
+    height: auto;
 }
 
 section, .divitems{
@@ -107,11 +119,9 @@ section, .divitems{
     display: grid;
     -ms-grid-columns: 1fr 10px 1fr;
     grid-template-columns: 1fr 1fr;
-    -ms-grid-rows: 1fr 10px 1fr;
-    grid-template-rows: 1fr 1fr;
     grid-gap: 10px;
     width: 100%;
-    height: 100%;
+    height: 120%;
 }
 
 section > *:nth-child(1), .divitems> *:nth-child(1){
@@ -135,7 +145,7 @@ section > *:nth-child(4), .divitems> *:nth-child(4){
 }
 
 canvas{
-    height: 100%;
+    height: 450px!important;
 }
 .info{
     /* position: absolute; */
