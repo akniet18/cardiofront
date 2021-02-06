@@ -73,9 +73,9 @@ export default {
           self.t = self.maxx 
           self.q = self.minn 
         }else{
-          self.p = self.maxx * 0.3
-          self.t = self.maxx * 0.6
-          self.q = self.minn * 0.5
+          self.p = Math.round(self.maxx * 0.3)
+          self.t = Math.round(self.maxx * 0.6)
+          self.q = Math.round(self.minn * 0.5)
         }
         period = []
       }
