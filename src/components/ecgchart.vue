@@ -23,6 +23,7 @@ export default {
     this.chart = null
     return{
         data: [],
+        socket: null,
         xAxisStripLinesArray: [],
         yAxisStripLinesArray: [],
         dps: [],
@@ -54,14 +55,14 @@ export default {
     } = require('@arction/xydata')
     this.graf(this.data)
     
-    let socket = new WebSocket("wss://back.cardioservice.com.kz/api/setByte/");
+    this.socket = new WebSocket("wss://back.cardioservice.com.kz/api/setByte/");
     let self = this
     
     let period = []
-    socket.onopen = function(e) {
+    this.socket.onopen = function(e) {
       console.log('open')
     };
-    socket.onmessage = function(event) {
+    this.socket.onmessage = function(event) {
       let d = JSON.parse(event.data)['content']['pointers']['content']['pointers']
       console.log(d);
       period = period.concat(d)
@@ -114,10 +115,8 @@ export default {
       // self.minterval()
       // console.log(self.data)
     };
-    socket.onclose = function(event) {
-      console.log("close", event);
-    };
-    socket.onerror = function(error) {
+    
+    this.socket.onerror = function(error) {
       console.log(error)
     };
   },
@@ -244,7 +243,9 @@ export default {
   beforeDestroy() {
     // "dispose" should be called when the component is unmounted to free all the resources used by the chart
     // this.chart.dispose()
-    clearInterval(this.interval)
+    // clearInterval(this.interval)
+    this.socket.close()
+  
   }
 }
 </script>
