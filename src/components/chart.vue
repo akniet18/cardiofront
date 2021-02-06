@@ -1,6 +1,6 @@
 <template>
     <div class="wrapper">
-        <div class="items">
+        <div class="divitems">
             <div class="item item1" ><EcgChart did="1"/></div>
             <div class="item item2" ><EcgChart did="2"/></div>
             <div class="item item3" ><EcgChart did="3"/></div>
@@ -68,17 +68,20 @@ export default {
   },
   mounted () {
       let s = document.getElementById("lcjs-auto-flexbox")
-      let canv= document.querySelectorAll("#lcjs-auto-flexbox canvas")
-      if (window.outerWidth < 600){
-        s.style.display = "flex"
-        s.style.flexDirection = "column"
-      }else{
-        s.style.display = "grid"
-        s.style.gridTemplateColumns = "1fr 1fr"
-        for (let i in canv){
-            canv[i].style.height = "500px"
-        }
-      }  
+      s.style.height = "0"
+      let canv= document.querySelectorAll("canvas")
+     
+       
+      let item = document.querySelectorAll('div[class^="item"')
+      let chart = document.querySelectorAll('div[id^="chart"')
+      let infod = document.querySelectorAll('div[class^="infod"')
+      console.log(infod);
+      for (let i in item){
+          item[i].appendChild(chart[i])
+          chart[i].appendChild(infod[i])
+          item[i].style.height = "100%"
+          chart[i].style.height = "100%"
+      }
   },
   methods: {
       zoom(id){
@@ -98,7 +101,7 @@ export default {
     min-height: 90vh;
 }
 
-section{
+section, .divitems{
     position: absolute;
     display: -ms-grid;
     display: grid;
@@ -111,33 +114,31 @@ section{
     height: 100%;
 }
 
-section > *:nth-child(1){
+section > *:nth-child(1), .divitems> *:nth-child(1){
     -ms-grid-row: 1;
     -ms-grid-column: 1;
 }
 
-section > *:nth-child(2){
+section > *:nth-child(2),.divitems> *:nth-child(2){
     -ms-grid-row: 1;
     -ms-grid-column: 3;
 }
 
-section > *:nth-child(3){
+section > *:nth-child(3), .divitems> *:nth-child(3){
     -ms-grid-row: 3;
     -ms-grid-column: 1;
 }
 
-section > *:nth-child(4){
+section > *:nth-child(4), .divitems> *:nth-child(4){
     -ms-grid-row: 3;
     -ms-grid-column: 3;
 }
-.items{
+.divitems{
     width: 100%;
-    height: auto;
-}
-
-.item1{
     height: 100%;
-    min-height: 90vh;
+}
+canvas{
+    height: 100%;
 }
 .info{
     /* position: absolute; */

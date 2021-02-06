@@ -2,7 +2,7 @@
     <!-- <div id="section" class="fill"></div> -->
     <div style="margin-top: 15px; position: relative">
       <section class="section"></section>
-      <div class="info">
+      <div class="infod">
         <div>p: {{p}}</div>
         <div>q: {{q}}</div>
         <div>r: {{maxx}}</div>
@@ -14,8 +14,6 @@
 </template>
 
 <script>
-
-let lineSeries = null
 export default {
   name: 'EcgChart',
   props: {
@@ -26,10 +24,6 @@ export default {
     return{
         data: [],
         socket: null,
-        xAxisStripLinesArray: [],
-        yAxisStripLinesArray: [],
-        dps: [],
-        dataPointsArray: [],
         k: 1,
         interval: null,
         series: null,
@@ -40,11 +34,8 @@ export default {
         q: 0,
         t: 0
     }
-},
-
-  created(){
-    // this.getData()
   },
+
   mounted () {
     // this.getData2()
     const lcjs = require('@arction/lcjs')
@@ -66,7 +57,7 @@ export default {
     };
     this.socket.onmessage = function(event) {
       let d = JSON.parse(event.data)['content']['pointers']['content']['pointers']
-      console.log(d);
+      // console.log(d);
       period = period.concat(d.slice(1))
       if (period.length >= 351){
         self.maxx = Math.max(...period)
@@ -83,7 +74,6 @@ export default {
         period = []
       }
       let p = []
-      
       for (let i=1; i<d.length; i++){
           if (d[i] > 10){
             self.k+=3
@@ -100,53 +90,12 @@ export default {
             // console.log(d[i]);
           }
       }
-      
-      // self.data = p
-      // self.minterval()
-      // console.log(self.data)
     };
-    
     this.socket.onerror = function(error) {
       console.log(error)
     };
   },
   methods: {
-      getData(){
-          let self = this
-          self.interval = setInterval(function(){
-          axios.get('api/setByte/')
-            .then(r=>{
-                let d = r.data.data
-                d = d.substring(1, d.length-1)
-                d = d.split(', ')
-                let p = []
-                for (let i=0; i<d.length; i++){
-                    let pp = {x: new Date().getTime(), y: parseInt(d[i])}
-                    self.k+=5
-                    p.push(pp)
-                }
-                self.data = p
-                console.log(p)
-            }, r=>{
-                console.log(r)
-            })
-          }, 1000)
-      },
-      createChart() {
-        this.chart = lightningChart().ChartXY({container: "section"})
-        this.chart.setAutoCursorMode(AutoCursorModes.disabled)
-        this.chart.getDefaultAxisY()
-            .setInterval(1000000, 17000000)
-            .setScrollStrategy(AxisScrollStrategies.expansion)
-        this.chart.getDefaultAxisX()
-            .setInterval(0, 800)
-            .setScrollStrategy(AxisScrollStrategies.progressive)
-        lineSeries = this.chart.addLineSeries({ dataPattern: DataPatterns.horizontalProgressive })
-        // Set stroke style of the line
-        lineSeries.setStrokeStyle((style) => style.setThickness(3))
-        // lineSeries.setMouseInteractions(false)
-        // lineSeries.add(data)
-      },
       graf(p){
         const lcjs = require('@arction/lcjs')
         const {
@@ -188,19 +137,6 @@ export default {
             .setInterval(0, 2200)
             .setScrollStrategy(AxisScrollStrategies.progressive)
 
-        //let point=this.data
-        // createSampledDataGenerator(point, 1, 10)
-        //     .setSamplingFrequency(1)
-        //     .setInputData(point)
-        //     // .generate()
-        //     .setStreamBatchSize(48)
-        //     .setStreamInterval(50)
-        //     // .setStreamRepeat(true)
-        //     .toStream()
-        //     .forEach(point => {
-        //         // Push the created points to the series.
-        //         series.add({ x: point.timestamp, y: point.data.y })
-        //     })
         // let old = p[0]
         // for (let i in p){
         //   this.k+=3
@@ -208,13 +144,7 @@ export default {
         //     this.series.add({x: this.k, y: p[i]})  
         //   // }
         // }
-        
-        var asd = document.querySelector('#lcjs-auto-flexbox')
-        asd.style.height = "100%"
-        let sec = document.querySelector(".section")
-        sec.style.height = "100%"
-        asd.style.zIndex = "9"
-        sec.appendChild(asd)
+
       },
       minterval(){
         let self = this
@@ -250,7 +180,7 @@ export default {
 #mycanvas{
   width: 100%;
 }
-.info{
+.infod{
   position: absolute;
   bottom: 15px;
   right: 8px;
