@@ -1,10 +1,10 @@
 <template>
     <div class="wrapper">
         <div class="items">
-            <div class="item item1" ><EcgChart :d="data"/></div>
-            <div class="item item2" ><EcgChart2 /></div>
-            <div class="item item3" ><EcgChart2 /></div>
-            <div class="item item4" ><EcgChart2 /></div>
+            <div class="item item1" ><EcgChart did="1"/></div>
+            <div class="item item2" ><EcgChart did="2"/></div>
+            <div class="item item3" ><EcgChart did="3"/></div>
+            <div class="item item4" ><EcgChart did="4"/></div>
         </div>
         <section>
             <div class="info" @click="zoom(1)">

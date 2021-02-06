@@ -18,7 +18,9 @@
 let lineSeries = null
 export default {
   name: 'EcgChart',
-  props: ['d'],
+  props: {
+    did: String
+  },
   data(){
     this.chart = null
     return{
@@ -54,8 +56,8 @@ export default {
         createSampledDataGenerator
     } = require('@arction/xydata')
     this.graf(this.data)
-    
-    this.socket = new WebSocket("wss://back.cardioservice.com.kz/api/setByte/");
+    // let did = sessionStorage.getItem('did')
+    this.socket = new WebSocket("wss://back.cardioservice.com.kz/api/setByte/?wid="+this.did);
     let self = this
     
     let period = []
@@ -81,7 +83,7 @@ export default {
         period = []
       }
       let p = []
-      let old = d[0]
+      
       for (let i=1; i<d.length; i++){
           if (d[i] > 10){
             self.k+=3
@@ -98,17 +100,7 @@ export default {
             // console.log(d[i]);
           }
       }
-      // createSampledDataGenerator(p, 1, 10)
-      //   .setSamplingFrequency(1)
-      //   .setInputData(p)
-      //   .generate()
-      //   .setStreamBatchSize(48)
-      //   .setStreamInterval(50)
-      //   .toStream()
-      //   .forEach(p => {
-      //       // Push the created points to the series.
-      //       self.series.add({ x: p.data.x, y: p.data.y })
-      //   })
+      
       // self.data = p
       // self.minterval()
       // console.log(self.data)

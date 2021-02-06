@@ -97,6 +97,7 @@ export default {
 						sessionStorage.setItem('birth_date', r.data.birth_date)
 						sessionStorage.setItem('location', r.data.location)
 						sessionStorage.setItem('avatar', r.data.avatar)
+						sessionStorage.setItem('did', r.data.device_id)
 						if (r.data.is_staff){
 							window.location.href = '/home/staff/';
 						}

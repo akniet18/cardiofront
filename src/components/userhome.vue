@@ -1,7 +1,7 @@
 <template>
     <div class="wrapper">
         <div>
-            <div class="item item1"><EcgChart :d="data"/></div>
+            <div class="item item1"><EcgChart :did="dev_id"/></div>
         </div>
         
         <section>
@@ -32,6 +32,7 @@ export default {
 //   extends: Line,
   data(){
     return{
+        dev_id: sessionStorage.getItem('did'),
         chartdata: [1, 2, 3, 4, 5, 6],
         options: [],
         data: [],
@@ -45,6 +46,8 @@ export default {
   },
   created(){
     //   this.getData()
+    this.dev_id = sessionStorage.getItem('did')
+    console.log(this.dev_id,sessionStorage.getItem('did'));
   },
   mounted () {
       var asd = document.querySelector('#lcjs-auto-flexbox')
