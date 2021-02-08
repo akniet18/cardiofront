@@ -8,7 +8,7 @@
             <div class="item item5" ><EcgChart did="5"/></div>
         </div>
         <section>
-            <div class="info" @click="zoom(1)">
+            <div class="info" @click="zoom(1, 'Көшербай Марлен Айдынұлы', '18.04.1997', 'г. Алматы, мкр-н. Айгерим-1, ул. Бенберина 76, кв. 8', '../assets/ava1.jpeg')">
                 <div class="sectionAva">
                     <img src="../assets/ava1.jpeg" alt="">
                 </div>
@@ -17,8 +17,8 @@
                     <div class="birthdate">18.04.1997</div>
                     <div class="address">г. Алматы, мкр-н. Айгерим-1, ул. Бенберина 76, кв. 8</div>
                 </div>
-            </div> 
-            <div class="info" @click="zoom(2)">
+            </div>
+            <div class="info" @click="zoom(2, 'Шылмырза Үсен Жұманұлы', '16.09.1997', 'г.Алматы, Ауэзовский р-н, мкр.11, ул.Шаляпина дом 14, кв 10', '../assets/ava2.jpeg')">
                 <div class="sectionAva">
                     <img src="../assets/ava2.jpeg" alt="">
                 </div>
@@ -28,7 +28,7 @@
                     <div class="address">г.Алматы, Ауэзовский р-н, мкр.11, ул.Шаляпина дом 14, кв 10</div>
                 </div>
             </div> 
-            <div class="info" @click="zoom(3)">
+            <div class="info" @click="zoom(3, 'Игембай Ерболат Айдынұлы', '04.07.1996г', 'Алматы обл, Еңбекшіқазақ ауд, Түрген ауылы, Жүнісбай 11', '../assets/ava3.jpeg')">
                 <div class="sectionAva">
                     <img src="../assets/ava3.jpeg" alt="">
                 </div>
@@ -38,7 +38,7 @@
                     <div class="address">Алматы обл, Еңбекшіқазақ ауд, Түрген ауылы, Жүнісбай 11</div>
                 </div>
             </div> 
-            <div class="info" @click="zoom(4)">
+            <div class="info" @click="zoom(4, 'Сейткасымов Турар', '09.07.1997', 'Г. Алматы Жетысуский р-н. ул. Леваневского 3', '../assets/ava4.jpeg')">
                 <div class="sectionAva">
                     <img src="../assets/ava4.jpeg" alt="">
                 </div>
@@ -48,7 +48,7 @@
                     <div class="address">Г. Алматы Жетысуский р-н. ул. Леваневского 3</div>
                 </div>
             </div> 
-            <div class="info" @click="zoom(1)">
+            <div class="info" @click="zoom(5, 'Көшербай Марлен Айдынұлы', '18.04.1997', 'г. Алматы, мкр-н. Айгерим-1, ул. Бенберина 76, кв. 8', '../assets/ava1.jpeg')">
                 <div class="sectionAva">
                     <img src="../assets/ava1.jpeg" alt="">
                 </div>
@@ -80,9 +80,6 @@ export default {
   mounted () {
       let s = document.getElementById("lcjs-auto-flexbox")
       s.style.height = "0"
-      let canv= document.querySelectorAll("canvas")
-     
-       
       let item = document.querySelectorAll('div[class^="item"')
       let chart = document.querySelectorAll('div[id^="chart"')
       let infod = document.querySelectorAll('div[class^="infod"')
@@ -95,10 +92,11 @@ export default {
       }
   },
   methods: {
-      zoom(id){
-          console.log(id)
-      },
-
+    zoom(id, name, bd, location, avatar){
+        // this.$router.push({name: "profile_detail", query: {dev_id: id}})
+        // window.location.href = '/profile/staff/detail/?dev_id='+id.toString()+"&";
+        window.location.href = `/profile/staff/detail/?dev_id=${id}&name=${name}&birth_date=${bd}&location=${location}&avatar=${avatar}`
+    },
   }
 }
 </script>
@@ -183,9 +181,9 @@ canvas{
   section, .divitems{
     -ms-grid-columns: 1fr;
     grid-template-columns: 1fr;
-    -ms-grid-rows: 1fr 10px 1fr 10px 1fr 10px 1fr;
-    grid-template-rows: 1fr 1fr 1fr 1fr;
-    height: 150vh;
+    -ms-grid-rows: 1fr 10px 1fr 10px 1fr 10px 1fr 10px 1fr;
+    grid-template-rows: 1fr 1fr 1fr 1fr 1fr;
+    height: 190vh;
   }
   
 }

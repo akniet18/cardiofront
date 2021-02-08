@@ -30,7 +30,7 @@ Vue.use(VueRouter)
       },
       {
         path: "/",
-        name:'chart',
+        name:'chart2',
         component: function () {
           return import('../components/userhome.vue')
         },
@@ -54,6 +54,13 @@ Vue.use(VueRouter)
         name: 'profile_staff',
         component: function () {
           return import('../views/profilestaff.vue')
+        }
+      },
+      {
+        path: '/profile/staff/detail',
+        name: 'profile_detail',
+        component: function () {
+          return import('../views/userdetail.vue')
         }
       }
     ]

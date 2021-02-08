@@ -10,7 +10,7 @@
                     <img :src="avatar" alt="">
                 </div>
                 <div class="sectionInfo">
-                    <div class="username">{{last_name}} {{first_name}}</div>
+                    <div class="username">{{name}}</div>
                     <div class="birthdate">{{birth_date}}</div>
                     <div class="address">{{location}}</div>
                 </div>
@@ -22,36 +22,40 @@
 </template>
 
 <script>
-// import { Line } from 'vue-chartjs'
-import EcgChart from './ecgchart'
+import EcgChart from '../components/ecgchart'
 export default {
-  name: 'Chart',
   components: {
       EcgChart
   },
-//   extends: Line,
+//   props: {
+//     username: String,
+//     first_name: String,
+//     last_name: String,
+//     birth_date: String,
+//     avatar: String,
+//     location: String,
+//     dev_id: String
+//   },
   data(){
     return{
-        dev_id: sessionStorage.getItem('did'),
-        chartdata: [1, 2, 3, 4, 5, 6],
-        options: [],
         data: [],
-        username: sessionStorage.getItem('username'),
-        first_name: sessionStorage.getItem('first_name'),
-        last_name: sessionStorage.getItem('last_name'),
-        birth_date: sessionStorage.getItem('birth_date'),
-        avatar: sessionStorage.getItem('avatar'),
-        location: sessionStorage.getItem('location'),
+        dev_id: this.$route.query.dev_id,
+        // username: this.$route.query.,
+        name: this.$route.query.name,
+        birth_date: this.$route.query.birth_date,
+        avatar: this.$route.query.avatar,
+        location: this.$route.query.location,
     }
   },
   created(){
     this.dev_id = sessionStorage.getItem('did')
-    console.log(this.dev_id,sessionStorage.getItem('did'));
   },
   mounted () {
-      var asd = document.querySelector('#lcjs-auto-flexbox')
-      asd.style.zIndex = "99"   
+
   },
+  methods: {
+   
+  }
 }
 </script>
 

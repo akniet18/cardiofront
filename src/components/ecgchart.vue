@@ -144,6 +144,10 @@ export default {
         //     this.series.add({x: this.k, y: p[i]})  
         //   // }
         // }
+        let lcjss = document.querySelector('#lcjs-auto-flexbox')
+        let section = document.querySelector('.section')
+        lcjss.style.height = "100%"
+        section.appendChild(lcjss)
 
       },
       minterval(){
@@ -182,10 +186,10 @@ export default {
 }
 .infod{
   position: absolute;
-  bottom: 15px;
+  bottom: 5px;
   right: 2px;
   background: #202020;
-  z-index: 9999;
+  z-index: 99;
   color: #fff;
   padding: 10px;
 }
