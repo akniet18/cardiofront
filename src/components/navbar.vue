@@ -5,24 +5,7 @@
                 @select="handleSelect" 
                 @open="handleOpen"
                 @close="handleClose" :collapse="isCollapse">
-        <!-- <el-submenu index="5">
-            <template slot="title">
-                <i class="el-icon-location"></i>
-                <span slot="title">Navigator One</span>
-            </template>
-            <el-menu-item-group>
-                <span slot="title">Group One</span>
-                <el-menu-item index="1-1">item one</el-menu-item>
-                <el-menu-item index="1-2">item two</el-menu-item>
-            </el-menu-item-group>
-                <el-menu-item-group title="Group Two">
-                <el-menu-item index="1-3">item three</el-menu-item>
-            </el-menu-item-group>
-                <el-submenu index="1-4">
-                <span slot="title">item four</span>
-                <el-menu-item index="1-4-1">item one</el-menu-item>
-            </el-submenu>
-        </el-submenu> -->
+
         <el-menu-item index="1">
             <i class="el-icon-menu"></i>
             <span slot="title">Электрокардиографии</span>
@@ -35,15 +18,12 @@
             <i class="el-icon-plus"></i>
             <span slot="title">Добавить пользователя</span>
         </el-menu-item>
-        
-        <!-- <el-menu-item index="3">
-            <i class="el-icon-document"></i>
-            <span slot="title">Navigator Three</span>
+
+        <el-menu-item index="4" v-show="is_staff != 'false'">
+            <i class="el-icon-s-order"></i>
+            <span slot="title">Все пользователи</span>
         </el-menu-item>
-        <el-menu-item index="4">
-            <i class="el-icon-setting"></i>
-            <span slot="title">Navigator Four</span>
-        </el-menu-item> -->
+        
         </el-menu>
         
     </div>
@@ -82,6 +62,9 @@
             }
             else if (key == 3){
                 this.$router.push({name: "create_user"})  
+            }
+            else if (key == 4){
+                this.$router.push({name: "all_users"})  
             }
         },
         handleOpen(key, keyPath) {

@@ -5,7 +5,6 @@
             <div class="item item2" ><EcgChart did="2"/></div>
             <div class="item item3" ><EcgChart did="3"/></div>
             <div class="item item4" ><EcgChart did="4"/></div>
-            <div class="item item5" ><EcgChart did="5"/></div>
         </div>
         <section>
             <div class="info" @click="zoom(1, 'Көшербай Марлен Айдынұлы', '18.04.1997', 'г. Алматы, мкр-н. Айгерим-1, ул. Бенберина 76, кв. 8', '../assets/ava1.jpeg')">
@@ -46,16 +45,6 @@
                     <div class="username">Сейткасымов Турар</div>
                     <div class="birthdate">09.07.1997</div>
                     <div class="address">Г. Алматы Жетысуский р-н. ул. Леваневского 3</div>
-                </div>
-            </div> 
-            <div class="info" @click="zoom(5, 'Көшербай Марлен Айдынұлы', '18.04.1997', 'г. Алматы, мкр-н. Айгерим-1, ул. Бенберина 76, кв. 8', '../assets/ava1.jpeg')">
-                <div class="sectionAva">
-                    <img src="../assets/ava1.jpeg" alt="">
-                </div>
-                <div class="sectionInfo">
-                    <div class="username">Көшербай Марлен Айдынұлы </div>
-                    <div class="birthdate">18.04.1997</div>
-                    <div class="address">г. Алматы, мкр-н. Айгерим-1, ул. Бенберина 76, кв. 8</div>
                 </div>
             </div> 
         </section>
@@ -181,8 +170,8 @@ canvas{
   section, .divitems{
     -ms-grid-columns: 1fr;
     grid-template-columns: 1fr;
-    -ms-grid-rows: 1fr 10px 1fr 10px 1fr 10px 1fr 10px 1fr;
-    grid-template-rows: 1fr 1fr 1fr 1fr 1fr;
+    -ms-grid-rows: 1fr 10px 1fr 10px 1fr 10px 1fr;
+    grid-template-rows: 1fr 1fr 1fr 1fr;
     height: 190vh;
   }
   

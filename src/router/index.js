@@ -62,6 +62,13 @@ Vue.use(VueRouter)
         component: function () {
           return import('../views/userdetail.vue')
         }
+      },
+      {
+        path: '/all/users',
+        name: 'all_users',
+        component: function () {
+          return import('../views/allusers.vue')
+        }
       }
     ]
   },

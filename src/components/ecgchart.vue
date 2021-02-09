@@ -1,5 +1,4 @@
 <template>
-    <!-- <div id="section" class="fill"></div> -->
     <div style="margin-top: 15px; position: relative">
       <section class="section"></section>
       <div class="infod">
@@ -9,7 +8,6 @@
         <div>s: {{minn}}</div>
         <div>t: {{t}}</div>
       </div>
-      <!-- <canvas id="mycanvas" height="300"></canvas> -->
     </div>
 </template>
 
@@ -165,8 +163,6 @@ export default {
       }
   },
   beforeDestroy() {
-    // "dispose" should be called when the component is unmounted to free all the resources used by the chart
-    // this.chart.dispose()
     // clearInterval(this.interval)
     this.socket.close()
   
