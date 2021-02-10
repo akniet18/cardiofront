@@ -1,19 +1,48 @@
 <template>
     <div class="wrapper">
-        <section>
-            <div class="info"
-                v-for="i in data" :key="i.device_id"
-                @click="zoom(i.device_id, i.last_name+' '+i.first_name, i.birth_date, i.location, i.avatar)">
-                <div class="sectionAva">
-                    <img :src="i.avatar">
-                </div>
-                <div class="sectionInfo">
-                    <div class="username">{{i.last_name}} {{i.first_name}}</div>
-                    <div class="birthdate">{{i.birth_date}}</div>
-                    <div class="address">{{i.location}}</div>
-                </div>
-            </div>
-        </section>
+        <table>
+            <tr class="table_header">
+                <th class="table_header_column">Фамилия</th>
+                <th class="table_header_column">Имя</th>
+                <th class="table_header_column">Адрес</th>
+                <th class="table_header_column">Дата рождения</th>
+                <th>
+                    <el-input
+                    v-model="search"
+                    size="mini"
+                    placeholder="Type to search"/>
+                </th>
+            </tr>
+            <tr v-for="i in data.filter(data => !search || data.username.toLowerCase().includes(search.toLowerCase()) 
+                                    || data.first_name.toLowerCase().includes(search.toLowerCase())
+                                    || data.last_name.toLowerCase().includes(search.toLowerCase())
+                                    || data.location.toLowerCase().includes(search.toLowerCase()))" 
+                :key="i.device_id"
+                class="table_row success_row" :class="`table_row_${i.device_id}`"
+                >
+                <th>
+                    <div style="display:flex; align-items:center">
+                        <img :src="i.avatar" width="50px">
+                        <div style="display:flex; flex-direction: column; margin-left: 10px;">
+                            <div>{{i.last_name}}</div>
+                            <div class="show_on_mobile">{{i.first_name}}</div>
+                            <div class="show_on_mobile">{{i.location}}</div>
+                            <div class="show_on_mobile">{{i.birth_date}}</div>
+                        </div>
+                    </div>
+                </th>
+                <th class="table_header_column">{{i.first_name}}</th>
+                <th class="table_header_column">{{i.location}}</th>
+                <th class="table_header_column">{{i.birth_date}}</th>
+                <th>
+                    <el-button
+                        size="mini"
+                        @click="handleShow(i.device_id, i.last_name+' '+i.first_name, i.birth_date, i.location, i.avatar)">Показать
+                    </el-button>
+                </th>
+            </tr>
+        </table>
+      
     </div>
 </template>
 
@@ -24,11 +53,15 @@ export default {
     return{
       chartdata: [1, 2, 3, 4, 5, 6],
       options: [],
-      data: []
+      data: [],
+      search: '',
+      socket_list: []
     }
   },
+  created(){
+    this.getUser()
+  },
   mounted () {
-      this.getUser()
   },
   methods: {
     getUser() {
@@ -39,20 +72,65 @@ export default {
                     r.data[i].avatar = 'https://back.cardioservice.com.kz/media/'+r.data[i].avatar
                 }
                 this.data = r.data
+                this.sockets(r.data)
             }, e=> {
                 console.log(e);
             })
+        
     },
-    zoom(id, name, bd, location, avatar){
-        // this.$router.push({name: "profile_detail", query: {dev_id: id}})
-        // window.location.href = '/profile/staff/detail/?dev_id='+id.toString()+"&";
-        window.location.href = `/profile/staff/detail/?dev_id=${id}&name=${name}&birth_date=${bd}&location=${location}&avatar=${avatar}`
+    sockets(d){
+        for (let i of d){
+            let socket = new WebSocket("wss://back.cardioservice.com.kz/api/setByte/?wid="+i.device_id);
+            socket.onopen = function(e) {
+                console.log('open')
+            };
+            let period = []
+            let maxx = 0
+            let minn = 0
+            let tr = document.querySelector('.table_row_'+i.device_id.toString())
+            socket.onmessage = function(event) {
+                let d = JSON.parse(event.data)['content']['pointers']['content']['pointers']
+                period = period.concat(d.slice(1))
+                if (period.length >= 351){
+                    maxx = Math.max(...period)
+                    minn = Math.min(...period)
+                    if (minn >= 0 && minn <= 10000000){
+                        tr.style.background = "oldlace"
+                    }
+                    else if (minn > 10000000 && minn <= 16000000){
+                        tr.style.background = "#ffef4a"
+                    }
+                    else{
+                        tr.style.background = "#f0f9eb"
+                    }
+                }
+            }
+            socket.onerror = function(error) {
+                console.log(error)
+            };
+            this.socket_list.push(socket)
+        }
     },
+    handleShow(id, name, bd, location, ava){
+        window.location.href = `/profile/staff/detail/?dev_id=${id}&name=${name}&birth_date=${bd}&location=${location}&avatar=${ava}`
+    }
+  },
+  beforeDestroy() {
+    for (let i of this.socket_list){
+        i.close()
+    }
   }
 }
 </script>
 
 <style scoped>
+.warning-row{
+background: oldlace;
+}
+
+.success_row {
+background: #f0f9eb!important;
+}
 .wrapper{
     display: -webkit-box;
     display: -ms-flexbox;
@@ -60,29 +138,19 @@ export default {
     position: relative;
     height: auto;
 }
-
-section{
-    position: absolute;
-
-    grid-gap: 5px;
+table{
     width: 100%;
-    height: auto;
+    border-spacing: 0
 }
-.info{
-    top: 5px;
-    left: 5px;
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-    -webkit-box-align: center;
-        -ms-flex-align: center;
-            align-items: center;
-    font-size: 0.9em;
-    width: 100%;
-    height: 70px;
-    z-index: 99;
-    padding: 2px 0;
-    border-bottom: 1px solid #000;
+tr, th{
+    padding: 10px;
+    color: #606266;
+}
+th{
+   border-bottom: 1px solid #dddddd;
+}
+tr:first-child th{
+    color: #909399
 }
 .sectionAva img{
     width: 60px;
@@ -92,9 +160,27 @@ section{
 .sectionAva{
     margin:0 5px;
 } 
+.show_on_mobile{
+       display: none;
+   }
+
 @media (max-width: 800px) {
    .info{
        font-size: 0.8em;
-   }  
+   }
+   .table_header_column {
+       display: none;
+   }
+   .show_on_mobile{
+       display: block;
+   }
+   th{
+       font-size: 0.9em;
+   }
+}
+@media (max-width: 800px) {
+    th{
+       font-size: 0.8em;
+   }
 }
 </style>

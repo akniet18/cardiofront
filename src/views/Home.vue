@@ -86,7 +86,7 @@ section{
   display: grid;
   -ms-grid-columns: 2fr 10px 10fr;
   grid-template-columns: 2fr 10fr;
-  grid-gap: 10px;
+  grid-gap: 5px;
   margin-right: 10px;
   /* height: auto; */
 }
@@ -95,17 +95,9 @@ section{
   margin-left: 15px;
   cursor: pointer;
 }
-
-/* @media (min-width: 900px) {
-  section{
-    -ms-grid-columns: 2fr 10px 12fr;
-    grid-template-columns: 2fr 12fr;
-  }
-} */
 @media (max-width: 600px) {
   section{
-    -ms-grid-columns: 50px 5px 13.5fr;
-    grid-template-columns: 50px 13.5fr;
+   
     margin-right: 5px;
   }
   .logo{

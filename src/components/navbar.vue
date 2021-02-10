@@ -21,7 +21,7 @@
 
         <el-menu-item index="4" v-show="is_staff != 'false'">
             <i class="el-icon-s-order"></i>
-            <span slot="title">Все пользователи</span>
+            <span slot="title">Список пациентов</span>
         </el-menu-item>
         
         </el-menu>
@@ -45,7 +45,6 @@
     },
     methods: {
         handleSelect(key, keyPath){
-            console.log(this.is_staff)
             if (key == 1){
                 if (sessionStorage.getItem('is_staff') == "true"){
                     window.location.href = '/home/staff';
@@ -82,5 +81,13 @@
   .el-menu-vertical-demo:not(.el-menu--collapse) {
     /* width: 220px; */
     min-height: 100vh;
+  }
+  @media (max-width: 600px) {
+      .el-menu--collapse{
+          width: 50px!important;
+      }
+      .el-tooltip{
+          padding: 0 15px!important;
+      }
   }
 </style>

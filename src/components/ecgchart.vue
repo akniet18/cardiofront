@@ -165,7 +165,6 @@ export default {
   beforeDestroy() {
     // clearInterval(this.interval)
     this.socket.close()
-  
   }
 }
 </script>
