@@ -7,6 +7,7 @@
         <div>r: {{maxx}}</div>
         <div>s: {{minn}}</div>
         <div>t: {{t}}</div>
+        <div>ЧСС: {{chss}}</div>
       </div>
     </div>
 </template>
@@ -30,7 +31,8 @@ export default {
         minn: 0,
         p: 0,
         q: 0,
-        t: 0
+        t: 0,
+        chss: 0
     }
   },
 
@@ -46,10 +48,12 @@ export default {
     } = require('@arction/xydata')
     this.graf(this.data)
     // let did = sessionStorage.getItem('did')
+    console.log(this.$props.did);
     this.socket = new WebSocket("wss://back.cardioservice.com.kz/api/setByte/?wid="+this.did);
     let self = this
     
     let period = []
+    let oldK = 0
     this.socket.onopen = function(e) {
       console.log('open')
     };
@@ -57,19 +61,21 @@ export default {
       let d = JSON.parse(event.data)['content']['pointers']['content']['pointers']
       // console.log(d);
       period = period.concat(d.slice(1))
-      if (period.length >= 351){
+      if (period.length >= 300){
         self.maxx = Math.max(...period)
         self.minn = Math.min(...period)
+        self.chss = Math.round(1500 / Math.round((self.k/3-oldK/3)))
         if (self.maxx == self.minn){
           self.p = self.maxx
-          self.t = self.maxx 
-          self.q = self.minn 
+          self.t = self.maxx
+          self.q = self.minn
         }else{
           self.p = Math.round(self.maxx * 0.3)
           self.t = Math.round(self.maxx * 0.6)
           self.q = Math.round(self.minn * 0.5)
         }
         period = []
+        oldK = self.k
       }
       let p = []
       for (let i=1; i<d.length; i++){

@@ -69,6 +69,13 @@ Vue.use(VueRouter)
         component: function () {
           return import('../views/allusers.vue')
         }
+      },
+      {
+        path: '/profile/staff/detail/old',
+        name: 'profile_old',
+        component: function () {
+          return import('../views/userdetail2.vue')
+        }
       }
     ]
   },

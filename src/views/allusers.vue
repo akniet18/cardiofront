@@ -39,6 +39,10 @@
                         size="mini"
                         @click="handleShow(i.device_id, i.last_name+' '+i.first_name, i.birth_date, i.location, i.avatar)">Показать
                     </el-button>
+                    <el-button
+                        size="mini"
+                        @click="handleShow2(i.device_id, i.last_name+' '+i.first_name, i.birth_date, i.location, i.avatar)">Показать
+                    </el-button>
                 </th>
             </tr>
         </table>
@@ -87,7 +91,6 @@ export default {
             let period = []
             let maxx = 0
             let minn = 0
-            let tr = document.querySelector('.table_row_'+i.device_id.toString())
             socket.onmessage = function(event) {
                 let d = JSON.parse(event.data)['content']['pointers']['content']['pointers']
                 period = period.concat(d.slice(1))
@@ -95,14 +98,15 @@ export default {
                     maxx = Math.max(...period)
                     minn = Math.min(...period)
                     if (minn >= 0 && minn <= 10000000){
-                        tr.style.background = "oldlace"
+                        document.querySelector('.table_row_'+i.device_id.toString()).style.background = "oldlace"
                     }
                     else if (minn > 10000000 && minn <= 16000000){
-                        tr.style.background = "#ffef4a"
+                        document.querySelector('.table_row_'+i.device_id.toString()).style.background = "#ffef4a"
                     }
                     else{
-                        tr.style.background = "#f0f9eb"
+                        document.querySelector('.table_row_'+i.device_id.toString()).style.background = "#f0f9eb"
                     }
+                    period = []
                 }
             }
             socket.onerror = function(error) {
@@ -113,6 +117,9 @@ export default {
     },
     handleShow(id, name, bd, location, ava){
         window.location.href = `/profile/staff/detail/?dev_id=${id}&name=${name}&birth_date=${bd}&location=${location}&avatar=${ava}`
+    },
+    handleShow2(id, name, bd, location, ava){
+        window.location.href = `/profile/staff/detail/old/?dev_id=${id}&name=${name}&birth_date=${bd}&location=${location}&avatar=${ava}`
     }
   },
   beforeDestroy() {
@@ -129,7 +136,7 @@ background: oldlace;
 }
 
 .success_row {
-background: #f0f9eb!important;
+background: #f0f9eb;
 }
 .wrapper{
     display: -webkit-box;

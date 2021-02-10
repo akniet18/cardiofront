@@ -23,20 +23,11 @@
 </template>
 
 <script>
-import EcgChart from '../components/ecgchart'
+import EcgChart from '../components/ecgchart2'
 export default {
   components: {
       EcgChart
   },
-//   props: {
-//     username: String,
-//     first_name: String,
-//     last_name: String,
-//     birth_date: String,
-//     avatar: String,
-//     location: String,
-//     dev_id: String
-//   },
   data(){
     return{
         data: [],
