@@ -46,7 +46,6 @@
                 </th>
             </tr>
         </table>
-      
     </div>
 </template>
 

@@ -89,7 +89,9 @@ export default {
             data.append('first_name', this.ruleForm.first_name)
             data.append('last_name', this.ruleForm.last_name)
             data.append('username', this.ruleForm.username)
-            data.append('avatar', document.querySelector('#avatar').files[0])
+            if (document.querySelector('#avatar').files[0]){
+                data.append('avatar', document.querySelector('#avatar').files[0])
+            }
             data.append('birth_date', moment(String(this.ruleForm.date1)).format('YYYY-MM-DD'))
             data.append('location', this.ruleForm.location)
             data.append('pwd', this.ruleForm.pwd)
