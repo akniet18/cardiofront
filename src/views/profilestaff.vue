@@ -212,14 +212,16 @@ export default {
           .catch(_ => {});
       },
       deleteUser(row){
-          let headers = {"Authorization": "Token " + sessionStorage.getItem('key')}
-          axios.post('users/delete/'+row.device_id, {headers})
-            .then(r=>{
+            let headers = {"Authorization": "Token " + sessionStorage.getItem('key')}
+            let data = {}
+            axios.post('users/delete/'+row.id, data, {headers})
+              .then(r=>{
                 // console.log(r.data);
                 this.$message({
                     message: 'Удалено',
                     type: 'success'
                 });
+                this.data = this.data.filter(item => item !== row)
             }, r=> {
                 console.log(r)
             })
