@@ -99,6 +99,10 @@ export default {
             axios.post('users/create/', data, {headers})
                 .then(r => {
                     console.log(r)
+                    this.$message({
+                        message: 'Пациент добавлен',
+                        type: 'success'
+                    });
                 }, r => {
                     console.log(r)
                 })

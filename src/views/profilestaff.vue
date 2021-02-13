@@ -48,7 +48,7 @@
                 <template slot-scope="scope">
                     <!-- <el-button @click="handleClick" type="text" size="small">Detail</el-button> -->
                     <el-button type="warning" size="mini" @click="handleChange(scope.$index, scope.row)">Изменить</el-button>
-                    <el-button size="mini" type="danger">Удалить</el-button>
+                    <el-button size="mini" type="danger" @click="deleteUser(scope.row)">Удалить</el-button>
                 </template>
             </el-table-column>
         </el-table>
@@ -210,6 +210,19 @@ export default {
             done();
           })
           .catch(_ => {});
+      },
+      deleteUser(row){
+          let headers = {"Authorization": "Token " + sessionStorage.getItem('key')}
+          axios.post('users/delete/'+row.device_id, {headers})
+            .then(r=>{
+                // console.log(r.data);
+                this.$message({
+                    message: 'Удалено',
+                    type: 'success'
+                });
+            }, r=> {
+                console.log(r)
+            })
       }
     }
 }

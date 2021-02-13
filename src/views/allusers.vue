@@ -41,7 +41,7 @@
                     </el-button>
                     <el-button
                         size="mini"
-                        @click="handleShow2(i.device_id, i.last_name+' '+i.first_name, i.birth_date, i.location, i.avatar)">Показать
+                        @click="handleShow2(i.device_id, i.last_name+' '+i.first_name, i.birth_date, i.location, i.avatar)">Сохраненные данные
                     </el-button>
                 </th>
             </tr>
