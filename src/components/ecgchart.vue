@@ -70,9 +70,9 @@ export default {
           self.t = self.maxx
           self.q = self.minn
         }else{
-          self.p = Math.round(self.maxx * 0.3)
-          self.t = Math.round(self.maxx * 0.6)
-          self.q = Math.round(self.minn * 0.5)
+          self.p = Math.max(...period.slice(0, 60))
+          self.t = Math.max(...period.slice(60, 90))
+          self.q = Math.min(...period.slice(200,300))
         }
         period = []
         oldK = self.k
