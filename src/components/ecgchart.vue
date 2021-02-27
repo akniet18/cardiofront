@@ -59,7 +59,7 @@ export default {
     };
     this.socket.onmessage = function(event) {
       let d = JSON.parse(event.data)['content']['pointers']['content']['pointers']
-      // console.log(d);
+      console.log(d);
       period = period.concat(d.slice(1))
       if (period.length >= 300){
         self.maxx = Math.max(...period)
@@ -80,20 +80,23 @@ export default {
       let p = []
       for (let i=1; i<d.length; i++){
           if (d[i] > 10){
-            self.k+=3
+            self.k+=30
+            // let mmax = Math.max(...period)
+            // let mmin = Math.min(...period)
             self.series.add({x: self.k, y: d[i]})
-            let mmax = self.series.getYMax() + 20000
-            let mmin = self.series.getYMin() - 20000
-            self.chart.getDefaultAxisY()
-              .setTickStrategy("Empty")
-              .setStrokeStyle(emptyLine)
-              .setInterval(mmin, mmax)
-              .setScrollStrategy(AxisScrollStrategies.expansion)
+            // let mmax = self.series.getYMax() + 100000
+            // let mmin = self.series.getYMin() - 100000
+            // self.chart.getDefaultAxisY()
+            //   .setTickStrategy("Empty")
+            //   .setStrokeStyle(emptyLine)
+            //   .setInterval(mmin, mmax)
+            //   .setScrollStrategy(AxisScrollStrategies.expansion)
+            
             // self.data.push({x: self.k, y: d[i]})
             // p.push({x: self.k, y: d[i]})
-            // console.log(d[i]);
           }
       }
+     
     };
     this.socket.onerror = function(error) {
       console.log(error)
@@ -114,9 +117,9 @@ export default {
             emptyLine,
             emptyTick
         } = lcjs
-
+        
         this.chart = lightningChart().ChartXY({
-            // theme: Themes.dark 
+            // theme: Themes.blueSciFi
         }).setTitle('')
         // Add line series to visualize the data received
         this.series = this.chart.addLineSeries({ dataPattern: DataPatterns.horizontalProgressive })
@@ -126,19 +129,19 @@ export default {
                 thickness: 2,
                 fillStyle: new SolidFill({ color: ColorHEX('#5aafc7') })
             }))
-            .setMouseInteractions(false)
+            // .setMouseInteractions(false)
         this.chart.setAutoCursorMode(AutoCursorModes.disabled)
         // Setup view nicely.
         this.chart.getDefaultAxisY()
-            .setTickStrategy("Empty")
-            .setStrokeStyle(emptyLine)
-            // .setInterval(16000000, 17000000)
-            // .setScrollStrategy(AxisScrollStrategies.progressive)
+            // .setTickStrategy("Empty")
+            // .setStrokeStyle(emptyLine)
+            .setInterval(16100000, 16500000)
+            .setScrollStrategy(AxisScrollStrategies.progressive)
 
         this.chart.getDefaultAxisX()
             // .setTickStrategy("Empty")
             // .setStrokeStyle(emptyLine)
-            .setInterval(0, 2200)
+            .setInterval(0, 50000)
             .setScrollStrategy(AxisScrollStrategies.progressive)
 
         // let old = p[0]
@@ -154,19 +157,6 @@ export default {
         section.appendChild(lcjss)
 
       },
-      minterval(){
-        let self = this
-        this.interval = setInterval(function(){
-          let mmax = self.series.getYMax()
-          let mmin = self.series.getYMin()
-          if (mmax && mmin){
-            // console.log(mmax);
-            let data = (mmax + mmin) / 2
-            self.k += 2
-            self.series.add({x: self.k, y: data})
-          }
-        }, 200);
-      }
   },
   beforeDestroy() {
     // clearInterval(this.interval)

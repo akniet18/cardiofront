@@ -52,9 +52,10 @@ export default {
     let oldK = 0
 
     let headers = {"Authorization": "Token " + sessionStorage.getItem('key')}
-    axios.get('api/get/1', {headers})
+    axios.get('api/get/'+this.$props.did, {headers})
         .then(r=>{
           let d = r.data.data
+          console.log(d);
           period = period.concat(d)
           if (period.length >= 300){
             self.maxx = Math.max(...period)
@@ -74,28 +75,28 @@ export default {
           }
           let point = []
           for (let i of d){
-            self.k+=3
-            point.push({x: self.k, y: i})
-            // self.series.add({x: self.k, y: i})
-            // let mmax = self.series.getYMax() + 20000
-            // let mmin = self.series.getYMin() - 20000
-            // self.chart.getDefaultAxisY()
-            //   .setTickStrategy("Empty")
-            //   .setStrokeStyle(emptyLine)
-            //   .setInterval(mmin, mmax)
-            //   .setScrollStrategy(AxisScrollStrategies.expansion)
+            self.k+=10
+            // point.push({x: self.k, y: i})
+            self.series.add({x: self.k, y: i})
+            let mmax = self.series.getYMax() + 150000
+            let mmin = self.series.getYMin() - 150000
+            self.chart.getDefaultAxisY()
+              // .setTickStrategy("Empty")
+              // .setStrokeStyle(emptyLine)
+              .setInterval(mmin, mmax)
+              .setScrollStrategy(AxisScrollStrategies.expansion)
           }
-          createSampledDataGenerator(point, 1, 10)
-            .setSamplingFrequency(1)
-            .setInputData(point)
-            .generate()
-            .setStreamBatchSize(48)
-            .setStreamInterval(50)
-            .toStream()
-            .forEach(point => {
-                // Push the created points to the series.
-                self.series.add({ x: point.data.x, y: point.data.y })
-            })
+          // createSampledDataGenerator(point, 1, 10)
+          //   .setSamplingFrequency(1)
+          //   .setInputData(point)
+          //   .generate()
+          //   .setStreamBatchSize(48)
+          //   .setStreamInterval(50)
+          //   .toStream()
+          //   .forEach(point => {
+          //       // Push the created points to the series.
+          //       self.series.add({ x: point.data.x, y: point.data.y })
+          //   })
         }, r=>{
           console.log(r);
         })
@@ -117,8 +118,8 @@ export default {
         } = lcjs
 
         this.chart = lightningChart().ChartXY({
-            // theme: Themes.dark 
-        }).setTitle('')
+            // theme: Themes.dark
+        })
         // Add line series to visualize the data received
         this.series = this.chart.addLineSeries({ dataPattern: DataPatterns.horizontalProgressive })
         // Style the series
@@ -133,13 +134,13 @@ export default {
         this.chart.getDefaultAxisY()
             .setTickStrategy("Empty")
             .setStrokeStyle(emptyLine)
-            // .setInterval(16000000, 17000000)
+            // .setInterval(0, 17000000)
             // .setScrollStrategy(AxisScrollStrategies.progressive)
 
         this.chart.getDefaultAxisX()
             // .setTickStrategy("Empty")
             // .setStrokeStyle(emptyLine)
-            .setInterval(0, 2200)
+            .setInterval(0, 50000)
             .setScrollStrategy(AxisScrollStrategies.progressive)
 
         // let old = p[0]
