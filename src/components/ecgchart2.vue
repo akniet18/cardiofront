@@ -1,5 +1,12 @@
 <template>
     <div style="margin-top: 15px; position: relative">
+      <el-dialog title="Выберите дату" :visible.sync="dialogTableVisible">
+        <div>
+          <span v-for="i in pdata">
+            <el-button @click="show(i)">{{i.date}}</el-button>
+          </span>
+        </div>
+      </el-dialog>
       <section class="section"></section>
       <div class="infod">
         <div>p: {{p}}</div>
@@ -32,74 +39,21 @@ export default {
         p: 0,
         q: 0,
         t: 0,
-        chss: 0
+        chss: 0,
+        dialogTableVisible: false,
+        pdata: null
     }
   },
-
   mounted () {
-    // this.getData2()
-    const lcjs = require('@arction/lcjs')
-        const {
-            AxisScrollStrategies,
-            emptyLine
-        } = lcjs
-     const {
-        createSampledDataGenerator
-    } = require('@arction/xydata')
     this.graf(this.data)
-    let self = this
-    let period = []
-    let oldK = 0
-
     let headers = {"Authorization": "Token " + sessionStorage.getItem('key')}
     axios.get('api/get/'+this.$props.did, {headers})
-        .then(r=>{
-          let d = r.data.data
-          console.log(d);
-          period = period.concat(d)
-          if (period.length >= 300){
-            self.maxx = Math.max(...period)
-            self.minn = Math.min(...period)
-            // self.chss = Math.round(1500 / Math.round((self.k/3-oldK/3)))
-            if (self.maxx == self.minn){
-              self.p = self.maxx
-              self.t = self.maxx
-              self.q = self.minn
-            }else{
-              self.p = Math.round(self.maxx * 0.3)
-              self.t = Math.round(self.maxx * 0.6)
-              self.q = Math.round(self.minn * 0.5)
-            }
-            period = []
-            oldK = self.k
-          }
-          let point = []
-          for (let i of d){
-            self.k+=10
-            // point.push({x: self.k, y: i})
-            self.series.add({x: self.k, y: i})
-            let mmax = self.series.getYMax() + 150000
-            let mmin = self.series.getYMin() - 150000
-            self.chart.getDefaultAxisY()
-              // .setTickStrategy("Empty")
-              // .setStrokeStyle(emptyLine)
-              .setInterval(mmin, mmax)
-              .setScrollStrategy(AxisScrollStrategies.expansion)
-          }
-          // createSampledDataGenerator(point, 1, 10)
-          //   .setSamplingFrequency(1)
-          //   .setInputData(point)
-          //   .generate()
-          //   .setStreamBatchSize(48)
-          //   .setStreamInterval(50)
-          //   .toStream()
-          //   .forEach(point => {
-          //       // Push the created points to the series.
-          //       self.series.add({ x: point.data.x, y: point.data.y })
-          //   })
-        }, r=>{
-          console.log(r);
-        })
+      .then(r=>{
+         this.dialogTableVisible = true
+         this.pdata = r.data
+      }, r=> {
+        console.log(r);
+      })
   },
   methods: {
       graf(p){
@@ -155,6 +109,53 @@ export default {
         lcjss.style.height = "100%"
         section.appendChild(lcjss)
 
+      },
+      show(d) {
+        const lcjs = require('@arction/lcjs')
+        const {
+            AxisScrollStrategies,
+            emptyLine
+        } = lcjs
+        const {
+            createSampledDataGenerator
+        } = require('@arction/xydata')
+        this.dialogTableVisible = false
+        this.data = d.data
+        let self = this
+        let period = []
+        let oldK = 0
+        d = d.data
+          console.log(d);
+          period = period.concat(d)
+          if (period.length >= 300){
+            self.maxx = Math.max(...period)
+            self.minn = Math.min(...period)
+            // self.chss = Math.round(1500 / Math.round((self.k/3-oldK/3)))
+            if (self.maxx == self.minn){
+              self.p = self.maxx
+              self.t = self.maxx
+              self.q = self.minn
+            }else{
+              self.p = Math.round(self.maxx * 0.3)
+              self.t = Math.round(self.maxx * 0.6)
+              self.q = Math.round(self.minn * 0.5)
+            }
+            period = []
+            oldK = self.k
+          }
+          let point = []
+          for (let i of d){
+            self.k+=10
+            // point.push({x: self.k, y: i})
+            self.series.add({x: self.k, y: i})
+            let mmax = self.series.getYMax() + 150000
+            let mmin = self.series.getYMin() - 150000
+            self.chart.getDefaultAxisY()
+              // .setTickStrategy("Empty")
+              // .setStrokeStyle(emptyLine)
+              .setInterval(mmin, mmax)
+              .setScrollStrategy(AxisScrollStrategies.expansion)
+          }
       }
   }
 }
