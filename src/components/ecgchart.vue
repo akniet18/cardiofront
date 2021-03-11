@@ -84,13 +84,13 @@ export default {
             // let mmax = Math.max(...period)
             // let mmin = Math.min(...period)
             self.series.add({x: self.k, y: d[i]})
-            // let mmax = self.series.getYMax() + 100000
-            // let mmin = self.series.getYMin() - 100000
-            // self.chart.getDefaultAxisY()
-            //   .setTickStrategy("Empty")
-            //   .setStrokeStyle(emptyLine)
-            //   .setInterval(mmin, mmax)
-            //   .setScrollStrategy(AxisScrollStrategies.expansion)
+            let mmax = self.series.getYMax() + 100000
+            let mmin = self.series.getYMin() - 100000
+            self.chart.getDefaultAxisY()
+              .setTickStrategy("Empty")
+              .setStrokeStyle(emptyLine)
+              .setInterval(mmin, mmax)
+              .setScrollStrategy(AxisScrollStrategies.expansion)
             
             // self.data.push({x: self.k, y: d[i]})
             // p.push({x: self.k, y: d[i]})
@@ -133,10 +133,10 @@ export default {
         this.chart.setAutoCursorMode(AutoCursorModes.disabled)
         // Setup view nicely.
         this.chart.getDefaultAxisY()
-            // .setTickStrategy("Empty")
-            // .setStrokeStyle(emptyLine)
-            .setInterval(16100000, 16500000)
-            .setScrollStrategy(AxisScrollStrategies.progressive)
+            .setTickStrategy("Empty")
+            .setStrokeStyle(emptyLine)
+            // .setInterval(16100000, 16500000)
+            // .setScrollStrategy(AxisScrollStrategies.progressive)
 
         this.chart.getDefaultAxisX()
             // .setTickStrategy("Empty")

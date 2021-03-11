@@ -148,13 +148,13 @@ export default {
             self.k+=10
             // point.push({x: self.k, y: i})
             self.series.add({x: self.k, y: i})
-            let mmax = self.series.getYMax() + 150000
-            let mmin = self.series.getYMin() - 150000
-            self.chart.getDefaultAxisY()
-              // .setTickStrategy("Empty")
-              // .setStrokeStyle(emptyLine)
-              .setInterval(mmin, mmax)
-              .setScrollStrategy(AxisScrollStrategies.expansion)
+            // let mmax = self.series.getYMax() + 150000
+            // let mmin = self.series.getYMin() - 150000
+            // self.chart.getDefaultAxisY()
+            //   // .setTickStrategy("Empty")
+            //   // .setStrokeStyle(emptyLine)
+            //   .setInterval(mmin, mmax)
+            //   .setScrollStrategy(AxisScrollStrategies.expansion)
           }
       }
   }
