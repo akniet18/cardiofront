@@ -78,20 +78,26 @@ export default {
         oldK = self.k
       }
       let p = []
+      let old = 0
       for (let i=1; i<d.length; i++){
           if (d[i] > 10){
             self.k+=30
             // let mmax = Math.max(...period)
             // let mmin = Math.min(...period)
             self.series.add({x: self.k, y: d[i]})
-            let mmax = self.series.getYMax() + 100000
-            let mmin = self.series.getYMin() - 100000
-            self.chart.getDefaultAxisY()
-              .setTickStrategy("Empty")
-              .setStrokeStyle(emptyLine)
-              .setInterval(mmin, mmax)
-              .setScrollStrategy(AxisScrollStrategies.expansion)
+            // let mmax = self.series.getYMax() + 100000
+            // let mmin = self.series.getYMin() - 100000
+            if (Math.round(old - d[i]) > 5000){
+              let mmax = d[i] + 70000
+              let mmin = d[i] - 70000
+              self.chart.getDefaultAxisY()
+                .setTickStrategy("Empty")
+                .setStrokeStyle(emptyLine)
+                .setInterval(mmin, mmax)
+                .setScrollStrategy(AxisScrollStrategies.expansion)
+            }
             
+            old = d[i]
             // self.data.push({x: self.k, y: d[i]})
             // p.push({x: self.k, y: d[i]})
           }
@@ -154,7 +160,9 @@ export default {
         let lcjss = document.querySelector('#lcjs-auto-flexbox')
         let section = document.querySelector('.section')
         lcjss.style.height = "100%"
+        lcjss.style.marginTop = "40px"
         section.appendChild(lcjss)
+        lcjss.querySelector('canvas').style.zIndex = "999"
 
       },
   },
@@ -180,7 +188,7 @@ export default {
   bottom: 5px;
   right: 2px;
   background: #202020;
-  z-index: 99;
+  z-index: 999;
   color: #fff;
   padding: 10px;
 }

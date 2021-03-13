@@ -16,6 +16,9 @@
         <div>t: {{t}}</div>
         <div>ЧСС: {{chss}}</div>
       </div>
+      <div class="button">
+        <button @click="downloadg">Download</button>
+      </div>
     </div>
 </template>
 
@@ -45,7 +48,7 @@ export default {
     }
   },
   mounted () {
-    this.graf(this.data)
+    this.graf()
     let headers = {"Authorization": "Token " + sessionStorage.getItem('key')}
     axios.get('api/get/'+this.$props.did, {headers})
       .then(r=>{
@@ -56,7 +59,7 @@ export default {
       })
   },
   methods: {
-      graf(p){
+      graf(){
         const lcjs = require('@arction/lcjs')
         const {
             lightningChart,
@@ -72,11 +75,8 @@ export default {
         } = lcjs
 
         this.chart = lightningChart().ChartXY({
-            // theme: Themes.dark
         })
-        // Add line series to visualize the data received
         this.series = this.chart.addLineSeries({ dataPattern: DataPatterns.horizontalProgressive })
-        // Style the series
         this.series
             .setStrokeStyle(new SolidLine({
                 thickness: 2,
@@ -84,30 +84,19 @@ export default {
             }))
             .setMouseInteractions(false)
         this.chart.setAutoCursorMode(AutoCursorModes.disabled)
-        // Setup view nicely.
         this.chart.getDefaultAxisY()
             .setTickStrategy("Empty")
             .setStrokeStyle(emptyLine)
-            // .setInterval(0, 17000000)
-            // .setScrollStrategy(AxisScrollStrategies.progressive)
 
         this.chart.getDefaultAxisX()
-            // .setTickStrategy("Empty")
-            // .setStrokeStyle(emptyLine)
             .setInterval(0, 50000)
             .setScrollStrategy(AxisScrollStrategies.progressive)
-
-        // let old = p[0]
-        // for (let i in p){
-        //   this.k+=3
-        //   // if (Math.abs(p[i]-old) < 2000000){
-        //     this.series.add({x: this.k, y: p[i]})  
-        //   // }
-        // }
         let lcjss = document.querySelector('#lcjs-auto-flexbox')
         let section = document.querySelector('.section')
         lcjss.style.height = "100%"
+        lcjss.style.marginTop = "40px"
         section.appendChild(lcjss)
+        lcjss.querySelector('canvas').style.zIndex = "999"
 
       },
       show(d) {
@@ -144,18 +133,77 @@ export default {
             oldK = self.k
           }
           let point = []
+          let old = 0
           for (let i of d){
             self.k+=10
             // point.push({x: self.k, y: i})
             self.series.add({x: self.k, y: i})
-            // let mmax = self.series.getYMax() + 150000
-            // let mmin = self.series.getYMin() - 150000
-            // self.chart.getDefaultAxisY()
-            //   // .setTickStrategy("Empty")
-            //   // .setStrokeStyle(emptyLine)
-            //   .setInterval(mmin, mmax)
-            //   .setScrollStrategy(AxisScrollStrategies.expansion)
+            if (Math.round(old - i) > 2000){
+              let mmax = i + 70000
+              let mmin = i - 70000
+              self.chart.getDefaultAxisY()
+                .setTickStrategy("Empty")
+                .setStrokeStyle(emptyLine)
+                .setInterval(mmin, mmax)
+                .setScrollStrategy(AxisScrollStrategies.expansion)
+            }
+            old = i
           }
+          
+      },
+      downloadg(){
+        const lcjs = require('@arction/lcjs')
+        const {
+            AxisScrollStrategies,
+            emptyLine
+        } = lcjs
+        const {
+            createSampledDataGenerator
+        } = require('@arction/xydata')
+        this.data = this.data.slice(this.data.length-2200)
+        let d = this.data
+        console.log(d);
+        this.series.clear()
+
+        let self = this
+        let old = 0
+        let k = 0
+        for (let i of d){
+            k+=10
+            // point.push({x: self.k, y: i})
+            self.series.add({x: k, y: i})
+            if (Math.round(old - i) > 2000){
+              let mmax = i + 70000
+              let mmin = i - 70000
+              self.chart.getDefaultAxisY()
+                .setTickStrategy("Empty")
+                .setStrokeStyle(emptyLine)
+                .setInterval(mmin, mmax)
+                .setScrollStrategy(AxisScrollStrategies.expansion)
+            }
+            
+            old = i
+          }
+        self.chart.getDefaultAxisX()
+                // .setTickStrategy("Empty")
+                // .setStrokeStyle(emptyLine)
+                .setInterval(0, 22000)
+                .setScrollStrategy(AxisScrollStrategies.expansion)
+        setTimeout(function(){
+          var canvas = document.querySelector("canvas");
+        // console.log(canvas);
+        // Convert the canvas to data
+        var image = canvas.toDataURL();
+        // Create a link
+        var aDownloadLink = document.createElement('a');
+        // Add the name of the file to the link
+        aDownloadLink.download = 'canvas_image.png';
+        // Attach the data to the link
+        aDownloadLink.href = image;
+        // Get the code to click the download link
+        aDownloadLink.click();
+        }, 1000)
+        
       }
   }
 }
@@ -176,9 +224,13 @@ export default {
   bottom: 5px;
   right: 2px;
   background: #202020;
-  z-index: 99;
+  z-index: 999;
   color: #fff;
   padding: 10px;
+}
+.button{
+  position: absolute;
+  z-index: 9999;
 }
 @media (max-width: 800px) {
   .infod{

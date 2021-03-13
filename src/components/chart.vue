@@ -149,7 +149,7 @@ canvas{
     width: 100%;
     height: 70px;
     color: #fff;
-    z-index: 99;
+    z-index: 999;
 }
 .sectionAva img{
     width: 60px;

@@ -1,6 +1,5 @@
 <template>
     <div class="wrapper">
-        
         <div>
             <div class="item item1"><EcgChart :did="dev_id"/></div>
         </div>
@@ -16,9 +15,7 @@
                     <div class="address">{{location}} {{dev_id}}</div>
                 </div>
             </div> 
-            
         </section>
-        
     </div>
 </template>
 
