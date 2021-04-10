@@ -6,7 +6,7 @@
 
                 <div class="inpDiv">
                     <el-form-item prop="username">
-                        <label  for="username">Username or email</label>
+                        <label  for="username">Логин</label>
                         <el-input
                             id="username"
                             v-model="ch_form.username"

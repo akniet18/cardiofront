@@ -24,6 +24,7 @@
 
 <script>
 import axios from 'axios'
+import moment from 'moment'
 export default {
   props: {
     did: String
@@ -53,6 +54,9 @@ export default {
     axios.get('api/get/'+this.$props.did, {headers})
       .then(r=>{
          this.dialogTableVisible = true
+         for (let i of r.data){
+          i.date = moment(i.date).format('DD-MM-YY')
+         }
          this.pdata = r.data
       }, r=> {
         console.log(r);

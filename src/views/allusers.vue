@@ -4,6 +4,7 @@
             <tr class="table_header">
                 <th class="table_header_column">Фамилия</th>
                 <th class="table_header_column">Имя</th>
+                <th class="table_header_column">ID карточки</th>
                 <th class="table_header_column">Адрес</th>
                 <th class="table_header_column">Дата рождения</th>
                 <th>
@@ -32,6 +33,7 @@
                     </div>
                 </th>
                 <th class="table_header_column">{{i.first_name}}</th>
+                <th class="table_header_column">{{i.device_id}}</th>
                 <th class="table_header_column">{{i.location}}</th>
                 <th class="table_header_column">{{i.birth_date}}</th>
                 <th>
