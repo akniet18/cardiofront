@@ -1,155 +1,152 @@
 <template>
     <div class="wrapper">
-        <div class="divitems">
-            <div class="item item1" ><EcgChart did="1"/></div>
-            <div class="item item2" ><EcgChart did="2"/></div>
-            <div class="item item3" ><EcgChart did="3"/></div>
-            <div class="item item4" ><EcgChart did="4"/></div>
-        </div>
-        <section>
-            <div class="info" @click="zoom(1, 'Көшербай Марлен Айдынұлы', '18.04.1997', 'г. Алматы, мкр-н. Айгерим-1, ул. Бенберина 76, кв. 8', '../assets/ava1.jpeg')">
-                <div class="sectionAva">
-                    <img src="../assets/ava1.jpeg" alt="">
-                </div>
-                <div class="sectionInfo">
-                    <div class="username">Көшербай Марлен Айдынұлы </div>
-                    <div class="birthdate">18.04.1997</div>
-                    <div class="address">г. Алматы, мкр-н. Айгерим-1, ул. Бенберина 76, кв. 8</div>
-                </div>
-            </div>
-            <div class="info" @click="zoom(2, 'Шылмырза Үсен Жұманұлы', '16.09.1997', 'г.Алматы, Ауэзовский р-н, мкр.11, ул.Шаляпина дом 14, кв 10', '../assets/ava2.jpeg')">
-                <div class="sectionAva">
-                    <img src="../assets/ava2.jpeg" alt="">
-                </div>
-                <div class="sectionInfo">
-                    <div class="username">Шылмырза Үсен Жұманұлы</div>
-                    <div class="birthdate">16.09.1997</div>
-                    <div class="address">г.Алматы, Ауэзовский р-н, мкр.11, ул.Шаляпина дом 14, кв 10</div>
-                </div>
-            </div> 
-            <div class="info" @click="zoom(3, 'Игембай Ерболат Айдынұлы', '04.07.1996г', 'Алматы обл, Еңбекшіқазақ ауд, Түрген ауылы, Жүнісбай 11', '../assets/ava3.jpeg')">
-                <div class="sectionAva">
-                    <img src="../assets/ava3.jpeg" alt="">
-                </div>
-                <div class="sectionInfo">
-                    <div class="username">Игембай Ерболат Айдынұлы</div>
-                    <div class="birthdate">04.07.1996г</div>
-                    <div class="address">Алматы обл, Еңбекшіқазақ ауд, Түрген ауылы, Жүнісбай 11</div>
-                </div>
-            </div> 
-            <div class="info" @click="zoom(4, 'Сейткасымов Турар', '09.07.1997', 'Г. Алматы Жетысуский р-н. ул. Леваневского 3', '../assets/ava4.jpeg')">
-                <div class="sectionAva">
-                    <img src="../assets/ava4.jpeg" alt="">
-                </div>
-                <div class="sectionInfo">
-                    <div class="username">Сейткасымов Турар</div>
-                    <div class="birthdate">09.07.1997</div>
-                    <div class="address">Г. Алматы Жетысуский р-н. ул. Леваневского 3</div>
-                </div>
-            </div> 
-        </section>
+        <table>
+            <tr class="table_header">
+                <th class="table_header_column">Фамилия</th>
+                <th class="table_header_column">Имя</th>
+                <th class="table_header_column">ID карточки</th>
+                <th class="table_header_column">Адрес</th>
+                <th class="table_header_column">Дата рождения</th>
+                <th class="last">
+                    <el-input
+                    v-model="search"
+                    size="mini"
+                    placeholder="Type to search"/>
+                    <el-button
+                        size="mini"
+                        @click="handleShow()">Выбрать
+                    </el-button>
+                </th>
+ 
+            </tr>
+            <tr v-for="i in data.filter(data => !search || data.username.toLowerCase().includes(search.toLowerCase()) 
+                                    || data.first_name.toLowerCase().includes(search.toLowerCase())
+                                    || data.last_name.toLowerCase().includes(search.toLowerCase())
+                                    || data.location.toLowerCase().includes(search.toLowerCase()))" 
+                :key="i.device_id"
+                class="table_row success_row" :class="`table_row_${i.device_id}`"
+                >
+                <th>
+                    <div style="display:flex; align-items:center">
+                        <img :src="i.avatar" width="50px">
+                        <div style="display:flex; flex-direction: column; margin-left: 10px;">
+                            <div>{{i.last_name}}</div>
+                            <div class="show_on_mobile">{{i.first_name}}</div>
+                            <div class="show_on_mobile">{{i.location}}</div>
+                            <div class="show_on_mobile">{{i.birth_date}}</div>
+                        </div>
+                    </div>
+                </th>
+                <th class="table_header_column">{{i.first_name}}</th>
+                <th class="table_header_column">{{i.device_id}}</th>
+                <th class="table_header_column">{{i.location}}</th>
+                <th class="table_header_column">{{i.birth_date}}</th>
+                <th>
+                    <!-- <el-checkbox ref="checkbox" :class="'checkbox-'+i.device_id" @change="checked(i)"></el-checkbox> -->
+                    <input type="checkbox" ref="checkbox" :class="'checkbox-'+i.device_id" @change="checked(i)">
+                </th>
+            </tr>
+        </table>
     </div>
 </template>
 
 <script>
-import EcgChart from './ecgchart'
-import EcgChart2 from './ecgchart2'
+import axios from 'axios';
 export default {
-  name: 'Chart',
-  components: {
-      EcgChart, EcgChart2
-  },
   data(){
     return{
       chartdata: [1, 2, 3, 4, 5, 6],
       options: [],
-      data: []
+      data: [],
+      search: '',
+      list: [],
+      last: [],
+      lastCheck: null
     }
   },
+  created(){
+    this.getUser()
+  },
   mounted () {
-      let s = document.getElementById("lcjs-auto-flexbox")
-      s.style.height = "0"
-      let item = document.querySelectorAll('div[class^="item"')
-      let chart = document.querySelectorAll('div[id^="chart"')
-      let infod = document.querySelectorAll('div[class^="infod"')
-      console.log(infod);
-      for (let i in item){
-          item[i].appendChild(chart[i])
-          chart[i].appendChild(infod[i])
-          item[i].style.height = "100%"
-          chart[i].style.height = "100%"
-      }
   },
   methods: {
-    zoom(id, name, bd, location, avatar){
-        // this.$router.push({name: "profile_detail", query: {dev_id: id}})
-        // window.location.href = '/profile/staff/detail/?dev_id='+id.toString()+"&";
-        window.location.href = `/profile/staff/detail/?dev_id=${id}&name=${name}&birth_date=${bd}&location=${location}&avatar=${avatar}`
+    getUser() {
+        let headers = {"Authorization": "Token " + sessionStorage.getItem('key')}
+        axios.get('users/get/', {headers})
+            .then(r=>{
+                for (let i in r.data){
+                    r.data[i].avatar = 'https://back.cardioservice.com.kz/media/'+r.data[i].avatar
+                }
+                this.data = r.data
+            }, e=> {
+                console.log(e);
+            })
+        
     },
+    checked(item){
+        let a = this.$refs.checkbox
+        let b = `.checkbox-${item.device_id}`
+        if (this.last.includes(b)){
+            const index = this.last.indexOf(item);
+            if (index > -1) {
+                this.last.splice(index, 1);
+                this.list.splice(index, 1);
+            }
+        }
+        else{
+            this.last.push(b)
+            this.list.push(item)
+        }        
+        if (this.last.length > 4){
+            document.querySelector(this.last[0]).checked = false
+            this.last = this.last.slice(1, this.last.length)
+            this.list = this.list.slice(1, this.list.length)
+        }
+        // console.log(this.list, this.last);
+        this.lastCheck = `.checkbox-${item.device_id}`
+    },
+    handleShow(){
+        localStorage.setItem('checked', JSON.stringify(this.list))
+        // window.location.href = `/home/checked`
+        this.$router.push({name: "checked"})
+    },
+
   }
 }
 </script>
 
 <style scoped>
+.warning-row{
+background: oldlace;
+}
+
+.success_row {
+background: #f0f9eb;
+}
 .wrapper{
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
     position: relative;
-    min-height: 90vh;
     height: auto;
 }
-
-section, .divitems{
-    position: absolute;
-    display: -ms-grid;
-    display: grid;
-    -ms-grid-columns: 1fr 10px 1fr;
-    grid-template-columns: 1fr 1fr;
-    grid-gap: 10px;
+table{
     width: 100%;
-    height: 120%;
+    border-spacing: 0
+}
+.table_header{
+    /* position: fixed; */
 }
 
-section > *:nth-child(1), .divitems> *:nth-child(1){
-    -ms-grid-row: 1;
-    -ms-grid-column: 1;
+tr, th{
+    padding: 10px;
+    color: #606266;
 }
-
-section > *:nth-child(2),.divitems> *:nth-child(2){
-    -ms-grid-row: 1;
-    -ms-grid-column: 3;
+th{
+   border-bottom: 1px solid #dddddd;
 }
-
-section > *:nth-child(3), .divitems> *:nth-child(3){
-    -ms-grid-row: 3;
-    -ms-grid-column: 1;
-}
-
-section > *:nth-child(4), .divitems> *:nth-child(4){
-    -ms-grid-row: 3;
-    -ms-grid-column: 3;
-}
-
-canvas{
-    height: 450px!important;
-}
-.info{
-    /* position: absolute; */
-    top: 5px;
-    left: 5px;
-    background: #202020;
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-    -webkit-box-align: center;
-        -ms-flex-align: center;
-            align-items: center;
-    font-size: 0.9em;
-    width: 100%;
-    height: 70px;
-    color: #fff;
-    z-index: 999;
+tr:first-child th{
+    color: #909399
 }
 .sectionAva img{
     width: 60px;
@@ -158,22 +155,33 @@ canvas{
 }
 .sectionAva{
     margin:0 5px;
+} 
+.show_on_mobile{
+       display: none;
+   }
+.last{
+    display: flex;
 }
-#lcjs-auto-flexbox{
-      height: 0;
-  } 
+.last input{
+    width: 100px;
+}
 @media (max-width: 800px) {
    .info{
        font-size: 0.8em;
    }
-  
-  section, .divitems{
-    -ms-grid-columns: 1fr;
-    grid-template-columns: 1fr;
-    -ms-grid-rows: 1fr 10px 1fr 10px 1fr 10px 1fr;
-    grid-template-rows: 1fr 1fr 1fr 1fr;
-    height: 190vh;
-  }
-  
+   .table_header_column {
+       display: none;
+   }
+   .show_on_mobile{
+       display: block;
+   }
+   th{
+       font-size: 0.9em;
+   }
+}
+@media (max-width: 800px) {
+    th{
+       font-size: 0.8em;
+   }
 }
 </style>

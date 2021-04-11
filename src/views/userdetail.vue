@@ -48,10 +48,23 @@ export default {
         location: this.$route.query.location,
     }
   },
+  mounted(){
+      let item = document.querySelectorAll('div[class^="item"')
+      let chart = document.querySelectorAll('div[id^="chart"')
+      let infod = document.querySelectorAll('div[class^="infod"')
+      for (let i in item){
+          console.log(item[i]);
+          item[i].appendChild(chart[i])
+          chart[i].appendChild(infod[i])
+          item[i].style.height = "100%"
+          chart[i].style.height = "450px"
+      }
+  }
 }
 </script>
 
 <style scoped>
+
 .wrapper{
     display: -webkit-box;
     display: -ms-flexbox;

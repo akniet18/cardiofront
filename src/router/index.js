@@ -22,10 +22,17 @@ Vue.use(VueRouter)
     beforeEnter: ifAuth,
     children: [
       {
-        path: "staff/",
+        path: "staff",
         name:'chart',
         component: function () {
           return import('../components/chart.vue')
+        },
+      },
+      {
+        path: "checked",
+        name:'checked',
+        component: function () {
+          return import('../components/info.vue')
         },
       },
       {
