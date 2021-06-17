@@ -2,20 +2,19 @@
     <div class="wrapper">
         <table>
             <tr class="table_header">
-                <th class="table_header_column">Фамилия</th>
-                <th class="table_header_column">Имя</th>
-                <th class="table_header_column">ID карточки</th>
-                <th class="table_header_column">Адрес</th>
-                <th class="table_header_column">Дата рождения</th>
+                <th class="table_header_column">{{ $t('surname') }}</th>
+                <th class="table_header_column">{{ $t('first_name') }}</th>
+                <th class="table_header_column">{{ $t('id') }}</th>
+                <th class="table_header_column">{{ $t('address') }}</th>
+                <th class="table_header_column">{{ $t('birth_date') }}</th>
                 <th class="last">
                     <el-input
                     v-model="search"
                     size="mini"
-                    placeholder="Type to search"/>
+                    :placeholder="$t('typeToSearch')"/>
                     <el-button
                         size="mini"
-                        @click="handleShow()">Выбрать
-                    </el-button>
+                        @click="handleShow()">{{ $t('choise') }}</el-button>
                 </th>
  
             </tr>
@@ -54,7 +53,7 @@
 import axios from 'axios';
 export default {
   data(){
-    return{
+    return {
       chartdata: [1, 2, 3, 4, 5, 6],
       options: [],
       data: [],
@@ -75,13 +74,12 @@ export default {
         axios.get('users/get/', {headers})
             .then(r=>{
                 for (let i in r.data){
-                    r.data[i].avatar = 'https://back.cardioservice.com.kz/media/'+r.data[i].avatar
+                    r.data[i].avatar = 'https://back.cardioservice.com.kz/media/' + r.data[i].avatar
                 }
                 this.data = r.data
             }, e=> {
                 console.log(e);
             })
-        
     },
     checked(item){
         let a = this.$refs.checkbox

@@ -1,37 +1,37 @@
 <template>
     <div class="section">  
         <el-form :model="ruleForm" :rules="rules" ref="ruleForm"  class="demo-ruleForm">
-            <el-form-item label="username" prop="username">
+            <el-form-item :label="$t('username')" prop="username">
                 <el-input v-model="ruleForm.username"></el-input>
             </el-form-item>
-            <el-form-item label="Пароль" prop="pwd">
+            <el-form-item :label="$t('password')" prop="pwd">
                 <el-input v-model="ruleForm.pwd"></el-input>
             </el-form-item>
 
-            <el-form-item label="Имя" prop="first_name">
+            <el-form-item :label="$t('first_name')" prop="first_name">
                 <el-input v-model="ruleForm.first_name"></el-input>
             </el-form-item>
-            <el-form-item label="Фамилия" prop="last_name">
+            <el-form-item :label="$t('surname')" prop="last_name">
                 <el-input v-model="ruleForm.last_name"></el-input>
             </el-form-item>
 
-            <el-form-item prop="date1" label="Дата рождения">
+            <el-form-item prop="date1" :label="$t('birth_date')">
                 <el-date-picker type="date" placeholder="Pick a date" v-model="ruleForm.date1" style="width: 100%;"></el-date-picker>
             </el-form-item>
-            <el-form-item label="Адрес" prop="location">
+            <el-form-item :label="$t('address')" prop="location">
                 <el-input type="textarea" v-model="ruleForm.location"></el-input>
             </el-form-item>
-             <el-form-item label="id устройства" prop="did">
+             <el-form-item :label="$t('id')" prop="did">
                 <el-input type="textarea" v-model="ruleForm.did"></el-input>
             </el-form-item>
 
-            <el-form-item label="Аватар">
+            <el-form-item :label="$t('avatar')">
                 <input type='file' id="avatar" />
             </el-form-item>
 
             <el-form-item>
-                <el-button type="primary" @click="submitForm('ruleForm')">Create</el-button>
-                <el-button @click="resetForm('ruleForm')">Reset</el-button>
+                <el-button type="primary" @click="submitForm('ruleForm')">{{ $t('create') }}</el-button>
+                <el-button @click="resetForm('ruleForm')">{{ $t('reset') }}</el-button>
             </el-form-item>
         </el-form>
     </div>

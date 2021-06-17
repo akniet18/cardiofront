@@ -96,7 +96,6 @@ export default {
                 .setInterval(mmin, mmax)
                 .setScrollStrategy(AxisScrollStrategies.expansion)
             }
-            
             old = d[i]
             // self.data.push({x: self.k, y: d[i]})
             // p.push({x: self.k, y: d[i]})

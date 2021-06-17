@@ -1,8 +1,8 @@
 <template>
     <div style="margin-top: 15px; position: relative">
-      <el-dialog title="Выберите дату" :visible.sync="dialogTableVisible">
+      <el-dialog :title="$t('choose_date')" :visible.sync="dialogTableVisible">
         <div>
-          <span v-for="i in pdata">
+          <span v-for="i in pdate">
             <el-button @click="show(i)">{{i.date}}</el-button>
           </span>
         </div>
@@ -45,7 +45,8 @@ export default {
         t: 0,
         chss: 0,
         dialogTableVisible: false,
-        pdata: null
+        pdata: null,
+        pdate: null
     }
   },
   mounted () {
@@ -55,9 +56,9 @@ export default {
       .then(r=>{
          this.dialogTableVisible = true
          for (let i of r.data){
-          i.date = moment(i.date).format('DD-MM-YY')
+          i.date = moment(i.date).format('DD-MM-YYYY')
          }
-         this.pdata = r.data
+         this.pdate = r.data
       }, r=> {
         console.log(r);
       })
@@ -104,56 +105,57 @@ export default {
 
       },
       show(d) {
+        this.dialogTableVisible = false
         const lcjs = require('@arction/lcjs')
         const {
             AxisScrollStrategies,
             emptyLine
         } = lcjs
-        const {
-            createSampledDataGenerator
-        } = require('@arction/xydata')
-        this.dialogTableVisible = false
-        this.data = d.data
-        let self = this
-        let period = []
-        let oldK = 0
-        d = d.data
-          console.log(d);
-          period = period.concat(d)
-          if (period.length >= 300){
-            self.maxx = Math.max(...period)
-            self.minn = Math.min(...period)
-            // self.chss = Math.round(1500 / Math.round((self.k/3-oldK/3)))
-            if (self.maxx == self.minn){
-              self.p = self.maxx
-              self.t = self.maxx
-              self.q = self.minn
-            }else{
-              self.p = Math.round(self.maxx * 0.3)
-              self.t = Math.round(self.maxx * 0.6)
-              self.q = Math.round(self.minn * 0.5)
+        let headers = {"Authorization": "Token " + sessionStorage.getItem('key')}
+        axios.get('api/get/date/'+d.id, {headers})
+          .then(r=>{
+            this.data = r.data[0].data
+            let self = this
+            let period = []
+            let oldK = 0
+            d = r.data[0].data
+            period = period.concat(d)
+            if (period.length >= 350){
+              self.maxx = Math.max(...period)
+              self.minn = Math.min(...period)
+              // self.chss = Math.round(1500 / Math.round((self.k/3-oldK/3)))
+              if (self.maxx == self.minn){
+                self.p = self.maxx
+                self.t = self.maxx
+                self.q = self.minn
+              }else{
+                self.p = Math.round(self.maxx * 0.3)
+                self.t = Math.round(self.maxx * 0.6)
+                self.q = Math.round(self.minn * 0.5)
+              }
+              period = []
+              oldK = self.k
             }
-            period = []
-            oldK = self.k
-          }
-          let point = []
-          let old = 0
-          for (let i of d){
-            self.k+=10
-            // point.push({x: self.k, y: i})
-            self.series.add({x: self.k, y: i})
-            if (Math.round(old - i) > 2000){
-              let mmax = i + 70000
-              let mmin = i - 70000
-              self.chart.getDefaultAxisY()
-                .setTickStrategy("Empty")
-                .setStrokeStyle(emptyLine)
-                .setInterval(mmin, mmax)
-                .setScrollStrategy(AxisScrollStrategies.expansion)
+            let point = []
+            let old = 0
+            for (let i of d){
+              self.k+=10
+              // point.push({x: self.k, y: i})
+              self.series.add({x: self.k, y: i})
+              if (Math.round(old - i) > 2000){
+                let mmax = i + 70000
+                let mmin = i - 70000
+                self.chart.getDefaultAxisY()
+                  .setTickStrategy("Empty")
+                  .setStrokeStyle(emptyLine)
+                  .setInterval(mmin, mmax)
+                  .setScrollStrategy(AxisScrollStrategies.expansion)
+              }
+              old = i
             }
-            old = i
-          }
-          
+          }, r=> {
+            console.log(r);
+          })          
       },
       downloadg(){
         const lcjs = require('@arction/lcjs')

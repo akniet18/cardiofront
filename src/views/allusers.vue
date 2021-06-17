@@ -2,16 +2,16 @@
     <div class="wrapper">
         <table>
             <tr class="table_header">
-                <th class="table_header_column">Фамилия</th>
-                <th class="table_header_column">Имя</th>
-                <th class="table_header_column">ID карточки</th>
-                <th class="table_header_column">Адрес</th>
-                <th class="table_header_column">Дата рождения</th>
+                <th class="table_header_column">{{ $t('surname') }}</th>
+                <th class="table_header_column">{{ $t('first_name') }}</th>
+                <th class="table_header_column">{{ $t('id') }}</th>
+                <th class="table_header_column">{{ $t('address') }}</th>
+                <th class="table_header_column">{{ $t('birth_date') }}</th>
                 <th>
                     <el-input
                     v-model="search"
                     size="mini"
-                    placeholder="Type to search"/>
+                    :placeholder="$t('typeToSearch')"/>
                 </th>
             </tr>
             <tr v-for="i in data.filter(data => !search || data.username.toLowerCase().includes(search.toLowerCase()) 
@@ -39,11 +39,11 @@
                 <th>
                     <el-button
                         size="mini"
-                        @click="handleShow(i.device_id, i.last_name+' '+i.first_name, i.birth_date, i.location, i.avatar)">Показать
+                        @click="handleShow(i.device_id, i.last_name+' '+i.first_name, i.birth_date, i.location, i.avatar)">{{ $t('show') }}
                     </el-button>
                     <el-button
                         size="mini"
-                        @click="handleShow2(i.device_id, i.last_name+' '+i.first_name, i.birth_date, i.location, i.avatar)">Сохраненные данные
+                        @click="handleShow2(i.device_id, i.last_name+' '+i.first_name, i.birth_date, i.location, i.avatar)">{{ $t('save_data') }}
                     </el-button>
                 </th>
             </tr>

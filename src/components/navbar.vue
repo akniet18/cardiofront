@@ -8,20 +8,20 @@
 
         <el-menu-item index="1">
             <i class="el-icon-menu"></i>
-            <span slot="title">Электрокардиографии</span>
+            <span slot="title">{{ $t('first_nav_item') }}</span>
         </el-menu-item>
         <el-menu-item index="2">
             <i class="el-icon-user"></i>
-            <span slot="title">Пользователи</span>
+            <span slot="title">{{ $t('second_nav_item') }}</span>
         </el-menu-item>
         <el-menu-item index="3" v-show="is_staff != 'false'">
             <i class="el-icon-plus"></i>
-            <span slot="title">Добавить пользователя</span>
+            <span slot="title">{{ $t('third_nav_item') }}</span>
         </el-menu-item>
 
         <el-menu-item index="4" v-show="is_staff != 'false'">
             <i class="el-icon-s-order"></i>
-            <span slot="title">Список пациентов</span>
+            <span slot="title">{{ $t('fourth_nav_item') }}</span>
         </el-menu-item>
         
         </el-menu>

@@ -5,7 +5,7 @@
         <div class="userDiv">
             <img class="ava" :src="avatar"/>
             <div class="text-white">{{username}}</div> 
-            <div class="logout" @click="logout">Выйти</div>
+            <div class="logout" @click="logout">{{ $t('logout') }}</div>
         </div>
   
     </header>
@@ -15,18 +15,21 @@
       <router-view></router-view>
       <!-- <Chart /> -->
     </section>
+    <LanguageSwitcher />
   </div>
 </template>
 
 <script>
 import NavBar from '../components/navbar'
 import { BIcon, BIconArrowUp, BIconArrowDown } from 'bootstrap-vue'
+import LanguageSwitcher from "../components/LanguageSwitcher.vue";
 
 export default {
   components:{
     NavBar, BIcon,
     BIconArrowUp,
-    BIconArrowDown
+    BIconArrowDown,
+    LanguageSwitcher
   },
   name: 'Home',
   data(){

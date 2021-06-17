@@ -8,31 +8,31 @@
             style="width: 100%">
             <el-table-column
                 prop="username"
-                label="Никнейм"
+                :label="$t('username')"
                 width="100px"
             >
             </el-table-column>
             <el-table-column
                 prop="first_name"
-                label="Имя"
+                :label="$t('first_name')"
                 v-if="show"
             >
             </el-table-column>
             <el-table-column
                 prop="last_name"
-                label="Фамилия"
+                :label="$t('surname')"
                 v-if="show"
             >
             </el-table-column>
             <el-table-column
                 prop="location"
-                label="Адрес"
+                :label="$t('address')"
                 v-if="show"
               >
             </el-table-column>
             <el-table-column
                 prop="birth_date"
-                label="Дата рождения"
+                :label="$t('birth_date')"
                 sortable
                 v-if="show"
                >
@@ -43,46 +43,46 @@
                     <el-input
                     v-model="search"
                     size="mini"
-                    placeholder="Type to search"/>
+                    :placeholder="$t('typeToSearch')"/>
                 </template>
                 <template slot-scope="scope">
                     <!-- <el-button @click="handleClick" type="text" size="small">Detail</el-button> -->
-                    <el-button type="warning" size="mini" @click="handleChange(scope.$index, scope.row)">Изменить</el-button>
-                    <el-button size="mini" type="danger" @click="deleteUser(scope.row)">Удалить</el-button>
+                    <el-button type="warning" size="mini" @click="handleChange(scope.$index, scope.row)">{{$t('change')}}</el-button>
+                    <el-button size="mini" type="danger" @click="deleteUser(scope.row)">{{$t('delete')}}</el-button>
                 </template>
             </el-table-column>
         </el-table>
 
         <el-dialog
-            title="Tips"
+            title=""
             :visible.sync="dialogVisible"
             width="80%"
             >
             <el-form :model="ruleForm" :rules="rules" ref="ruleForm" class="demo-ruleForm">
-                <el-form-item label="username" prop="username">
+                <el-form-item :label="$t('username')" prop="username">
                     <el-input v-model="ruleForm.username"></el-input>
                 </el-form-item>
                 <!-- <el-form-item label="password" prop="pwd">
                     <el-input v-model="ruleForm.pwd"></el-input>
                 </el-form-item> -->
 
-                <el-form-item label="Имя" prop="first_name">
+                <el-form-item :label="$t('first_name')" prop="first_name">
                     <el-input v-model="ruleForm.first_name"></el-input>
                 </el-form-item>
-                <el-form-item label="Фамилия" prop="last_name">
+                <el-form-item :label="$t('surname')" prop="last_name">
                     <el-input v-model="ruleForm.last_name"></el-input>
                 </el-form-item>
 
-                <el-form-item prop="birth_date" label="Дата рождения">
+                <el-form-item prop="birth_date" :label="$t('birth_date')">
                     <el-date-picker type="date" placeholder="Pick a date" v-model="ruleForm.birth_date" style="width: 100%;"></el-date-picker>
                 </el-form-item>
-                <el-form-item label="Адрес" prop="location">
+                <el-form-item :label="$t('address')" prop="location">
                     <el-input type="textarea" v-model="ruleForm.location"></el-input>
                 </el-form-item>
-                <el-form-item label="id устройства" prop="device_id">
+                <el-form-item :label="$t('id')" prop="device_id">
                     <el-input type="textarea" v-model="ruleForm.device_id"></el-input>
                 </el-form-item>
-                <el-form-item label="Аватар">
+                <el-form-item :label="$t('avatar')">
                     <input type='file' id="avatar" />
                 </el-form-item>
 
@@ -92,8 +92,8 @@
                 </el-form-item> -->
             </el-form>
             <span slot="footer" class="dialog-footer">
-                <el-button @click="dialogVisible = false">Cancel</el-button>
-                <el-button type="primary" @click="submitForm('ruleForm')">Confirm</el-button>
+                <el-button @click="dialogVisible = false">{{$t('cancel')}}</el-button>
+                <el-button type="primary" @click="submitForm('ruleForm')">{{$t('save')}}</el-button>
             </span>
         </el-dialog>
         
