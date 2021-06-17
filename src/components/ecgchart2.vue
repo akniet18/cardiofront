@@ -8,14 +8,14 @@
         </div>
       </el-dialog>
       <section class="section"></section>
-      <div class="infod">
+      <!-- <div class="infod">
         <div>p: {{p}}</div>
         <div>q: {{q}}</div>
         <div>r: {{maxx}}</div>
         <div>s: {{minn}}</div>
         <div>t: {{t}}</div>
         <div>ЧСС: {{chss}}</div>
-      </div>
+      </div> -->
       <div class="button">
         <button @click="downloadg">Download</button>
       </div>

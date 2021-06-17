@@ -1,14 +1,57 @@
 <template>
     <div style="margin-top: 15px; position: relative">
       <section class="section"></section>
-      <div class="infod">
+      <!-- <div class="infod">
         <div>p: {{p}}</div>
         <div>q: {{q}}</div>
         <div>r: {{maxx}}</div>
         <div>s: {{minn}}</div>
         <div>t: {{t}}</div>
         <div>ЧСС: {{chss}}</div>
+      </div> -->
+      <div class="conc">
+        <button @click="conclusion" :disabled="ss < 5">{{$t('conclusion')}}</button>
       </div>
+      <el-dialog
+        :title="$t('conclusion')"
+        :visible.sync="dialogVisible"
+        width="75%"
+        >
+        <div>
+          <div><b>{{$t('protocol')}}</b></div>
+          <div>{{$t('hs')}}:  {{chss}} {{$t('bl_min')}}</div>
+          <div class="mb10">{{$t('interval')}} RR: мс</div>
+          <div class="table-conclusion">
+            <div>{{$t('danger')}}</div>
+            <div>{{$t('device_check')}}</div>
+          </div>
+          <div class="table-conclusion">
+            <div>{{$t('sinus_rhythm')}}</div>
+            <div>{{$t('normal_ecg')}}</div>
+          </div>
+          <div class="table-conclusion">
+            <div>{{$t('sinus_bradycardia')}} ({{$t('hs')}} 45)</div>
+            <div v-if="chss>45">{{$t('not_found')}}</div>
+            <div v-else>{{$t('found')}}</div>
+          </div>
+          <div class="table-conclusion">
+            <div>{{$t('sinus_tachycardia')}} ({{$t('hs')}} ≥ 100)</div>
+            <div v-if="chss<100">{{$t('not_found')}}</div>
+            <div v-else>{{$t('found')}}</div>
+          </div>
+          <div class="table-conclusion">
+            <div>{{$t('atrial')}}</div>
+            <div>{{$t('not_found')}}</div>
+          </div>
+          <div class="table-conclusion">
+            <div>{{$t('atrial_flutter')}}
+            </div>
+            <div>{{$t('not_found')}}</div>
+          </div>
+        </div>
+
+      </el-dialog>
+
     </div>
 </template>
 
@@ -19,7 +62,6 @@ export default {
     did: String
   },
   data(){
-    this.chart = null
     return{
         data: [],
         socket: null,
@@ -32,26 +74,32 @@ export default {
         p: 0,
         q: 0,
         t: 0,
-        chss: 0
+        chss: 0,
+        timer: 0,
+        ss: 0,
+        dialogVisible: false
     }
   },
-
   mounted () {
     // this.getData2()
     const lcjs = require('@arction/lcjs')
-        const {
-            AxisScrollStrategies,
-            emptyLine
-        } = lcjs
+    const {
+        AxisScrollStrategies,
+        emptyLine
+    } = lcjs
      const {
         createSampledDataGenerator
     } = require('@arction/xydata')
     this.graf(this.data)
     // let did = sessionStorage.getItem('did')
-    console.log(this.$props.did);
     this.socket = new WebSocket("wss://back.cardioservice.com.kz/api/setByte/?wid="+this.did);
     let self = this
-    
+    this.timer = setInterval(function(){
+      self.ss += 1
+      if (self.ss >= 60){
+        self.ss = 0
+      }
+    }, 1000)
     let period = []
     let oldK = 0
     this.socket.onopen = function(e) {
@@ -59,7 +107,7 @@ export default {
     };
     this.socket.onmessage = function(event) {
       let d = JSON.parse(event.data)['content']['pointers']['content']['pointers']
-      console.log(d);
+      // console.log(d);
       period = period.concat(d.slice(1))
       if (period.length >= 300){
         self.maxx = Math.max(...period)
@@ -164,6 +212,9 @@ export default {
         lcjss.querySelector('canvas').style.zIndex = "999"
 
       },
+      conclusion(){
+        this.dialogVisible = true
+      }
   },
   beforeDestroy() {
     // clearInterval(this.interval)
@@ -189,6 +240,26 @@ export default {
   background: #202020;
   z-index: 999;
   color: #fff;
+  padding: 10px;
+}
+.conc{
+  position: absolute;
+  right: 10px;
+  top: 0;
+  z-index: 9999;
+  font-size: 14px;
+}
+.mb10{
+  margin-bottom: 10px;
+}
+.table-conclusion{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+.table-conclusion div{
+  border: 1px solid #000;
+  display: flex;
+  justify-content: center;
   padding: 10px;
 }
 @media (max-width: 800px) {

@@ -22,5 +22,20 @@
   "reset": "Reset",
   "cancel": "Cancel",
   "save": "Save",
-  "choose_date": "Choose a date"
+  "choose_date": "Choose a date",
+  "conclusion": "Conclusion",
+  "protocol": "Research protocol",
+  "hs": "HS",
+  "bl_min": "bl/min",
+  "interval": "Interval",
+  "danger": "The danger",
+  "device_check": "Checking the device",
+  "sinus_rhythm": "Sinus rhythm",
+  "normal_ecg": "Normal ECG",
+  "sinus_bradycardia": "Sinus bradycardia",
+  "sinus_tachycardia": "Sinus tachycardia",
+  "not_found": "Not found",
+  "found": "Found",
+  "atrial": "Atrial fibrillation (absence of P waves, different spacing between R waves, presence of F fibrillation wave)",
+  "atrial_flutter": "Atrial flutter (presence on the ECG of frequent (up to 200-400 per minute) regular, similar atrial F waves, correct regular ventricular rhythm with equal RR intervals)"
 }

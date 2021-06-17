@@ -13,7 +13,7 @@
                 <div class="sectionInfo">
                     <div class="username">{{name}}</div>
                     <div class="birthdate">{{birth_date}}</div>
-                    <div class="address">{{location}} {{dev_id}}</div>
+                    <div class="address" v-if="location != 'undefined'">{{location}}</div>
                 </div>
             </div> 
             
