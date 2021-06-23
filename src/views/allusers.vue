@@ -39,7 +39,7 @@
                 <th>
                     <el-button
                         size="mini"
-                        @click="handleShow(i.device_id, i.last_name+' '+i.first_name, i.birth_date, i.location, i.avatar)">{{ $t('show') }}
+                        @click="handleShow(i.device_id, i.last_name+' '+i.first_name, i.birth_date, i.location, i.avatar, i.last_name, i.first_name)">{{ $t('show') }}
                     </el-button>
                     <el-button
                         size="mini"
@@ -116,8 +116,8 @@ export default {
             this.socket_list.push(socket)
         }
     },
-    handleShow(id, name, bd, location, ava){
-        window.location.href = `/profile/staff/detail/?dev_id=${id}&name=${name}&birth_date=${bd}&location=${location}&avatar=${ava}`
+    handleShow(id, name, bd, location, ava, ln, fn){
+        window.location.href = `/profile/staff/detail/?dev_id=${id}&name=${name}&birth_date=${bd}&location=${location}&avatar=${ava}&last_name=${ln}&first_name=${fn}`
     },
     handleShow2(id, name, bd, location, ava){
         window.location.href = `/profile/staff/detail/old/?dev_id=${id}&name=${name}&birth_date=${bd}&location=${location}&avatar=${ava}`

@@ -1,11 +1,7 @@
 <template>
     <div class="wrapper">
-        
-        <div>
-            <div class="item item1"><EcgChart :did="dev_id"/></div>
-        </div>
-        
-        <section>
+        <div class="item" style="height: 100%" >
+            <EcgChart :did="dev_id" :userinfo="userinfo"/>
             <div class="info">
                 <div class="sectionAva">
                     <img :src="avatar" alt="">
@@ -15,10 +11,8 @@
                     <div class="birthdate">{{birth_date}}</div>
                     <div class="address" v-if="location != 'undefined'">{{location}}</div>
                 </div>
-            </div> 
-            
-        </section>
-        
+            </div>
+        </div>
     </div>
 </template>
 
@@ -28,15 +22,6 @@ export default {
   components: {
       EcgChart
   },
-//   props: {
-//     username: String,
-//     first_name: String,
-//     last_name: String,
-//     birth_date: String,
-//     avatar: String,
-//     location: String,
-//     dev_id: String
-//   },
   data(){
     return{
         data: [],
@@ -46,19 +31,29 @@ export default {
         birth_date: this.$route.query.birth_date,
         avatar: this.$route.query.avatar,
         location: this.$route.query.location,
+        userinfo: {}
     }
   },
-  mounted(){
-      let item = document.querySelectorAll('div[class^="item"')
-      let chart = document.querySelectorAll('div[id^="chart"')
-      let infod = document.querySelectorAll('div[class^="infod"')
-      for (let i in item){
-          console.log(item[i]);
-          item[i].appendChild(chart[i])
-          chart[i].appendChild(infod[i])
-          item[i].style.height = "100%"
-          chart[i].style.height = "450px"
-      }
+    mounted(){
+        this.userinfo = {
+            'last_name': this.$route.query.last_name,
+            'first_name': this.$route.query.first_name,
+            'birth_date': this.$route.query.birth_date,
+        }
+        console.log(this.userinfo);
+        let s = document.querySelector(".section")
+        s.style.display = "none"
+        let item = document.querySelectorAll('div[class^="item"')
+        //   console.log(item);
+        let chart = document.querySelectorAll('div[id^="chart"')
+        //   let infod = document.querySelectorAll('div[class^="infod"')
+        //   console.log(infod);
+        for (let i in item){
+            item[i].appendChild(chart[i])
+            chart[i].style.height = "450px"
+            // chart[i].style.marginTop = "-45px"
+            chart[i].querySelector('canvas').style.zIndex = "99"
+        }
   }
 }
 </script>
@@ -78,16 +73,10 @@ export default {
     position: relative;
     height: 450px
 }
-section{
-    position: absolute;
-    grid-gap: 10px;
-    width: 100%;
-    height: 100%;
-}
 .info{
-    position: absolute;
+    /* position: absolute; */
     top: 5px;
-    left: 0px;
+    left: 5px;
     background: #202020;
     display: -webkit-box;
     display: -ms-flexbox;

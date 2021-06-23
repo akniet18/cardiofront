@@ -2,7 +2,7 @@
     <div class="wrapper">
         <div class="divitems">
             <div class="item" style="height: 100%" v-for="(i, index) in data" :key="index">
-                <EcgChart :did="i.device_id"/>
+                <EcgChart :did="i.device_id" :userinfo="i" />
                 <div class="info" @click="zoom(1, `${i.last_name} ${i.first_name}`, i.birth_date, i.location, i.avatar)">
                     <div class="sectionAva">
                         <img :src="i.avatar" alt="">
@@ -47,19 +47,13 @@ export default {
       this.data = JSON.parse(localStorage.getItem('checked'))
   },
   mounted () {
-    //   console.log(this.data);
       let s = document.querySelector(".section")
       s.style.display = "none"
       let item = document.querySelectorAll('div[class^="item"')
-    //   console.log(item);
       let chart = document.querySelectorAll('div[id^="chart"')
-    //   let infod = document.querySelectorAll('div[class^="infod"')
-    //   console.log(infod);
       for (let i in item){
           console.log(item[i]);
           item[i].appendChild(chart[i])
-        //   chart[i].appendChild(infod[i])
-        //   item[i].style.height = "100%"
           chart[i].style.height = "450px"
           chart[i].querySelector('canvas').style.zIndex = "99"
       }

@@ -1,10 +1,7 @@
 <template>
     <div class="wrapper">
-        <div>
-            <div class="item item1"><EcgChart :did="dev_id"/></div>
-        </div>
-        
-        <section>
+        <div class="item" style="height: 100%" >
+            <EcgChart :did="dev_id" :userinfo="userinfo"/>
             <div class="info">
                 <div class="sectionAva">
                     <img :src="avatar" alt="">
@@ -12,24 +9,20 @@
                 <div class="sectionInfo">
                     <div class="username">{{last_name}} {{first_name}}</div>
                     <div class="birthdate">{{birth_date}}</div>
-                    <div class="address">{{location}}</div>
+                    <div class="address" v-if="location != 'undefined'">{{location}}</div>
                 </div>
-            </div> 
-            
-        </section>
-        
+            </div>
+        </div>        
     </div>
 </template>
 
 <script>
-// import { Line } from 'vue-chartjs'
 import EcgChart from './ecgchart'
 export default {
   name: 'Chart',
   components: {
       EcgChart
   },
-//   extends: Line,
   data(){
     return{
         dev_id: sessionStorage.getItem('did'),
@@ -42,6 +35,7 @@ export default {
         birth_date: sessionStorage.getItem('birth_date'),
         avatar: sessionStorage.getItem('avatar'),
         location: sessionStorage.getItem('location'),
+        userinfo: {}
     }
   },
   created(){
@@ -49,8 +43,20 @@ export default {
     console.log(this.dev_id,sessionStorage.getItem('did'));
   },
   mounted () {
-      var asd = document.querySelector('#lcjs-auto-flexbox')
-      asd.style.zIndex = "99"   
+      this.userinfo = {
+        'last_name': this.last_name,
+        'first_name': this.first_name,
+        'birth_date': this.birth_date,
+      }
+      let s = document.querySelector(".section")
+        s.style.display = "none"
+        let item = document.querySelectorAll('div[class^="item"')
+        let chart = document.querySelectorAll('div[id^="chart"')
+        for (let i in item){
+            item[i].appendChild(chart[i])
+            chart[i].style.height = "450px"
+            chart[i].querySelector('canvas').style.zIndex = "99"
+        }
   },
 }
 </script>
@@ -76,9 +82,9 @@ section{
     height: 100%;
 }
 .info{
-    position: absolute;
+    /* position: absolute; */
     top: 5px;
-    left: 0px;
+    left: 5px;
     background: #202020;
     display: -webkit-box;
     display: -ms-flexbox;

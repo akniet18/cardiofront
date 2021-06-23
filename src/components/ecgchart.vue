@@ -18,6 +18,12 @@
         width="75%"
         >
         <div>
+          <div><b>{{$t('patient')}}</b></div>
+          <div>{{$t('id')}}: {{did}}</div>
+          <div>{{$t('fio')}}: {{userinfo.last_name}} {{userinfo.first_name}}</div>
+          <div>{{$t('birth_date')}}: {{userinfo.birth_date}}</div>
+          <div>{{$t('today')}}: {{new Date().getDate()}}.{{new Date().getMonth()}}.{{new Date().getFullYear()}}</div>
+          <br>
           <div><b>{{$t('protocol')}}</b></div>
           <div>{{$t('hs')}}:  {{chss}} {{$t('bl_min')}}</div>
           <div class="mb10">{{$t('interval')}} RR: мс</div>
@@ -58,9 +64,7 @@
 <script>
 export default {
   name: 'EcgChart',
-  props: {
-    did: String
-  },
+  props:  ['did', 'userinfo'],
   data(){
     return{
         data: [],
@@ -87,9 +91,6 @@ export default {
         AxisScrollStrategies,
         emptyLine
     } = lcjs
-     const {
-        createSampledDataGenerator
-    } = require('@arction/xydata')
     this.graf(this.data)
     // let did = sessionStorage.getItem('did')
     this.socket = new WebSocket("wss://back.cardioservice.com.kz/api/setByte/?wid="+this.did);
@@ -105,26 +106,31 @@ export default {
     this.socket.onopen = function(e) {
       console.log('open')
     };
+    let len = 0
     this.socket.onmessage = function(event) {
       let d = JSON.parse(event.data)['content']['pointers']['content']['pointers']
       // console.log(d);
-      period = period.concat(d.slice(1))
-      if (period.length >= 300){
-        self.maxx = Math.max(...period)
-        self.minn = Math.min(...period)
-        self.chss = Math.round(1500 / Math.round((self.k/3-oldK/3)))
-        if (self.maxx == self.minn){
-          self.p = self.maxx
-          self.t = self.maxx
-          self.q = self.minn
-        }else{
-          self.p = Math.max(...period.slice(0, 60))
-          self.t = Math.max(...period.slice(60, 90))
-          self.q = Math.min(...period.slice(200,300))
+      // period = period.concat(d.slice(1))
+      // if (period.length >= 360){
+        // self.maxx = Math.max(...period)
+        // self.minn = Math.min(...period)
+        len += d.slice(1).length
+        if (self.ss >= 60){
+          self.chss = parseInt(len / 360)
         }
-        period = []
+        // self.chss = Math.round(1500 / Math.round((self.k/3-oldK/3)))
+        // if (self.maxx == self.minn){
+        //   self.p = self.maxx
+        //   self.t = self.maxx
+        //   self.q = self.minn
+        // }else{
+        //   self.p = Math.max(...period.slice(0, 60))
+        //   self.t = Math.max(...period.slice(60, 90))
+        //   self.q = Math.min(...period.slice(200,300))
+        // }
+        // period = []
         oldK = self.k
-      }
+      // }
       let p = []
       let old = 0
       for (let i=1; i<d.length; i++){
@@ -209,7 +215,7 @@ export default {
         lcjss.style.height = "100%"
         lcjss.style.marginTop = "40px"
         section.appendChild(lcjss)
-        lcjss.querySelector('canvas').style.zIndex = "999"
+        lcjss.querySelector('canvas').style.zIndex = "99"
 
       },
       conclusion(){
@@ -246,7 +252,7 @@ export default {
   position: absolute;
   right: 10px;
   top: 0;
-  z-index: 9999;
+  z-index: 999;
   font-size: 14px;
 }
 .mb10{
