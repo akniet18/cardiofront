@@ -26,7 +26,7 @@
           <br>
           <div><b>{{$t('protocol')}}</b></div>
           <div>{{$t('hs')}}:  {{chss}} {{$t('bl_min')}}</div>
-          <div class="mb10">{{$t('interval')}} RR: мс</div>
+          <!-- <div class="mb10">{{$t('interval')}} RR: мс</div> -->
           <div class="table-conclusion">
             <div>{{$t('danger')}}</div>
             <div>{{$t('device_check')}}</div>
@@ -97,7 +97,7 @@ export default {
     let self = this
     this.timer = setInterval(function(){
       self.ss += 1
-      if (self.ss >= 60){
+      if (self.ss >= 61){
         self.ss = 0
       }
     }, 1000)
