@@ -10,7 +10,7 @@
         <div>ЧСС: {{chss}}</div>
       </div> -->
       <div class="conc">
-        <button @click="conclusion" :disabled="ss < 5">{{$t('conclusion')}}</button>
+        <button @click="conclusion" :disabled="!ssCheck">{{$t('conclusion')}}</button>
       </div>
       <el-dialog
         :title="$t('conclusion')"
@@ -27,6 +27,7 @@
           <div><b>{{$t('protocol')}}</b></div>
           <div>{{$t('hs')}}:  {{chss}} {{$t('bl_min')}}</div>
           <!-- <div class="mb10">{{$t('interval')}} RR: мс</div> -->
+          <div></div>
           <div class="table-conclusion">
             <div>{{$t('danger')}}</div>
             <div>{{$t('device_check')}}</div>
@@ -81,6 +82,7 @@ export default {
         chss: 0,
         timer: 0,
         ss: 0,
+        ssCheck: false,
         dialogVisible: false
     }
   },
@@ -98,6 +100,7 @@ export default {
     this.timer = setInterval(function(){
       self.ss += 1
       if (self.ss >= 61){
+        self.ssCheck = true
         self.ss = 0
       }
     }, 1000)
