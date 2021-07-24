@@ -26,7 +26,7 @@
           <br>
           <div><b>{{$t('protocol')}}</b></div>
           <div>{{$t('hs')}}:  {{chss}} {{$t('bl_min')}}</div>
-          <!-- <div class="mb10">{{$t('interval')}} RR: мс</div> -->
+          <div class="mb10">{{$t('interval')}} RR: {{rr}} мс</div>
           <div></div>
           <div class="table-conclusion">
             <div>{{$t('danger')}}</div>
@@ -83,6 +83,7 @@ export default {
         timer: 0,
         ss: 0,
         ssCheck: false,
+        rr: 0,
         dialogVisible: false
     }
   },
@@ -120,6 +121,7 @@ export default {
         len += d.slice(1).length
         if (self.ss >= 60){
           self.chss = parseInt(len / 360)
+          self.rr = 60 / parseInt(len / 360) 
         }
         // self.chss = Math.round(1500 / Math.round((self.k/3-oldK/3)))
         // if (self.maxx == self.minn){
