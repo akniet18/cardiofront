@@ -4,30 +4,29 @@
                 class="el-menu-vertical-demo" 
                 @select="handleSelect" 
                 @open="handleOpen"
-                @close="handleClose" :collapse="isCollapse">
+                @close="handleClose" :collapse="isCollapse"
+        >
+            <el-menu-item index="1">
+                <i class="el-icon-menu"></i>
+                <span slot="title">{{ $t('first_nav_item') }}</span>
+            </el-menu-item>
+            <el-menu-item index="2">
+                <i class="el-icon-user"></i>
+                <span slot="title">{{ $t('second_nav_item') }}</span>
+            </el-menu-item>
+            <el-menu-item index="3" v-show="is_staff != 'false'">
+                <i class="el-icon-plus"></i>
+                <span slot="title">{{ $t('third_nav_item') }}</span>
+            </el-menu-item>
 
-        <el-menu-item index="1">
-            <i class="el-icon-menu"></i>
-            <span slot="title">{{ $t('first_nav_item') }}</span>
-        </el-menu-item>
-        <el-menu-item index="2">
-            <i class="el-icon-user"></i>
-            <span slot="title">{{ $t('second_nav_item') }}</span>
-        </el-menu-item>
-        <el-menu-item index="3" v-show="is_staff != 'false'">
-            <i class="el-icon-plus"></i>
-            <span slot="title">{{ $t('third_nav_item') }}</span>
-        </el-menu-item>
-
-        <el-menu-item index="4" v-show="is_staff != 'false'">
-            <i class="el-icon-s-order"></i>
-            <span slot="title">{{ $t('fourth_nav_item') }}</span>
-        </el-menu-item>
-        
+            <el-menu-item index="4" v-show="is_staff != 'false'">
+                <i class="el-icon-s-order"></i>
+                <span slot="title">{{ $t('fourth_nav_item') }}</span>
+            </el-menu-item>
         </el-menu>
-        
     </div>
 </template>
+
 
 <script>
   export default {
@@ -67,10 +66,10 @@
             }
         },
         handleOpen(key, keyPath) {
-            console.log(key, keyPath)
+            // console.log(key, keyPath)
         },
         handleClose(key, keyPath) {
-            console.log(key, keyPath);
+            // console.log(key, keyPath);
         }
     }
   }
@@ -79,7 +78,6 @@
 
 <style>
   .el-menu-vertical-demo:not(.el-menu--collapse) {
-    /* width: 220px; */
     min-height: 100vh;
   }
   @media (max-width: 600px) {

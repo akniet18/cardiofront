@@ -56,9 +56,7 @@
             <div>{{$t('not_found')}}</div>
           </div>
         </div>
-
       </el-dialog>
-
     </div>
 </template>
 
