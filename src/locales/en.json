@@ -40,5 +40,6 @@
   "not_found": "Not found",
   "found": "Found",
   "atrial": "Atrial fibrillation (absence of P waves, different spacing between R waves, presence of F fibrillation wave)",
-  "atrial_flutter": "Atrial flutter (presence on the ECG of frequent (up to 200-400 per minute) regular, similar atrial F waves, correct regular ventricular rhythm with equal RR intervals)"
+  "atrial_flutter": "Atrial flutter (presence on the ECG of frequent (up to 200-400 per minute) regular, similar atrial F waves, correct regular ventricular rhythm with equal RR intervals)",
+  "pause": "Pause"
 }

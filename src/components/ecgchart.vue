@@ -11,6 +11,7 @@
       </div> -->
       <div class="conc">
         <button @click="conclusion" :disabled="!ssCheck">{{$t('conclusion')}}</button>
+        <button @click="pause">{{$t('pause')}}</button>
       </div>
       <el-dialog
         :title="$t('conclusion')"
@@ -165,65 +166,68 @@ export default {
     };
   },
   methods: {
-      graf(p){
-        const lcjs = require('@arction/lcjs')
-        const {
-            lightningChart,
-            DataPatterns,
-            AxisScrollStrategies,
-            SolidLine,
-            SolidFill,
-            ColorHEX,
-            AutoCursorModes,
-            Themes,
-            emptyLine,
-            emptyTick
-        } = lcjs
-        
-        this.chart = lightningChart().ChartXY({
-            // theme: Themes.blueSciFi
-        }).setTitle('')
-        // Add line series to visualize the data received
-        this.series = this.chart.addLineSeries({ dataPattern: DataPatterns.horizontalProgressive })
-        // Style the series
-        this.series
-            .setStrokeStyle(new SolidLine({
-                thickness: 2,
-                fillStyle: new SolidFill({ color: ColorHEX('#5aafc7') })
-            }))
-            // .setMouseInteractions(false)
-        this.chart.setAutoCursorMode(AutoCursorModes.disabled)
-        // Setup view nicely.
-        this.chart.getDefaultAxisY()
-            .setTickStrategy("Empty")
-            .setStrokeStyle(emptyLine)
-            // .setInterval(16100000, 16500000)
-            // .setScrollStrategy(AxisScrollStrategies.progressive)
+    pause(){
+      this.socket.close()
+    },
+    graf(p){
+      const lcjs = require('@arction/lcjs')
+      const {
+          lightningChart,
+          DataPatterns,
+          AxisScrollStrategies,
+          SolidLine,
+          SolidFill,
+          ColorHEX,
+          AutoCursorModes,
+          Themes,
+          emptyLine,
+          emptyTick
+      } = lcjs
+      
+      this.chart = lightningChart().ChartXY({
+          // theme: Themes.blueSciFi
+      }).setTitle('')
+      // Add line series to visualize the data received
+      this.series = this.chart.addLineSeries({ dataPattern: DataPatterns.horizontalProgressive })
+      // Style the series
+      this.series
+          .setStrokeStyle(new SolidLine({
+              thickness: 2,
+              fillStyle: new SolidFill({ color: ColorHEX('#5aafc7') })
+          }))
+          // .setMouseInteractions(false)
+      this.chart.setAutoCursorMode(AutoCursorModes.disabled)
+      // Setup view nicely.
+      this.chart.getDefaultAxisY()
+          .setTickStrategy("Empty")
+          .setStrokeStyle(emptyLine)
+          // .setInterval(16100000, 16500000)
+          // .setScrollStrategy(AxisScrollStrategies.progressive)
 
-        this.chart.getDefaultAxisX()
-            // .setTickStrategy("Empty")
-            // .setStrokeStyle(emptyLine)
-            .setInterval(0, 50000)
-            .setScrollStrategy(AxisScrollStrategies.progressive)
+      this.chart.getDefaultAxisX()
+          // .setTickStrategy("Empty")
+          // .setStrokeStyle(emptyLine)
+          .setInterval(0, 50000)
+          .setScrollStrategy(AxisScrollStrategies.progressive)
 
-        // let old = p[0]
-        // for (let i in p){
-        //   this.k+=3
-        //   // if (Math.abs(p[i]-old) < 2000000){
-        //     this.series.add({x: this.k, y: p[i]})  
-        //   // }
-        // }
-        let lcjss = document.querySelector('#lcjs-auto-flexbox')
-        let section = document.querySelector('.section')
-        lcjss.style.height = "100%"
-        lcjss.style.marginTop = "40px"
-        section.appendChild(lcjss)
-        lcjss.querySelector('canvas').style.zIndex = "99"
+      // let old = p[0]
+      // for (let i in p){
+      //   this.k+=3
+      //   // if (Math.abs(p[i]-old) < 2000000){
+      //     this.series.add({x: this.k, y: p[i]})  
+      //   // }
+      // }
+      let lcjss = document.querySelector('#lcjs-auto-flexbox')
+      let section = document.querySelector('.section')
+      lcjss.style.height = "100%"
+      lcjss.style.marginTop = "40px"
+      section.appendChild(lcjss)
+      lcjss.querySelector('canvas').style.zIndex = "99"
 
-      },
-      conclusion(){
-        this.dialogVisible = true
-      }
+    },
+    conclusion(){
+      this.dialogVisible = true
+    }
   },
   beforeDestroy() {
     // clearInterval(this.interval)
@@ -257,6 +261,11 @@ export default {
   top: 0;
   z-index: 999;
   font-size: 14px;
+  display: flex;
+  flex-direction: column;
+}
+.conc button:first-child{
+  margin: 10px 0;
 }
 .mb10{
   margin-bottom: 10px;
