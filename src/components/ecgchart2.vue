@@ -145,7 +145,7 @@ export default {
               // if (Math.round(old - i) > 500){
                 let mmax = i + 7000
                 let mmin = i - 7000
-                console.log(mmin, mmax);
+                // console.log(mmin, mmax);
                 self.chart.getDefaultAxisY()
                   .setTickStrategy("Empty")
                   .setStrokeStyle(emptyLine)
