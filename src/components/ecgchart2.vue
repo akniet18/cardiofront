@@ -142,15 +142,16 @@ export default {
               self.k+=10
               // point.push({x: self.k, y: i})
               self.series.add({x: self.k, y: i})
-              if (Math.round(old - i) > 2000){
-                let mmax = i + 70000
-                let mmin = i - 70000
+              // if (Math.round(old - i) > 500){
+                let mmax = i + 7000
+                let mmin = i - 7000
+                console.log(mmin, mmax);
                 self.chart.getDefaultAxisY()
                   .setTickStrategy("Empty")
                   .setStrokeStyle(emptyLine)
-                  .setInterval(mmin, mmax)
+                  .setInterval(mmin, mmax, false, true)
                   .setScrollStrategy(AxisScrollStrategies.expansion)
-              }
+              // }
               old = i
             }
           }, r=> {
