@@ -137,6 +137,8 @@ export default {
       // }
       let p = []
       let old = 0
+      self.k += 30
+      self.series.add({x: self.k, y: d[0]-1})
       for (let i=1; i<d.length; i++){
           if (d[i] > 10){
             self.k+=30
@@ -145,15 +147,15 @@ export default {
             self.series.add({x: self.k, y: d[i]})
             // let mmax = self.series.getYMax() + 100000
             // let mmin = self.series.getYMin() - 100000
-            if (Math.round(old - d[i]) > 2000){
-              let mmax = d[i] + 70000
-              let mmin = d[i] - 70000
+            // if (Math.round(old - d[i]) > 2000){
+              let mmax = d[i] + 7000
+              let mmin = d[i] - 7000
               self.chart.getDefaultAxisY()
                 .setTickStrategy("Empty")
                 .setStrokeStyle(emptyLine)
                 .setInterval(mmin, mmax, false, true)
                 .setScrollStrategy(AxisScrollStrategies.expansion)
-            }
+            // }
             old = d[i]
             // self.data.push({x: self.k, y: d[i]})
             // p.push({x: self.k, y: d[i]})
