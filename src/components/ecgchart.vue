@@ -148,8 +148,8 @@ export default {
             // let mmax = self.series.getYMax() + 100000
             // let mmin = self.series.getYMin() - 100000
             if (Math.round(old - d[i]) > 2000){
-              let mmax = d[i] + 7000
-              let mmin = d[i] - 7000
+              let mmax = d[i] + 70000
+              let mmin = d[i] - 70000
               self.chart.getDefaultAxisY()
                 .setTickStrategy("Empty")
                 .setStrokeStyle(emptyLine)
