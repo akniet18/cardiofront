@@ -137,14 +137,18 @@ export default {
       // }
       let p = []
       let old = 0
-      self.k += 30
-      self.series.add({x: self.k, y: d[0]-1})
+      // if (d[1] === d[2] === d[3] === d[4] === d[5]){
+        // self.k += 30
+        // self.series.add({x: self.k, y: d[1]-1000})
+      // } 
       for (let i=1; i<d.length; i++){
           if (d[i] > 10){
             self.k+=30
+            // console.log(d[i]);
             // let mmax = Math.max(...period)
             // let mmin = Math.min(...period)
             self.series.add({x: self.k, y: d[i]})
+            console.log(d[i]);
             // let mmax = self.series.getYMax() + 100000
             // let mmin = self.series.getYMin() - 100000
             if (Math.round(old - d[i]) > 2000){
@@ -153,8 +157,8 @@ export default {
               self.chart.getDefaultAxisY()
                 .setTickStrategy("Empty")
                 .setStrokeStyle(emptyLine)
-                .setInterval(mmin, mmax, false, true)
-                .setScrollStrategy(AxisScrollStrategies.expansion)
+                .setInterval(mmin, mmax)
+                .setScrollStrategy(AxisScrollStrategies.progressive)
             }
             old = d[i]
             // self.data.push({x: self.k, y: d[i]})
@@ -194,7 +198,7 @@ export default {
       // Style the series
       this.series
           .setStrokeStyle(new SolidLine({
-              thickness: 2,
+              thickness: 3,
               fillStyle: new SolidFill({ color: ColorHEX('#5aafc7') })
           }))
           // .setMouseInteractions(false)
