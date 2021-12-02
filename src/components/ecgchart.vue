@@ -125,6 +125,7 @@ export default {
         "pointers"
       ];
       console.log("msg", d);
+      console.log("msg", 123);
       // period = period.concat(d.slice(1))
       // if (period.length >= 360){
       // self.maxx = Math.max(...period)
