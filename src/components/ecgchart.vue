@@ -117,7 +117,7 @@ export default {
     let period = [];
     let oldK = 0;
     this.socket.onopen = function (e) {
-      console.log("open");
+      console.log("open123");
     };
     let len = 0;
     this.socket.onmessage = function (event) {
@@ -125,7 +125,6 @@ export default {
         "pointers"
       ];
       console.log("msg", d);
-      console.log("msg", 123);
       // period = period.concat(d.slice(1))
       // if (period.length >= 360){
       // self.maxx = Math.max(...period)
