@@ -117,7 +117,7 @@ export default {
     let period = [];
     let oldK = 0;
     this.socket.onopen = function (e) {
-      console.log("open123");
+      console.log("open");
     };
     let len = 0;
     this.socket.onmessage = function (event) {
