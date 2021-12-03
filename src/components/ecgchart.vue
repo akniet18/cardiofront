@@ -155,7 +155,7 @@ export default {
       // }
       for (let i = 1; i < d.length; i++) {
         if (d[i] > 10) {
-          self.k += 30;
+          self.k += 10;
           // console.log(d[i]);
           // let mmax = Math.max(...period)
           // let mmin = Math.min(...period)
@@ -232,7 +232,7 @@ export default {
         .getDefaultAxisX()
         // .setTickStrategy("Empty")
         // .setStrokeStyle(emptyLine)
-        .setInterval(0, 50000)
+        .setInterval(0, 25000)
         .setScrollStrategy(AxisScrollStrategies.progressive);
 
       // let old = p[0]
