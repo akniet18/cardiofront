@@ -56,9 +56,13 @@ export default {
       .then(r=>{
          this.dialogTableVisible = true
          for (let i of r.data){
-          i.date = moment(i.date).format('DD-MM-YYYY')
+          let nd = new Date(i.date)
+          i.sortd = nd
+          i.date = nd.getDate() + '-'+(nd.getMonth()+1)+'-'+nd.getFullYear()
          }
-         this.pdate = r.data
+         this.pdate = r.data.sort(function(a,b){
+            return new Date(b.sortd) - new Date(a.sortd);
+         });
       }, r=> {
         console.log(r);
       })
@@ -94,7 +98,7 @@ export default {
             .setStrokeStyle(emptyLine)
 
         this.chart.getDefaultAxisX()
-            .setInterval(0, 50000)
+            .setInterval(0, 25000)
             .setScrollStrategy(AxisScrollStrategies.progressive)
         let lcjss = document.querySelector('#lcjs-auto-flexbox')
         let section = document.querySelector('.section')
@@ -116,43 +120,45 @@ export default {
           .then(r=>{
             this.data = r.data[0].data
             let self = this
-            let period = []
-            let oldK = 0
+            // let period = []
+            // let oldK = 0
             d = r.data[0].data
-            period = period.concat(d)
-            if (period.length >= 350){
-              self.maxx = Math.max(...period)
-              self.minn = Math.min(...period)
-              // self.chss = Math.round(1500 / Math.round((self.k/3-oldK/3)))
-              if (self.maxx == self.minn){
-                self.p = self.maxx
-                self.t = self.maxx
-                self.q = self.minn
-              }else{
-                self.p = Math.round(self.maxx * 0.3)
-                self.t = Math.round(self.maxx * 0.6)
-                self.q = Math.round(self.minn * 0.5)
-              }
-              period = []
-              oldK = self.k
-            }
-            let point = []
-            let old = 0
+            // period = period.concat(d)
+            // if (period.length >= 350){
+            //   self.maxx = Math.max(...period)
+            //   self.minn = Math.min(...period)
+            //   // self.chss = Math.round(1500 / Math.round((self.k/3-oldK/3)))
+            //   if (self.maxx == self.minn){
+            //     self.p = self.maxx
+            //     self.t = self.maxx
+            //     self.q = self.minn
+            //   }else{
+            //     self.p = Math.round(self.maxx * 0.3)
+            //     self.t = Math.round(self.maxx * 0.6)
+            //     self.q = Math.round(self.minn * 0.5)
+            //   }
+            //   period = []
+            //   oldK = self.k
+            // }
+            // let point = []
+            // let old = 0
             for (let i of d){
-              self.k+=10
-              // point.push({x: self.k, y: i})
-              self.series.add({x: self.k, y: i})
-              // if (Math.round(old - i) > 500){
-                let mmax = i + 7000
-                let mmin = i - 7000
-                // console.log(mmin, mmax);
-                self.chart.getDefaultAxisY()
-                  .setTickStrategy("Empty")
-                  .setStrokeStyle(emptyLine)
-                  .setInterval(mmin, mmax, false, true)
-                  .setScrollStrategy(AxisScrollStrategies.expansion)
-              // }
-              old = i
+              if (i > 10){
+                self.k+=10
+                // point.push({x: self.k, y: i})
+                self.series.add({x: self.k, y: i})
+                // if (Math.round(old - i) > 500){
+                  let mmax = i + 7000
+                  let mmin = i - 7000
+                  // console.log(mmin, mmax);
+                  self.chart.getDefaultAxisY()
+                    .setTickStrategy("Empty")
+                    .setStrokeStyle(emptyLine)
+                    .setInterval(mmin, mmax, false, true)
+                    .setScrollStrategy(AxisScrollStrategies.progressive)
+                // }
+                // old = i
+              }
             }
           }, r=> {
             console.log(r);

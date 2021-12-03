@@ -145,10 +145,10 @@ export default {
       //   self.q = Math.min(...period.slice(200,300))
       // }
       // period = []
-      oldK = self.k;
+      // oldK = self.k;
       // }
-      let p = [];
-      let old = 0;
+      // let p = [];
+      // let old = 0;
       // if (d[1] === d[2] === d[3] === d[4] === d[5]){
       // self.k += 30
       // self.series.add({x: self.k, y: d[1]-1000})
@@ -173,7 +173,7 @@ export default {
             .setInterval(mmin, mmax, false, true)
             .setScrollStrategy(AxisScrollStrategies.progressive);
           // }
-          old = d[i];
+          // old = d[i];
           // self.data.push({x: self.k, y: d[i]})
           // p.push({x: self.k, y: d[i]})
         }
