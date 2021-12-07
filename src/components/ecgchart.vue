@@ -164,8 +164,8 @@ export default {
           // let mmax = self.series.getYMax() + 100000
           // let mmin = self.series.getYMin() - 100000
           // if (Math.round(old - d[i]) > 2000){
-          let mmax = d[i] + 70000;
-          let mmin = d[i] - 70000;
+          let mmax = d[i] + 50000;
+          let mmin = d[i] - 50000;
           self.chart
             .getDefaultAxisY()
             .setTickStrategy("Empty")
@@ -232,7 +232,7 @@ export default {
         .getDefaultAxisX()
         // .setTickStrategy("Empty")
         // .setStrokeStyle(emptyLine)
-        .setInterval(0, 25000)
+        .setInterval(0, 10000)
         .setScrollStrategy(AxisScrollStrategies.progressive);
 
       // let old = p[0]
