@@ -194,7 +194,7 @@ export default {
             .getDefaultAxisY()
             .setTickStrategy("Empty")
             .setStrokeStyle(emptyLine)
-            .setInterval(mmin, mmax)
+            .setInterval(mmin, mmax, false, true)
             .setScrollStrategy(AxisScrollStrategies.expansion);
         }
 
