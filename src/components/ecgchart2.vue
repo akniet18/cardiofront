@@ -106,7 +106,7 @@ export default {
 
       this.chart
         .getDefaultAxisX()
-        .setInterval(0, 25000)
+        .setInterval(0, 3000)
         .setScrollStrategy(AxisScrollStrategies.progressive);
       let lcjss = document.querySelector("#lcjs-auto-flexbox");
       let section = document.querySelector(".section");
@@ -152,8 +152,8 @@ export default {
               // point.push({x: self.k, y: i})
               self.series.add({ x: self.k, y: i });
               // if (Math.round(old - i) > 500){
-              let mmax = i + 55000;
-              let mmin = i - 55000;
+              let mmax = i + 50000;
+              let mmin = i - 50000;
               // console.log(mmin, mmax);
               self.chart
                 .getDefaultAxisY()
@@ -189,8 +189,8 @@ export default {
           // point.push({x: self.k, y: i})
           self.series.add({ x: k, y: i });
           if (Math.round(old - i) > 2000) {
-            let mmax = i + 55000;
-            let mmin = i - 55000;
+            let mmax = i + 50000;
+            let mmin = i - 50000;
             self.chart
               .getDefaultAxisY()
               .setTickStrategy("Empty")
