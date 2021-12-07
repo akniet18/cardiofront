@@ -24,7 +24,6 @@
 
 <script>
 import axios from "axios";
-import moment from "moment";
 export default {
   props: {
     did: String,
@@ -124,28 +123,7 @@ export default {
         (r) => {
           this.data = r.data[0].data;
           let self = this;
-          // let period = []
-          // let oldK = 0
           d = r.data[0].data;
-          // period = period.concat(d)
-          // if (period.length >= 350){
-          //   self.maxx = Math.max(...period)
-          //   self.minn = Math.min(...period)
-          //   // self.chss = Math.round(1500 / Math.round((self.k/3-oldK/3)))
-          //   if (self.maxx == self.minn){
-          //     self.p = self.maxx
-          //     self.t = self.maxx
-          //     self.q = self.minn
-          //   }else{
-          //     self.p = Math.round(self.maxx * 0.3)
-          //     self.t = Math.round(self.maxx * 0.6)
-          //     self.q = Math.round(self.minn * 0.5)
-          //   }
-          //   period = []
-          //   oldK = self.k
-          // }
-          // let point = []
-          // let old = 0
           for (let i of d) {
             if (i > 10) {
               self.k += 10;
@@ -174,7 +152,6 @@ export default {
     downloadg() {
       const lcjs = require("@arction/lcjs");
       const { AxisScrollStrategies, emptyLine } = lcjs;
-      const { createSampledDataGenerator } = require("@arction/xydata");
       this.data = this.data.slice(this.data.length - 2200);
       let d = this.data;
       // console.log(d);
@@ -188,25 +165,25 @@ export default {
           k += 10;
           // point.push({x: self.k, y: i})
           self.series.add({ x: k, y: i });
-          if (Math.round(old - i) > 2000) {
-            let mmax = i + 50000;
-            let mmin = i - 50000;
-            self.chart
-              .getDefaultAxisY()
-              .setTickStrategy("Empty")
-              .setStrokeStyle(emptyLine)
-              .setInterval(mmin, mmax, false, true)
-              .setScrollStrategy(AxisScrollStrategies.expansion);
-          }
-          old = i;
+          // if (Math.round(old - i) > 2000) {
+          let mmax = i + 50000;
+          let mmin = i - 50000;
+          self.chart
+            .getDefaultAxisY()
+            .setTickStrategy("Empty")
+            .setStrokeStyle(emptyLine)
+            .setInterval(mmin, mmax, false, true)
+            .setScrollStrategy(AxisScrollStrategies.expansion);
+          // }
+          // old = i;
         }
       }
-      // self.chart
-      //   .getDefaultAxisX()
-      //   .setTickStrategy("Empty")
-      //   .setStrokeStyle(emptyLine)
-      //   .setInterval(0, 3000)
-      //   .setScrollStrategy(AxisScrollStrategies.expansion);
+      self.chart
+        .getDefaultAxisX()
+        .setTickStrategy("Empty")
+        .setStrokeStyle(emptyLine)
+        .setInterval(0, 3000)
+        .setScrollStrategy(AxisScrollStrategies.expansion);
       setTimeout(function () {
         var canvas = document.querySelector("canvas");
         // console.log(canvas);
