@@ -232,7 +232,7 @@ export default {
         .getDefaultAxisX()
         // .setTickStrategy("Empty")
         // .setStrokeStyle(emptyLine)
-        .setInterval(0, 50000)
+        .setInterval(0, 5000)
         .setScrollStrategy(AxisScrollStrategies.progressive);
 
       // let old = p[0]
