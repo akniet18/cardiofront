@@ -177,7 +177,7 @@ export default {
       const { createSampledDataGenerator } = require("@arction/xydata");
       this.data = this.data.slice(this.data.length - 2200);
       let d = this.data;
-      console.log(d);
+      // console.log(d);
       this.series.clear();
 
       let self = this;
@@ -198,16 +198,15 @@ export default {
               .setInterval(mmin, mmax, false, true)
               .setScrollStrategy(AxisScrollStrategies.expansion);
           }
-
           old = i;
         }
       }
-      self.chart
-        .getDefaultAxisX()
-        // .setTickStrategy("Empty")
-        // .setStrokeStyle(emptyLine)
-        .setInterval(0, 3000)
-        .setScrollStrategy(AxisScrollStrategies.expansion);
+      // self.chart
+      //   .getDefaultAxisX()
+      //   .setTickStrategy("Empty")
+      //   .setStrokeStyle(emptyLine)
+      //   .setInterval(0, 3000)
+      //   .setScrollStrategy(AxisScrollStrategies.expansion);
       setTimeout(function () {
         var canvas = document.querySelector("canvas");
         // console.log(canvas);
