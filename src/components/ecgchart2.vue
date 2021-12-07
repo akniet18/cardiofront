@@ -184,21 +184,23 @@ export default {
       let old = 0;
       let k = 0;
       for (let i of d) {
-        k += 10;
-        // point.push({x: self.k, y: i})
-        self.series.add({ x: k, y: i });
-        if (Math.round(old - i) > 2000) {
-          let mmax = i + 55000;
-          let mmin = i - 55000;
-          self.chart
-            .getDefaultAxisY()
-            .setTickStrategy("Empty")
-            .setStrokeStyle(emptyLine)
-            .setInterval(mmin, mmax, false, true)
-            .setScrollStrategy(AxisScrollStrategies.expansion);
-        }
+        if (i > 10) {
+          k += 10;
+          // point.push({x: self.k, y: i})
+          self.series.add({ x: k, y: i });
+          if (Math.round(old - i) > 2000) {
+            let mmax = i + 55000;
+            let mmin = i - 55000;
+            self.chart
+              .getDefaultAxisY()
+              .setTickStrategy("Empty")
+              .setStrokeStyle(emptyLine)
+              .setInterval(mmin, mmax, false, true)
+              .setScrollStrategy(AxisScrollStrategies.expansion);
+          }
 
-        old = i;
+          old = i;
+        }
       }
       self.chart
         .getDefaultAxisX()
