@@ -152,7 +152,7 @@ export default {
     downloadg() {
       const lcjs = require("@arction/lcjs");
       const { AxisScrollStrategies, emptyLine } = lcjs;
-      this.data = this.data.slice(this.data.length - 2200);
+      this.data = this.data.slice(this.data.length - 1000);
       let d = this.data;
       // console.log(d);
       this.series.clear();
