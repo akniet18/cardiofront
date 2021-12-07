@@ -124,7 +124,7 @@ export default {
       let d = JSON.parse(event.data)["content"]["pointers"]["content"][
         "pointers"
       ];
-      console.log("msg", d);
+      // console.log("msg", d);
       // period = period.concat(d.slice(1))
       // if (period.length >= 360){
       // self.maxx = Math.max(...period)
