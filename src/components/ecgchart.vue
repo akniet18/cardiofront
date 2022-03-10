@@ -78,7 +78,7 @@ export default {
   props: ["did", "userinfo"],
   data() {
     return {
-      data: [],
+      pdata: [],
       socket: null,
       k: 1,
       interval: null,
@@ -98,6 +98,9 @@ export default {
     };
   },
   mounted() {
+    const {
+        createSampledDataGenerator
+    } = require('@arction/xydata')
     // this.getData2()
     const lcjs = require("@arction/lcjs");
     const { AxisScrollStrategies, emptyLine } = lcjs;
@@ -147,15 +150,16 @@ export default {
       // period = []
       // oldK = self.k;
       // }
-      // let p = [];
-      // let old = 0;
+      let point = [];
+      let old = 0;
       // if (d[1] === d[2] === d[3] === d[4] === d[5]){
       // self.k += 30
       // self.series.add({x: self.k, y: d[1]-1000})
       // }
+      let p = []
       for (let i = 1; i < d.length; i++) {
         if (d[i] > 10) {
-          self.k += 10;
+          self.k += 1;
           // console.log(d[i]);
           // let mmax = Math.max(...period)
           // let mmin = Math.min(...period)
@@ -164,18 +168,20 @@ export default {
           // let mmax = self.series.getYMax() + 100000
           // let mmin = self.series.getYMin() - 100000
           // if (Math.round(old - d[i]) > 2000){
-          let mmax = d[i] + 70000;
-          let mmin = d[i] - 70000;
-          self.chart
-            .getDefaultAxisY()
-            .setTickStrategy("Empty")
-            .setStrokeStyle(emptyLine)
-            .setInterval(mmin, mmax, false, true)
-            .setScrollStrategy(AxisScrollStrategies.progressive);
+            let mmax = d[i] + 50000;
+            let mmin = d[i] - 50000;
+            self.chart
+              .getDefaultAxisY()
+              .setTickStrategy("Empty")
+              .setStrokeStyle(emptyLine)
+              .setInterval(mmin, mmax, false, true)
+              .setScrollStrategy(AxisScrollStrategies.expansion);
+            // old = d[i];
           // }
-          // old = d[i];
-          // self.data.push({x: self.k, y: d[i]})
-          // p.push({x: self.k, y: d[i]})
+          // self.pdata.push({x: self.k, y: d[i]})
+            
+            // p.push({x: self.k, y: d[i]})
+            // point = p
         }
       }
     };
@@ -183,6 +189,47 @@ export default {
       console.log(error);
     };
   },
+  // watch: {
+  //   pdata: function(point){
+  //     // console.log(point);
+  //     const {
+  //       createSampledDataGenerator
+  //     } = require('@arction/xydata')
+  //     // this.getData2()
+  //     const lcjs = require("@arction/lcjs");
+  //     const { AxisScrollStrategies, emptyLine } = lcjs;
+  //     let self = this
+  //     createSampledDataGenerator(point, 1, 10)
+  //       .setSamplingFrequency(1)
+  //       .setInputData(point)
+  //       .generate()
+  //       .setStreamBatchSize(48)
+  //       .setStreamInterval(50)
+  //       .setStreamRepeat(true)
+  //       .toStream()
+  //       .forEach(point => {
+  //         console.log(point.timestamp);
+  //           // Push the created points to the series.
+  //           self.series.add({ x: point.data.x, y: point.data.y })
+  //       })
+  //     for (let i of point){
+  //     //   setTimeout(function(){
+  //     //     self.series.add({ x: i.x, y: i.y });
+  //     //   // if (Math.round(old - d[i]) > 2000){
+  //         let mmax = i.y + 50000;
+  //         let mmin = i.y - 50000;
+  //         self.chart
+  //           .getDefaultAxisY()
+  //           .setTickStrategy("Empty")
+  //           .setStrokeStyle(emptyLine)
+  //           .setInterval(mmin, mmax, false, true)
+  //           .setScrollStrategy(AxisScrollStrategies.expansion);
+  //       // }
+  //     //   }, 10)
+  //     //   point.shift()
+  //     }
+  //   }
+  // },
   methods: {
     pause() {
       this.socket.close();
@@ -232,7 +279,7 @@ export default {
         .getDefaultAxisX()
         // .setTickStrategy("Empty")
         // .setStrokeStyle(emptyLine)
-        .setInterval(0, 25000)
+        .setInterval(0, 2500)
         .setScrollStrategy(AxisScrollStrategies.progressive);
 
       // let old = p[0]
