@@ -1,6 +1,7 @@
 <template>
-  <div style="margin-top: 15px; position: relative">
-    <section class="section"></section>
+  <div class="card_section" style="margin-top: 15px; position: relative">
+    <div>
+      <section class="section"></section>
     <!-- <div class="infod">
         <div>p: {{p}}</div>
         <div>q: {{q}}</div>
@@ -69,6 +70,10 @@
         </div>
       </div>
     </el-dialog>
+    </div>
+    
+    <div id="map"></div>
+    <!-- <div id="map" style="width: 600px; height: 400px"></div> -->
   </div>
 </template>
 
@@ -98,6 +103,28 @@ export default {
     };
   },
   mounted() {
+    // ymaps.ready(init);
+    // var myMap = new ymaps.Map("map", {
+    //     center: [43.2567, 76.9286],
+    //     zoom: 7
+    // });
+    let latlng = { lat: 43.236927, lng: 76.935135 }
+    const map = new google.maps.Map(document.getElementById("map"), { 
+      center: { lat: 43.236927, lng: 76.935135 },
+      zoom: 14,
+      // disableDefaultUI: true,
+      fullscreenControl: false,
+      mapTypeControl: false,
+      scaleControl: false,
+      streetViewControl: false,
+      zoomControl: false,
+      gestureHandling: "greedy"
+    });
+    const marker = new google.maps.Marker({
+      position: latlng,
+      map: map,
+    });
+    map.setTilt(45);
     const {
         createSampledDataGenerator
     } = require('@arction/xydata')
@@ -127,7 +154,7 @@ export default {
       let d = JSON.parse(event.data)["content"]["pointers"]["content"][
         "pointers"
       ];
-      console.log("msg", d);
+      // console.log("msg", d);
       // period = period.concat(d.slice(1))
       // if (period.length >= 360){
       // self.maxx = Math.max(...period)
@@ -152,10 +179,7 @@ export default {
       // }
       let point = [];
       let old = 0;
-      // if (d[1] === d[2] === d[3] === d[4] === d[5]){
-      // self.k += 30
-      // self.series.add({x: self.k, y: d[1]-1000})
-      // }
+
       let p = []
       for (let i = 1; i < d.length; i++) {
         if (d[i] > 10) {
@@ -168,15 +192,14 @@ export default {
           // let mmax = self.series.getYMax() + 100000
           // let mmin = self.series.getYMin() - 100000
           // if (Math.round(old - d[i]) > 2000){
-            let mmax = d[i] + 50000;
-            let mmin = d[i] - 50000;
-            self.chart
-              .getDefaultAxisY()
-              .setTickStrategy("Empty")
-              .setStrokeStyle(emptyLine)
-              .setInterval(mmin, mmax, false, true)
-              .setScrollStrategy(AxisScrollStrategies.expansion);
-            // old = d[i];
+          let mmax = d[i] + 55000;
+          let mmin = d[i] - 55000;
+          self.chart
+            .getDefaultAxisY()
+            .setTickStrategy("Empty")
+            .setStrokeStyle(emptyLine)
+            .setInterval(mmin, mmax, false, true)
+            .setScrollStrategy(AxisScrollStrategies.progressive);
           // }
           // self.pdata.push({x: self.k, y: d[i]})
             
@@ -254,47 +277,37 @@ export default {
           // theme: Themes.blueSciFi
         })
         .setTitle("");
-      // Add line series to visualize the data received
       this.series = this.chart.addLineSeries({
         dataPattern: DataPatterns.horizontalProgressive,
       });
-      // Style the series
       this.series.setStrokeStyle(
         new SolidLine({
           thickness: 3,
           fillStyle: new SolidFill({ color: ColorHEX("#5aafc7") }),
         })
       );
-      // .setMouseInteractions(false)
+
       this.chart.setAutoCursorMode(AutoCursorModes.disabled);
-      // Setup view nicely.
       this.chart
         .getDefaultAxisY()
         .setTickStrategy("Empty")
         .setStrokeStyle(emptyLine);
-      // .setInterval(16100000, 16500000)
-      // .setScrollStrategy(AxisScrollStrategies.progressive)
 
       this.chart
         .getDefaultAxisX()
         // .setTickStrategy("Empty")
         // .setStrokeStyle(emptyLine)
-        .setInterval(0, 2500)
+        .setInterval(0, 3000)
         .setScrollStrategy(AxisScrollStrategies.progressive);
 
-      // let old = p[0]
-      // for (let i in p){
-      //   this.k+=3
-      //   // if (Math.abs(p[i]-old) < 2000000){
-      //     this.series.add({x: this.k, y: p[i]})
-      //   // }
-      // }
       let lcjss = document.querySelector("#lcjs-auto-flexbox");
       let section = document.querySelector(".section");
       lcjss.style.height = "100%";
       lcjss.style.marginTop = "40px";
       section.appendChild(lcjss);
       lcjss.querySelector("canvas").style.zIndex = "99";
+      // let maps = document.querySelector('#map')
+      // maps.style
     },
     conclusion() {
       this.dialogVisible = true;
@@ -329,7 +342,7 @@ export default {
 .conc {
   position: absolute;
   right: 10px;
-  top: 0;
+  top: 10px;
   z-index: 999;
   font-size: 14px;
   display: flex;
@@ -350,6 +363,9 @@ export default {
   display: flex;
   justify-content: center;
   padding: 10px;
+}
+#map {
+  height: 150px;
 }
 @media (max-width: 800px) {
   .infod {

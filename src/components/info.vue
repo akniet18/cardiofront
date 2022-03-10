@@ -51,8 +51,10 @@ export default {
       s.style.display = "none"
       let item = document.querySelectorAll('div[class^="item"')
       let chart = document.querySelectorAll('div[id^="chart"')
+      let maps = document.querySelectorAll('#map')
       for (let i in item){
           console.log(item[i]);
+          maps[i].style.display = 'None'
           item[i].appendChild(chart[i])
           chart[i].style.height = "450px"
           chart[i].querySelector('canvas').style.zIndex = "99"

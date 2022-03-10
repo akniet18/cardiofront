@@ -48,8 +48,13 @@ export default {
         let chart = document.querySelectorAll('div[id^="chart"')
         //   let infod = document.querySelectorAll('div[class^="infod"')
         //   console.log(infod);
+        let maps = document.querySelectorAll('#map')
+        // let maps2 = document.querySelectorAll('#map2')
+      // maps.style
         for (let i in item){
             item[i].appendChild(chart[i])
+            item[i].appendChild(maps[i])
+            // item[i].appendChild(maps2[i])
             chart[i].style.height = "450px"
             // chart[i].style.marginTop = "-45px"
             chart[i].querySelector('canvas').style.zIndex = "99"
