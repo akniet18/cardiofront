@@ -113,7 +113,7 @@ export default {
       center: { lat: 43.236927, lng: 76.935135 },
       zoom: 14,
       // disableDefaultUI: true,
-      fullscreenControl: false,
+      // fullscreenControl: false,
       mapTypeControl: false,
       scaleControl: false,
       streetViewControl: false,
