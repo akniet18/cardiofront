@@ -2,7 +2,7 @@
   <div class="card_section" style="margin-top: 15px; position: relative">
     <div>
       <section class="section"></section>
-    <!-- <div class="infod">
+      <!-- <div class="infod">
         <div>p: {{p}}</div>
         <div>q: {{q}}</div>
         <div>r: {{maxx}}</div>
@@ -10,68 +10,68 @@
         <div>t: {{t}}</div>
         <div>ЧСС: {{chss}}</div>
       </div> -->
-    <div class="conc">
-      <button @click="conclusion" :disabled="!ssCheck">
-        {{ $t("conclusion") }}
-      </button>
-      <button @click="pause">{{ $t("pause") }}</button>
-    </div>
-    <el-dialog
-      :title="$t('conclusion')"
-      :visible.sync="dialogVisible"
-      width="75%"
-    >
-      <div>
-        <div>
-          <b>{{ $t("patient") }}</b>
-        </div>
-        <div>{{ $t("id") }}: {{ did }}</div>
-        <div>
-          {{ $t("fio") }}: {{ userinfo.last_name }} {{ userinfo.first_name }}
-        </div>
-        <div>{{ $t("birth_date") }}: {{ userinfo.birth_date }}</div>
-        <div>
-          {{ $t("today") }}: {{ new Date().getDate() }}.{{
-            new Date().getMonth()
-          }}.{{ new Date().getFullYear() }}
-        </div>
-        <br />
-        <div>
-          <b>{{ $t("protocol") }}</b>
-        </div>
-        <div>{{ $t("hs") }}: {{ chss }} {{ $t("bl_min") }}</div>
-        <div class="mb10">{{ $t("interval") }} RR: {{ rr }} мс</div>
-        <div></div>
-        <div class="table-conclusion">
-          <div>{{ $t("danger") }}</div>
-          <div>{{ $t("device_check") }}</div>
-        </div>
-        <div class="table-conclusion">
-          <div>{{ $t("sinus_rhythm") }}</div>
-          <div>{{ $t("normal_ecg") }}</div>
-        </div>
-        <div class="table-conclusion">
-          <div>{{ $t("sinus_bradycardia") }} ({{ $t("hs") }} 45)</div>
-          <div v-if="chss > 45">{{ $t("not_found") }}</div>
-          <div v-else>{{ $t("found") }}</div>
-        </div>
-        <div class="table-conclusion">
-          <div>{{ $t("sinus_tachycardia") }} ({{ $t("hs") }} ≥ 100)</div>
-          <div v-if="chss < 100">{{ $t("not_found") }}</div>
-          <div v-else>{{ $t("found") }}</div>
-        </div>
-        <div class="table-conclusion">
-          <div>{{ $t("atrial") }}</div>
-          <div>{{ $t("not_found") }}</div>
-        </div>
-        <div class="table-conclusion">
-          <div>{{ $t("atrial_flutter") }}</div>
-          <div>{{ $t("not_found") }}</div>
-        </div>
+      <div class="conc">
+        <button @click="conclusion" :disabled="!ssCheck">
+          {{ $t("conclusion") }}
+        </button>
+        <button @click="pause">{{ $t("pause") }}</button>
       </div>
-    </el-dialog>
+      <el-dialog
+        :title="$t('conclusion')"
+        :visible.sync="dialogVisible"
+        width="75%"
+      >
+        <div>
+          <div>
+            <b>{{ $t("patient") }}</b>
+          </div>
+          <div>{{ $t("id") }}: {{ did }}</div>
+          <div>
+            {{ $t("fio") }}: {{ userinfo.last_name }} {{ userinfo.first_name }}
+          </div>
+          <div>{{ $t("birth_date") }}: {{ userinfo.birth_date }}</div>
+          <div>
+            {{ $t("today") }}: {{ new Date().getDate() }}.{{
+              new Date().getMonth()
+            }}.{{ new Date().getFullYear() }}
+          </div>
+          <br />
+          <div>
+            <b>{{ $t("protocol") }}</b>
+          </div>
+          <div>{{ $t("hs") }}: {{ chss }} {{ $t("bl_min") }}</div>
+          <div class="mb10">{{ $t("interval") }} RR: {{ rr }} мс</div>
+          <div></div>
+          <div class="table-conclusion">
+            <div>{{ $t("danger") }}</div>
+            <div>{{ $t("device_check") }}</div>
+          </div>
+          <div class="table-conclusion">
+            <div>{{ $t("sinus_rhythm") }}</div>
+            <div>{{ $t("normal_ecg") }}</div>
+          </div>
+          <div class="table-conclusion">
+            <div>{{ $t("sinus_bradycardia") }} ({{ $t("hs") }} 45)</div>
+            <div v-if="chss > 45">{{ $t("not_found") }}</div>
+            <div v-else>{{ $t("found") }}</div>
+          </div>
+          <div class="table-conclusion">
+            <div>{{ $t("sinus_tachycardia") }} ({{ $t("hs") }} ≥ 100)</div>
+            <div v-if="chss < 100">{{ $t("not_found") }}</div>
+            <div v-else>{{ $t("found") }}</div>
+          </div>
+          <div class="table-conclusion">
+            <div>{{ $t("atrial") }}</div>
+            <div>{{ $t("not_found") }}</div>
+          </div>
+          <div class="table-conclusion">
+            <div>{{ $t("atrial_flutter") }}</div>
+            <div>{{ $t("not_found") }}</div>
+          </div>
+        </div>
+      </el-dialog>
     </div>
-    
+
     <div id="map"></div>
     <!-- <div id="map" style="width: 600px; height: 400px"></div> -->
   </div>
@@ -108,8 +108,8 @@ export default {
     //     center: [43.2567, 76.9286],
     //     zoom: 7
     // });
-    let latlng = { lat: 43.236927, lng: 76.935135 }
-    const map = new google.maps.Map(document.getElementById("map"), { 
+    let latlng = { lat: 43.236927, lng: 76.935135 };
+    const map = new google.maps.Map(document.getElementById("map"), {
       center: { lat: 43.236927, lng: 76.935135 },
       zoom: 14,
       // disableDefaultUI: true,
@@ -118,16 +118,14 @@ export default {
       scaleControl: false,
       streetViewControl: false,
       zoomControl: false,
-      gestureHandling: "greedy"
+      gestureHandling: "greedy",
     });
     const marker = new google.maps.Marker({
       position: latlng,
       map: map,
     });
     map.setTilt(45);
-    const {
-        createSampledDataGenerator
-    } = require('@arction/xydata')
+    const { createSampledDataGenerator } = require("@arction/xydata");
     // this.getData2()
     const lcjs = require("@arction/lcjs");
     const { AxisScrollStrategies, emptyLine } = lcjs;
@@ -150,10 +148,53 @@ export default {
       console.log("open");
     };
     let len = 0;
+
+    var allPoints = [];
+
     this.socket.onmessage = function (event) {
       let d = JSON.parse(event.data)["content"]["pointers"]["content"][
         "pointers"
       ];
+
+      // Мой тестовый код позже можно удалить !!!!!! <--------------------------------------------->
+
+      allPoints = allPoints.concat(d.slice(1));
+
+      if (allPoints.length > 2000) {
+        allPoints = allPoints.slice(allPoints.length - 2000);
+
+        var averagePoint = Math.max(...allPoints) - 2000;
+
+        var indexes = [];
+
+        for (var i = 0; i < allPoints.length; i++) {
+          if (allPoints[i] > averagePoint) {
+            indexes.push(i);
+          }
+        }
+
+        if (indexes.length > 1) {
+          var raznica = 0;
+          for (let i = 1; i < indexes.length; i++) {
+            if (indexes[i] - indexes[i - 1] > raznica) {
+              raznica = indexes[i] - indexes[i - 1];
+            }
+          }
+          if (raznica != 0) {
+            var rrLength = raznica;
+            var rrSM = rrLength / 800;
+            var myCHSS = 60 / rrSM;
+            if (myCHSS > 20 && myCHSS < 200) {
+              this.chss = parseInt(myCHSS);
+            }
+          }
+        }
+      }
+
+      console.log(this.chss);
+
+      // КОНЕЦ !!!!!! <---------------------------------------------------------------------------->
+
       // console.log("msg", d);
       // period = period.concat(d.slice(1))
       // if (period.length >= 360){
@@ -161,9 +202,10 @@ export default {
       // self.minn = Math.min(...period)
       len += d.slice(1).length;
       if (self.ss >= 60) {
-        self.chss = parseInt(len / 360);
+        // self.chss = parseInt(len / 360);
         self.rr = 60 / parseInt(len / 360);
       }
+
       // self.chss = Math.round(1500 / Math.round((self.k/3-oldK/3)))
       // if (self.maxx == self.minn){
       //   self.p = self.maxx
@@ -180,7 +222,7 @@ export default {
       let point = [];
       let old = 0;
 
-      let p = []
+      let p = [];
       for (let i = 1; i < d.length; i++) {
         if (d[i] > 10) {
           self.k += 1;
@@ -202,9 +244,9 @@ export default {
             .setScrollStrategy(AxisScrollStrategies.progressive);
           // }
           // self.pdata.push({x: self.k, y: d[i]})
-            
-            // p.push({x: self.k, y: d[i]})
-            // point = p
+
+          // p.push({x: self.k, y: d[i]})
+          // point = p
         }
       }
     };
