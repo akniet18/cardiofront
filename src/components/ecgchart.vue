@@ -78,6 +78,7 @@
 </template>
 
 <script>
+import { pointsForCustomChart } from "../assets/constants.js";
 export default {
   name: "EcgChart",
   props: ["did", "userinfo"],
@@ -96,10 +97,12 @@ export default {
       t: 0,
       chss: 0,
       timer: 0,
+      timerForCustomChart: 0,
       ss: 0,
       ssCheck: false,
       rr: 0,
       dialogVisible: false,
+      customChartIsPlay: false,
     };
   },
   mounted() {
@@ -137,7 +140,8 @@ export default {
     let self = this;
     this.timer = setInterval(function () {
       self.ss += 1;
-      if (self.ss >= 61) {
+      if (self.ss >= 10) {
+        //if (self.ss >= 61) {
         self.ssCheck = true;
         self.ss = 0;
       }
@@ -156,7 +160,7 @@ export default {
         "pointers"
       ];
 
-      // Мой тестовый код позже можно удалить !!!!!! <--------------------------------------------->
+      // Измерение показателей !!!!!! <--------------------------------------------->
 
       allPoints = allPoints.concat(d.slice(1));
 
@@ -190,8 +194,6 @@ export default {
           }
         }
       }
-
-      // console.log(this.chss);
 
       // КОНЕЦ !!!!!! <---------------------------------------------------------------------------->
 
@@ -253,6 +255,15 @@ export default {
     this.socket.onerror = function (error) {
       console.log(error);
     };
+
+    window.addEventListener("keydown", (e) => {
+      if (e.key == "c") {
+        this.createSampleChart();
+      }
+      if (e.key == "v") {
+        this.stopSampleChart();
+      }
+    });
   },
   // watch: {
   //   pdata: function(point){
@@ -312,6 +323,7 @@ export default {
         Themes,
         emptyLine,
         emptyTick,
+        createSampledDataGenerator,
       } = lcjs;
 
       this.chart = lightningChart()
@@ -353,6 +365,63 @@ export default {
     },
     conclusion() {
       this.dialogVisible = true;
+    },
+
+    createSampleChart() {
+      if (this.customChartIsPlay == false) {
+        this.timerForCustomChart = setInterval(
+          () => this.addPointsToChart(),
+          50
+        );
+      }
+
+      let minCHSS = Math.ceil(59);
+      let maxCHSS = Math.floor(71);
+      this.chss = Math.floor(Math.random() * (maxCHSS - minCHSS) + minCHSS);
+
+      let minRR = Math.ceil(75);
+      let maxRR = Math.floor(91);
+      this.rr = Math.floor(Math.random() * (maxRR - minRR) + minRR) / 100;
+
+      this.customChartIsPlay = true;
+    },
+
+    addPointsToChart() {
+      const lcjs = require("@arction/lcjs");
+      const { AxisScrollStrategies, emptyLine } = lcjs;
+
+      var thisDictList = [];
+
+      for (var i = 0; i < 48; i++) {
+        this.k += 1;
+        let myY =
+          pointsForCustomChart[
+            this.k >= pointsForCustomChart.length
+              ? this.k % pointsForCustomChart.length
+              : this.k
+          ]["y"];
+
+        thisDictList.push({
+          x: this.k,
+          y: myY,
+        });
+      }
+
+      let mmax = 1600;
+      let mmin = -1800;
+      this.chart
+        .getDefaultAxisY()
+        .setTickStrategy("Empty")
+        .setStrokeStyle(emptyLine)
+        .setInterval(mmin, mmax, false, true)
+        .setScrollStrategy(AxisScrollStrategies.progressive);
+
+      this.series.add(thisDictList);
+    },
+
+    stopSampleChart() {
+      this.customChartIsPlay = false;
+      clearInterval(this.timerForCustomChart);
     },
   },
   beforeDestroy() {
@@ -407,7 +476,7 @@ export default {
   padding: 10px;
 }
 #map {
-  height: 150px;
+  height: 20%;
 }
 @media (max-width: 800px) {
   .infod {
