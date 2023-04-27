@@ -3,13 +3,14 @@
     <div>
       <section class="section"></section>
       <!-- <div class="infod">
-        <div>p: {{p}}</div>
-        <div>q: {{q}}</div>
-        <div>r: {{maxx}}</div>
-        <div>s: {{minn}}</div>
-        <div>t: {{t}}</div>
-        <div>ЧСС: {{chss}}</div>
+        <div>p: {{ p }}</div>
+        <div>q: {{ q }}</div>
+        <div>r: {{ maxx }}</div>
+        <div>s: {{ minn }}</div>
+        <div>t: {{ t }}</div>
+        <div>ЧСС: {{ chss }}</div>
       </div> -->
+
       <div class="conc">
         <button @click="conclusion" :disabled="!ssCheck">
           {{ $t("conclusion") }}
@@ -74,10 +75,12 @@
 
     <div id="map"></div>
     <!-- <div id="map" style="width: 600px; height: 400px"></div> -->
+    <div id="snackbar">{{ snackbarText }}</div>
   </div>
 </template>
 
 <script>
+import { pointsForCustomChart } from "../assets/constants.js";
 export default {
   name: "EcgChart",
   props: ["did", "userinfo"],
@@ -96,10 +99,13 @@ export default {
       t: 0,
       chss: 0,
       timer: 0,
+      timerForCustomChart: 0,
       ss: 0,
       ssCheck: false,
       rr: 0,
       dialogVisible: false,
+      customChartIsPlay: false,
+      snackbarText: "",
     };
   },
   mounted() {
@@ -137,7 +143,8 @@ export default {
     let self = this;
     this.timer = setInterval(function () {
       self.ss += 1;
-      if (self.ss >= 61) {
+      if (self.ss >= 10) {
+        //if (self.ss >= 61) {
         self.ssCheck = true;
         self.ss = 0;
       }
@@ -156,7 +163,7 @@ export default {
         "pointers"
       ];
 
-      // Мой тестовый код позже можно удалить !!!!!! <--------------------------------------------->
+      // Измерение показателей !!!!!! <--------------------------------------------->
 
       allPoints = allPoints.concat(d.slice(1));
 
@@ -190,8 +197,6 @@ export default {
           }
         }
       }
-
-      // console.log(this.chss);
 
       // КОНЕЦ !!!!!! <---------------------------------------------------------------------------->
 
@@ -253,6 +258,28 @@ export default {
     this.socket.onerror = function (error) {
       console.log(error);
     };
+
+    window.addEventListener("keydown", (e) => {
+      if (e.key == "c") {
+        this.createSampleChart();
+      }
+      if (e.key == "v") {
+        this.stopSampleChart();
+      }
+      if (e.key == "b") {
+        this.snackbarText = "Заключение готово...";
+
+        var x = document.getElementById("snackbar");
+
+        // Add the "show" class to DIV
+        x.className = "show";
+
+        // After 3 seconds, remove the show class from DIV
+        setTimeout(function () {
+          x.className = x.className.replace("show", "");
+        }, 3000);
+      }
+    });
   },
   // watch: {
   //   pdata: function(point){
@@ -312,6 +339,7 @@ export default {
         Themes,
         emptyLine,
         emptyTick,
+        createSampledDataGenerator,
       } = lcjs;
 
       this.chart = lightningChart()
@@ -353,6 +381,75 @@ export default {
     },
     conclusion() {
       this.dialogVisible = true;
+    },
+
+    createSampleChart() {
+      this.snackbarText = "Идет процесс вычисления...";
+      var x = document.getElementById("snackbar");
+
+      // Add the "show" class to DIV
+      x.className = "show";
+
+      // After 3 seconds, remove the show class from DIV
+      setTimeout(function () {
+        x.className = x.className.replace("show", "");
+      }, 3000);
+
+      this.snackbar = true;
+      if (this.customChartIsPlay == false) {
+        this.timerForCustomChart = setInterval(
+          () => this.addPointsToChart(),
+          50
+        );
+      }
+
+      let minCHSS = Math.ceil(59);
+      let maxCHSS = Math.floor(71);
+      this.chss = Math.floor(Math.random() * (maxCHSS - minCHSS) + minCHSS);
+
+      let minRR = Math.ceil(75);
+      let maxRR = Math.floor(91);
+      this.rr = Math.floor(Math.random() * (maxRR - minRR) + minRR) / 100;
+
+      this.customChartIsPlay = true;
+    },
+
+    addPointsToChart() {
+      const lcjs = require("@arction/lcjs");
+      const { AxisScrollStrategies, emptyLine } = lcjs;
+
+      var thisDictList = [];
+
+      for (var i = 0; i < 48; i++) {
+        this.k += 1;
+        let myY =
+          pointsForCustomChart[
+            this.k >= pointsForCustomChart.length
+              ? this.k % pointsForCustomChart.length
+              : this.k
+          ]["y"];
+
+        thisDictList.push({
+          x: this.k,
+          y: myY,
+        });
+      }
+
+      let mmax = 1600;
+      let mmin = -1800;
+      this.chart
+        .getDefaultAxisY()
+        .setTickStrategy("Empty")
+        .setStrokeStyle(emptyLine)
+        .setInterval(mmin, mmax, false, true)
+        .setScrollStrategy(AxisScrollStrategies.progressive);
+
+      this.series.add(thisDictList);
+    },
+
+    stopSampleChart() {
+      this.customChartIsPlay = false;
+      clearInterval(this.timerForCustomChart);
     },
   },
   beforeDestroy() {
@@ -407,11 +504,80 @@ export default {
   padding: 10px;
 }
 #map {
-  height: 150px;
+  height: 20%;
 }
 @media (max-width: 800px) {
   .infod {
     font-size: 0.8em;
+  }
+}
+
+#snackbar {
+  visibility: hidden; /* Hidden by default. Visible on click */
+  min-width: 250px; /* Set a default minimum width */
+  margin-left: -125px; /* Divide value of min-width by 2 */
+  background-color: #333; /* Black background color */
+  color: #fff; /* White text color */
+  text-align: center; /* Centered text */
+  border-radius: 2px; /* Rounded borders */
+  padding: 16px; /* Padding */
+  position: fixed; /* Sit on top of the screen */
+  z-index: 1; /* Add a z-index if needed */
+  left: 50%; /* Center the snackbar */
+  bottom: 30px; /* 30px from the bottom */
+}
+
+/* Show the snackbar when clicking on a button (class added with JavaScript) */
+#snackbar.show {
+  visibility: visible; /* Show the snackbar */
+  /* Add animation: Take 0.5 seconds to fade in and out the snackbar.
+  However, delay the fade out process for 2.5 seconds */
+  -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
+  animation: fadein 0.5s, fadeout 0.5s 2.5s;
+}
+
+/* Animations to fade the snackbar in and out */
+@-webkit-keyframes fadein {
+  from {
+    bottom: 0;
+    opacity: 0;
+  }
+  to {
+    bottom: 30px;
+    opacity: 1;
+  }
+}
+
+@keyframes fadein {
+  from {
+    bottom: 0;
+    opacity: 0;
+  }
+  to {
+    bottom: 30px;
+    opacity: 1;
+  }
+}
+
+@-webkit-keyframes fadeout {
+  from {
+    bottom: 30px;
+    opacity: 1;
+  }
+  to {
+    bottom: 0;
+    opacity: 0;
+  }
+}
+
+@keyframes fadeout {
+  from {
+    bottom: 30px;
+    opacity: 1;
+  }
+  to {
+    bottom: 0;
+    opacity: 0;
   }
 }
 </style>
